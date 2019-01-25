@@ -25,6 +25,18 @@
                 ]
             },
             {
+                "type": "variable",
+                "filter": "^Mock",
+                "format": null
+            },
+            {
+                "type": "variable",
+                "modifiers": [
+                    "export"
+                ],
+                "format": "PascalCase"
+            },
+            {
                 "type": "method",
                 "format": [
                     "strictCamelCase",
