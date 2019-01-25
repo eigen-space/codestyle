@@ -1,5 +1,5 @@
 {
-    "name": "codestyle",
+    "name": "codestyle-tslint",
     "version": "1.0.0",
     "description": "Eigenspace team codestyle rules",
     "main": "rules.json",
@@ -7,10 +7,10 @@
     "author": "Nikita Sergeev <sergeev.nickitos@yandex.ru>",
     "license": "MIT",
     "scripts": {
+        "compile": "tsc"
     },
     "devDependencies": {
         "tslint": "5.12.1",
-        "tslint-eslint-rules": "5.4.0",
         "typescript": "3.1.6"
     }
 }
