@@ -3,7 +3,49 @@
         "tslint-eslint-rules"
     ],
     "rules": {
-        "no-multi-arg-functions": true,
+        "naming-convention": [
+            true,
+            {
+                "type": "variable",
+                "modifiers": [
+                    "local"
+                ],
+                "format": [
+                    "strictCamelCase"
+                ]
+            },
+            {
+                "type": "variable",
+                "modifiers": [
+                    "const"
+                ],
+                "format": [
+                    "strictCamelCase",
+                    "UPPER_CASE"
+                ]
+            },
+            {
+                "type": "method",
+                "format": [
+                    "strictCamelCase",
+                    "UPPER_CASE"
+                ]
+            },
+            {
+                "type": "property",
+                "format": [
+                    "strictCamelCase"
+                ]
+            },
+            {
+                "type": "type",
+                "format": "StrictPascalCase"
+            },
+            {
+                "type": "enumMember",
+                "format": "UPPER_CASE"
+            }
+        ],
         "arrow-return-shorthand": true,
         "class-name": true,
         "file-name-casing": [
