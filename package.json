@@ -1,0 +1,16 @@
+{
+    "name": "codestyle",
+    "version": "1.0.0",
+    "description": "Eigenspace team codestyle rules",
+    "main": "rules.json",
+    "repository": "https://github.com/eigen-space/codestyle.git",
+    "author": "Nikita Sergeev <sergeev.nickitos@yandex.ru>",
+    "license": "MIT",
+    "scripts": {
+    },
+    "devDependencies": {
+        "tslint": "5.12.1",
+        "tslint-eslint-rules": "5.4.0",
+        "typescript": "3.1.6"
+    }
+}
