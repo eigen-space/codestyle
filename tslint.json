@@ -2,6 +2,7 @@
     "extends": [
         "tslint-eslint-rules"
     ],
+    "rulesDirectory": "./rules",
     "rules": {
         "naming-convention": [
             true,
@@ -39,14 +40,23 @@
             {
                 "type": "method",
                 "format": [
-                    "strictCamelCase",
-                    "UPPER_CASE"
+                    "strictCamelCase"
                 ]
             },
             {
                 "type": "property",
                 "format": [
                     "strictCamelCase"
+                ]
+            },
+            {
+                "type": "property",
+                "modifiers": [
+                    "static"
+                ],
+                "format": [
+                    "strictCamelCase",
+                    "UPPER_CASE"
                 ]
             },
             {
