@@ -1,13 +1,15 @@
 {
     "name": "codestyle-tslint",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Eigenspace team codestyle rules",
     "main": "rules.json",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Nikita Sergeev <sergeev.nickitos@yandex.ru>",
     "license": "MIT",
     "scripts": {
-        "compile": "tsc"
+        "compile": "tsc",
+        "prepublish": "node ./dev/scripts/copy.js",
+        "publish": "yarn compile && yarn publish"
     },
     "devDependencies": {
         "tslint": "5.12.1",
