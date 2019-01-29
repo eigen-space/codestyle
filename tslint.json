@@ -1,7 +1,4 @@
 {
-    "extends": [
-        "tslint-eslint-rules"
-    ],
     "rulesDirectory": "./rules",
     "rules": {
         "naming-convention": [
@@ -35,7 +32,10 @@
                 "modifiers": [
                     "export"
                 ],
-                "format": "PascalCase"
+                "format": [
+                    "strictCamelCase",
+                    "PascalCase"
+                ]
             },
             {
                 "type": "method",
@@ -69,7 +69,6 @@
             }
         ],
         "arrow-return-shorthand": true,
-        "class-name": true,
         "file-name-casing": [
             true,
             "kebab-case"

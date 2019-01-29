@@ -6,3 +6,5 @@
 
 # compiled output
 /dist
+/rules/*.js
+/rules/*.js.map

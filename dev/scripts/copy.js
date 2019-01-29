@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const outputDir = './dist';
-const files = ['package.json', 'rules.json'];
+const files = ['package.json', 'tslint.json'];
 
 
 if (!fs.existsSync(outputDir)) {
