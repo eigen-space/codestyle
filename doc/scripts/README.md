@@ -3129,6 +3129,18 @@ c. \[Не автоматизировано\] Должно использоват
         DEFAULT = 'default',
         NORMAL = 'normal'
     }
+    
+    export enum ButtonMode {
+        // ...
+    }
+    
+    export enum ButtonState {
+        // ...
+    }
+    
+    export enum ButtonSizeType {
+        // ...
+    }
 ```
 
 #### 4.2.4. \[Не автоматизировано\] Имена констант
