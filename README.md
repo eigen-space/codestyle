@@ -12,16 +12,16 @@
 # Структура
 
 ```
-    /doc 
-        /common
-        /angular
-        /react
-        /scripts
-        /styles 
-    /rules
-    /tsconfig
-    /ide-configs
-        codestyle.idea.xml
+/doc 
+    /common
+    /angular
+    /react
+    /scripts
+    /styles 
+/rules
+/tsconfig
+/ide-configs
+    codestyle.idea.xml
 ```   
 
 # Руководство по написанию кода
@@ -40,7 +40,7 @@
     ```
     {
         "extends": [
-            "codestyle/tslint.json"
+            "@eigenspace/codestyle/tslint.json"
         ]
     }
     ```
@@ -60,5 +60,5 @@
 
 В текущем `tsconfig.json` проекта добавить:
 ```
-"extends": "codestyle/codestyle.tsconfig.json"
+"extends": "@eigenspace/codestyle/base.tsconfig.json"
 ```
