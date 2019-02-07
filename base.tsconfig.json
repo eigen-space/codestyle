@@ -14,7 +14,7 @@
         "noUnusedLocals": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "target": "es5",
+        "target": "es6",
         "jsx": "react",
         "lib": [
             "es2017",
