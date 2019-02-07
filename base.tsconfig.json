@@ -1,7 +1,6 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "outDir": "/dist/types",
         "sourceMap": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
@@ -17,9 +16,6 @@
         "declaration": true,
         "target": "es5",
         "jsx": "react",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
         "lib": [
             "es2017",
             "dom"
