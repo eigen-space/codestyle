@@ -1,7 +1,10 @@
 {
-    "extends": "./base.tsconfig.json",
+    "extends": "base.tsconfig.json",
     "compilerOptions": {
-        "outDir": "./dist/rules"
+        "outDir": "dist/rules",
+        "typeRoots": [
+            "node_modules/@types"
+        ]
     },
     "include": [
         "rules"
