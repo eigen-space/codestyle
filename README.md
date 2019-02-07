@@ -61,4 +61,7 @@
 В текущем `tsconfig.json` проекта добавить:
 ```
 "extends": "@eigenspace/codestyle/base.tsconfig.json"
+"compilerOptions": {
+    "moduleResolution": "node"
+}
 ```
