@@ -1,6 +1,7 @@
 {
     "extends": "./base.tsconfig.json",
     "compilerOptions": {
+        "module": "commonjs",
         "outDir": "dist/rules",
         "typeRoots": [
             "node_modules/@types"
