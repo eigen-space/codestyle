@@ -20,11 +20,11 @@
 названия тега.
 
 ```typescript
-    // Плохо
-    const burger = navbar.find('input');
+// Плохо
+const burger = navbar.find('input');
 
-    // Хорошо
-    const burger = navbar.find(BurgerWrapper);
+// Хорошо
+const burger = navbar.find(BurgerWrapper);
 ```
 
 ### 3.2. Props
@@ -35,15 +35,61 @@
 существования обработчика:
 
 ```typescript
-    // Плохо
-    private onBurgerBtnClicked(): void {
-        if (this.props.onBurgerBtnClicked) {
-            this.props.onBurgerBtnClicked();
-        }
+// Плохо
+private onBurgerBtnClicked(): void {
+    if (this.props.onBurgerBtnClicked) {
+        this.props.onBurgerBtnClicked();
     }
+}
 
-    // Хорошо
-    static defaultProps = {
-        onBurgerBtnClicked: () => {}
-    };
+// Хорошо
+static defaultProps = {
+    onBurgerBtnClicked: () => {}
+};
+```
+
+#### 3.2.2. \[Не автоматизировано\] Правила именования для обработчков
+
+Использовать следующий формат для описания обработчика в комментарии:
+`Handler for <действие> on [что-то] [дополнительное описание]`
+
+```typescript
+// Хорошо
+/**
+ * Handler for click on burger button.
+ */
+onBurgerBtnClick?: () => void;
+
+// Плохо
+/**
+* Callback is invoked when user presses burger button.
+*/
+onBurgerBtnClick?: () => void;
+
+// Плохо
+/**
+* Invoked after user presses burger button.
+*/
+onBurgerBtnClick?: () => void;
+```
+
+#### 3.2.3. \[Не автоматизировано\] Порядок в опредлении свойств 
+
+Использовать следующие приоритеты:
+
+1. Обязательные свойства
+2. Необязательные свойства
+3. Обязательные свойства с callback
+4. Необязательные свойства с callback
+
+В каждом пункте приоритеризация в зависимости от значимости свойства.
+
+```typescript
+export interface Props {
+    title: string;
+    mode: SomeComponentMode;
+    fluent?: boolean;
+    onValueChange: (value: string) => void;
+    onFocus?: () => void;
+}
 ```
