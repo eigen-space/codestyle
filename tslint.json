@@ -79,6 +79,7 @@
             "check-uppercase",
             {
                 "ignore-words": [
+                    "istanbul",
                     "noinspection",
                     "tslint:disable"
                 ]
