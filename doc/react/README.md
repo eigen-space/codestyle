@@ -54,22 +54,23 @@ static defaultProps = {
 `Handler for <действие> on [что-то] [дополнительное описание]`
 
 ```typescript
-// Хорошо
-/**
- * Handler for click on burger button.
- */
-onBurgerBtnClick?: () => void;
-
 // Плохо
+
 /**
 * Callback is invoked when user presses burger button.
 */
 onBurgerBtnClick?: () => void;
 
-// Плохо
 /**
 * Invoked after user presses burger button.
 */
+onBurgerBtnClick?: () => void;
+
+// Хорошо
+
+/**
+ * Handler for click on burger button.
+ */
 onBurgerBtnClick?: () => void;
 ```
 
