@@ -1,6 +1,7 @@
 {
     "rulesDirectory": "./rules",
     "rules": {
+        "cyclomatic-complexity": [true, 10],
         "naming-convention": [
             true,
             {
