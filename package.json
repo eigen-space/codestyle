@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "1.1.12",
+    "version": "1.1.13",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -25,7 +25,7 @@
         "lint": "tslint 'rules/**/*.ts'",
         "compile": "tsc",
         "copy": "node ./dev/scripts/copy.js",
-        "build": "yarn compile && yarn copy && yarn publish ./dist --access public"
+        "build": "yarn compile && yarn copy && yarn publish dist --access public"
     },
     "devDependencies": {
         "@types/node": "10.12.21",
