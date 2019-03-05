@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@eigenspace/helper-scripts@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.8.tgz#0d2b5b775bd0b41059bbd48015c22ca500ab31ee"
+  integrity sha512-uoRDRZQxCn2CviCvttLM5NKJ9xSqWWWzV3svh8GTLIq0xymrP8lplGJAsdZHVVbtcAGE7opk5eU6cqbU7M58dw==
+
 "@types/node@10.12.21":
   version "10.12.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.21.tgz#7e8a0c34cf29f4e17a36e9bd0ea72d45ba03908e"
