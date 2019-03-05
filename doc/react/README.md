@@ -94,3 +94,51 @@ export interface Props {
     onFocus?: () => void;
 }
 ```
+
+### 3.3. Template
+
+#### 3.3.1. \[Не автоматизировано\] Вынесение частей шаблона, которая показывается по условию в отдельную функцию
+
+Если у нас есть условие для отрисовки блока, и блок занимает больше одной строки, то его необходимо вынести в отделью функцию.
+
+```typescript jsx
+// Плохо
+
+<CardRoot {...this.props}>
+    {this.props.children}
+    {
+        hasContent &&
+        <Content>
+            {this.props.title && <Title {...this.props}>{this.props.title}</Title>}
+            {this.props.subtitle && <Subtitle>{this.props.subtitle}</Subtitle>}
+
+            <Description>{this.props.description}</Description>
+
+            {this.props.icon && <Icon>{this.props.icon}</Icon>}
+        </Content>
+    }
+</CardRoot>
+
+// Хорошо
+
+render(): ReactNode {
+    const hasContent = this.props.title || this.props.subtitle || this.props.icon || this.props.description;
+    return (
+        <CardRoot {...this.props}>
+            {this.props.children}
+            {hasContent && this.getContent()}
+        </CardRoot>
+    );
+}
+
+private getContent(): ReactNode {
+    return <Content>
+        {this.props.title && <Title {...this.props}>{this.props.title}</Title>}
+        {this.props.subtitle && <Subtitle>{this.props.subtitle}</Subtitle>}
+
+        <Description>{this.props.description}</Description>
+
+        {this.props.icon && <Icon>{this.props.icon}</Icon>}
+    </Content>;
+}
+```
