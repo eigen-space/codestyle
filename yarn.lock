@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@eigenspace/helper-scripts@1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.9.tgz#4af235592bd4fd5aa478cdcec42fd94657b1b9e0"
-  integrity sha512-zafiu0cagFG0be42X3qaVdYuZ7LERx0UfUDp5n3AXPz2cXox08iNU4FwmY8lp7LgzyWAAj8PDI/Wx+zT9CJd2w==
+"@eigenspace/helper-scripts@1.0.40":
+  version "1.0.40"
+  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.40.tgz#8b4098518e7b682f1d8571cc332a7ad4d9a5a5d7"
+  integrity sha512-qb3IifaJCNgpgczj6gwmZ2TqcLY5Ky8kkF6n6U5XbTGdrcCJg9Jrc2jjxRmv44gnzo/tEa9aEo1BCW6HwH9dNg==
   dependencies:
     minimist "1.2.0"
 
