@@ -1,7 +1,17 @@
 language: node_js
 node_js:
   - "11.10"
+git:
+  depth: false
 # node_modules cache
-cache: yarn
+cache:
+  directories:
+    - node_modules
+if: branch = master
 script:
-  - yarn deploy:publish
+  - git checkout $TRAVIS_BRANCH
+  - git remote set-url origin https://sergeevNick:$GITHUB_API_KEY@github.com/eigen-space/helper-scripts.git
+  - chmod +x ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh
+  - if ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh ; then
+      npm run deploy:publish;
+    fi
