@@ -29,7 +29,7 @@
         "deploy:publish": "yarn build && node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "devDependencies": {
-        "@eigenspace/helper-scripts": "1.0.9",
+        "@eigenspace/helper-scripts": "1.0.40",
         "@types/node": "10.12.21",
         "tslint": "5.12.1",
         "typescript": "3.3.1"
