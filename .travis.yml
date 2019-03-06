@@ -10,7 +10,7 @@ cache:
 if: branch = master
 script:
   - git checkout $TRAVIS_BRANCH
-  - git remote set-url origin https://sergeevNick:$GITHUB_API_KEY@github.com/eigen-space/helper-scripts.git
+  - git remote set-url origin https://sergeevNick:$GITHUB_API_KEY@github.com/eigen-space/codestyle.git
   - chmod +x ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh
   - if ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh ; then
       npm run deploy:publish;
