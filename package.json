@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "1.1.15",
+    "version": "1.1.16",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -22,15 +22,20 @@
     ],
     "scripts": {
         "dev": "tsc --outDir rules",
-        "lint": "tslint 'rules/**/*.ts'",
+        "lint": "yarn compile && yarn tslint --project test/test-tsconfig.json",
         "compile": "tsc",
+        "test": "yarn compile && yarn jest",
         "copy": "node ./dev/scripts/copy.js",
         "build": "yarn compile && yarn copy",
         "deploy:publish": "yarn build && node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "devDependencies": {
         "@eigenspace/helper-scripts": "1.0.40",
+        "@types/jest": "22.2.2",
         "@types/node": "10.12.21",
+        "jest": "23.6.0",
+        "jest-runner-tslint": "1.0.5",
+        "ts-jest": "23.10.5",
         "tslint": "5.12.1",
         "typescript": "3.3.1"
     }
