@@ -35,3 +35,5 @@ class Clazz {
 }
 
 Clazz.testFunc(false);
+
+const stolen = false;
