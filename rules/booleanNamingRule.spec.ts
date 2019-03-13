@@ -1,4 +1,3 @@
-import { Rule } from './booleanNamingRule';
 import { lint } from '../test/linter';
 
 const rule = 'boolean-naming';
@@ -9,8 +8,8 @@ describe('BooleanNamingRule', () => {
         const source = `
             let some: boolean;
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING);
+        const result = lint(rule, source);
+        expect(result.errorCount).toBe(1);
     });
 
     it('should do not return error if declarable variable with boolean type has name without `is` or `has`', () => {
@@ -27,8 +26,8 @@ describe('BooleanNamingRule', () => {
                 private some: boolean;
             }
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING);
+        const result = lint(rule, source);
+        expect(result.errorCount).toBe(1);
     });
 
     it('should do not return error if declarable property with boolean type has name without `is` or `has`', () => {
