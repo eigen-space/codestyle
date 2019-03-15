@@ -1,7 +1,13 @@
 import * as Lint from 'tslint';
 import { IOptions } from 'tslint';
 import * as ts from 'typescript';
-import { isParameterDeclaration, isPropertyDeclaration, isPropertySignature, isVariableDeclaration } from 'tsutils';
+import {
+    isParameterDeclaration,
+    isPropertyAssignment,
+    isPropertyDeclaration,
+    isPropertySignature,
+    isVariableDeclaration
+} from 'tsutils';
 
 /**
  * This rule checks boolean declaration to be content with our rules.
@@ -18,7 +24,11 @@ interface ExtendedType extends ts.Type {
     intrinsicName?: string;
 }
 
-type Declaration = ts.VariableDeclaration | ts.ParameterDeclaration | ts.PropertyDeclaration | ts.PropertySignature;
+type Declaration = ts.VariableDeclaration
+    | ts.ParameterDeclaration
+    | ts.PropertyDeclaration
+    | ts.PropertySignature
+    | ts.PropertyAssignment;
 
 export class Rule extends Lint.Rules.TypedRule {
     public static AVAILABLE_ENDING = 'ed';
@@ -69,7 +79,8 @@ function isValidNode(node: ts.Node): boolean {
     return isVariableDeclaration(node)
         || isParameterDeclaration(node)
         || isPropertyDeclaration(node)
-        || isPropertySignature(node);
+        || isPropertySignature(node)
+        || isPropertyAssignment(node);
 }
 
 function checkNode(node: Declaration,
