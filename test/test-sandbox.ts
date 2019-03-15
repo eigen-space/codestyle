@@ -1,3 +1,11 @@
+export interface Props {
+    fullWidth?: boolean; // 1048592 boolean
+
+    requiredFullWidth?: boolean; // 1048592 boolean
+
+    disabled?: boolean; // 1048592 boolean
+}
+
 // 1048592 boolean
 function foo(bool: boolean): boolean {
     return bool;
@@ -15,6 +23,8 @@ class Clazz {
     str: string; // 4 string
     num: number; // 8 number
     strArr: string[]; // 524288 undefined
+
+    fullWidth?: boolean; // 1048592 boolean
 
     // 1048592 boolean, 1048592 boolean
     static testFunc(boolArg: boolean, boolArg2 = true): void {

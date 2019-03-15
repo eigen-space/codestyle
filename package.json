@@ -27,7 +27,7 @@
         "test": "yarn compile && yarn jest",
         "copy": "node ./dev/scripts/copy.js",
         "build": "yarn compile && yarn copy",
-        "deploy:publish": "yarn build && node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
+        "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "devDependencies": {
         "@eigenspace/helper-scripts": "1.0.40",
