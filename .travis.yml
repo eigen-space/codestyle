@@ -8,10 +8,17 @@ cache:
   directories:
     - node_modules
 if: branch = master
-script:
-  - git checkout $TRAVIS_BRANCH
-  - git remote set-url origin https://sergeevNick:$GITHUB_API_KEY@github.com/eigen-space/codestyle.git
-  - chmod +x ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh
-  - if ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh ; then
-      yarn build && npm run deploy:publish;
-    fi
+
+before_script: chmod +x ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh
+
+jobs:
+  include:
+    - if: ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh
+    - stage: build
+      script: yarn build
+    - stage: deploy
+      script: npm run deploy:publish
+
+stages:
+  - build
+  - deploy
