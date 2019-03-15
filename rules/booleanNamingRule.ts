@@ -86,23 +86,39 @@ function isValidNode(node: ts.Node): boolean {
 function checkNode(node: Declaration,
                    tc: ts.TypeChecker,
                    ctx: Lint.WalkContext<void>): void {
+    if (!isBoolean(node, tc)) {
+        return;
+    }
+
+    const variableName = node.name.getText();
+    if (!isValidName(variableName) && !Rule.RESERVED_WORDS.includes(variableName)) {
+        ctx.addFailureAtNode(node.name, getFailureMessage(variableName));
+    }
+}
+
+function isBoolean(node: Declaration, tc: ts.TypeChecker): boolean {
     let typeNode: ExtendedType;
 
     try {
         typeNode = tc.getTypeAtLocation(node);
     } catch (e) {
-        return;
+        return false;
     }
 
     // tslint:disable-next-line
     const typeName = typeNode.intrinsicName;
     const typeFlag = typeNode.flags;
-    if (typeName === 'boolean' || typeFlag === ts.TypeFlags.BooleanLiteral) {
-        const variableName = node.name.getText();
-        if (!isValidName(variableName) && !Rule.RESERVED_WORDS.includes(variableName)) {
-            ctx.addFailureAtNode(node.name, getFailureMessage(variableName));
-        }
+    let nodeTypeKind;
+
+    if (isPropertySignature(node)) {
+        nodeTypeKind = node.type && node.type.kind;
     }
+
+    const isBooleanVariable = typeName === 'boolean';
+    const isBooleanLiteral = typeFlag === ts.TypeFlags.BooleanLiteral;
+    const isBooleanInInterface = nodeTypeKind === ts.SyntaxKind.BooleanKeyword;
+
+    return isBooleanVariable || isBooleanLiteral || isBooleanInInterface;
 }
 
 function isValidName(name: string): boolean {
