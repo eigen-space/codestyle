@@ -6,6 +6,10 @@ export interface Props {
     disabled?: boolean; // 1048592 boolean
 }
 
+interface Some extends Props {
+    filtrationEnabled?: boolean;
+}
+
 // 1048592 boolean
 function foo(bool: boolean): boolean {
     return bool;
@@ -23,6 +27,11 @@ class Clazz {
     str: string; // 4 string
     num: number; // 8 number
     strArr: string[]; // 524288 undefined
+
+    defaultProps = {
+        filtrationEnabled: true,
+        onOptionSelect: () => {}
+    };
 
     fullWidth?: boolean; // 1048592 boolean
 
