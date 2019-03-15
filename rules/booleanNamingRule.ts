@@ -23,7 +23,7 @@ type Declaration = ts.VariableDeclaration | ts.ParameterDeclaration | ts.Propert
 export class Rule extends Lint.Rules.TypedRule {
     public static AVAILABLE_ENDING = 'ed';
     public static AVAILABLE_PREFIXES = ['is', 'has'];
-    public static RESERVED_WORDS = ['busy', 'hidden'];
+    public static RESERVED_WORDS = ['busy', 'hidden', 'value'];
 
     public static metadata: Lint.IRuleMetadata = {
         ruleName: 'boolean-naming',
