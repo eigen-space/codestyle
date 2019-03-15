@@ -1,7 +1,7 @@
 import * as Lint from 'tslint';
 import { IOptions } from 'tslint';
 import * as ts from 'typescript';
-import { isParameterDeclaration, isPropertyDeclaration, isVariableDeclaration } from 'tsutils';
+import { isParameterDeclaration, isPropertyDeclaration, isPropertySignature, isVariableDeclaration } from 'tsutils';
 
 /**
  * This rule checks boolean declaration to be content with our rules.
@@ -17,6 +17,8 @@ import { isParameterDeclaration, isPropertyDeclaration, isVariableDeclaration } 
 interface ExtendedType extends ts.Type {
     intrinsicName?: string;
 }
+
+type Declaration = ts.VariableDeclaration | ts.ParameterDeclaration | ts.PropertyDeclaration | ts.PropertySignature;
 
 export class Rule extends Lint.Rules.TypedRule {
     public static AVAILABLE_ENDING = 'ed';
@@ -36,7 +38,7 @@ export class Rule extends Lint.Rules.TypedRule {
                 items: { type: 'string' }
             }
         },
-        optionExamples: [true, [true,  'stolen', 'taken']],
+        optionExamples: [true, [true, 'stolen', 'taken']],
         type: 'style',
         typescriptOnly: true,
         requiresTypeInfo: true
@@ -56,14 +58,21 @@ function walk(ctx: Lint.WalkContext<void>, tc: ts.TypeChecker): void {
     return ts.forEachChild(ctx.sourceFile, cb);
 
     function cb(node: ts.Node): void {
-        if (isVariableDeclaration(node) || isParameterDeclaration(node) || isPropertyDeclaration(node)) {
-            checkNode(node, tc, ctx);
+        if (isValidNode(node)) {
+            checkNode(node as Declaration, tc, ctx);
         }
         return ts.forEachChild(node, cb);
     }
 }
 
-function checkNode(node: ts.VariableDeclaration | ts.ParameterDeclaration | ts.PropertyDeclaration,
+function isValidNode(node: ts.Node): boolean {
+    return isVariableDeclaration(node)
+        || isParameterDeclaration(node)
+        || isPropertyDeclaration(node)
+        || isPropertySignature(node);
+}
+
+function checkNode(node: Declaration,
                    tc: ts.TypeChecker,
                    ctx: Lint.WalkContext<void>): void {
     let typeNode: ExtendedType;
@@ -80,7 +89,7 @@ function checkNode(node: ts.VariableDeclaration | ts.ParameterDeclaration | ts.P
     if (typeName === 'boolean' || typeFlag === ts.TypeFlags.BooleanLiteral) {
         const variableName = node.name.getText();
         if (!isValidName(variableName) && !Rule.RESERVED_WORDS.includes(variableName)) {
-            ctx.addFailureAtNode(node.name, getFalureMessage(variableName));
+            ctx.addFailureAtNode(node.name, getFailureMessage(variableName));
         }
     }
 }
@@ -108,6 +117,6 @@ function hasProperEnding(name: string): boolean {
     return name.endsWith(Rule.AVAILABLE_ENDING);
 }
 
-function getFalureMessage(name: string): string {
+function getFailureMessage(name: string): string {
     return `Boolean variable ${name} must be either starts with \`is\`, \`has\` or be participle or verbal adjective`;
 }
