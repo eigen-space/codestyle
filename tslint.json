@@ -1,5 +1,5 @@
 {
-    "rulesDirectory": "./rules",
+    "rulesDirectory": "./dist/rules",
     "rules": {
         "boolean-naming": true,
         "cyclomatic-complexity": [true, 10],
