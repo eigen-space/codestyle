@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import * as utils from 'tsutils';
 
-// Пересекается с class-name. Его можно удалить, заменив на это
 abstract class AbstractConfigDependentRule extends Lint.Rules.AbstractRule {
     public isEnabled(): boolean {
         return super.isEnabled() && this.ruleArguments.length !== 0;
@@ -18,21 +17,21 @@ const enum Format {
     Camel = 'camelCase',
     StrictCamel = 'strictCamelCase',
     Upper = 'UPPER_CASE',
-    Snake = 'snake_case'
+    Snake = 'snake_case',
 }
 
-const FORMAT_FAIL = ' name must be in ';
-const LEADING_FAIL = ' name must not have leading underscore';
+const FORMAT_FAIL   = ' name must be in ';
+const LEADING_FAIL  = ' name must not have leading underscore';
 const TRAILING_FAIL = ' name must not have trailing underscore';
-const NO_LEADING_FAIL = ' name must have leading underscore';
+const NO_LEADING_FAIL  = ' name must have leading underscore';
 const NO_TRAILING_FAIL = ' name must have trailing underscore';
-const REGEX_FAIL = ' name did not match required regex';
-const PREFIX_FAIL = ' name must start with ';
-const SUFFIX_FAIL = ' name must end with ';
-const PREFIX_FAIL_ARR = ' name must start with one of ';
-const SUFFIX_FAIL_ARR = ' name must end with one of ';
+const REGEX_FAIL    = ' name did not match required regex';
+const PREFIX_FAIL   = ' name must start with ';
+const SUFFIX_FAIL   = ' name must end with ';
+const PREFIX_FAIL_ARR  = ' name must start with one of ';
+const SUFFIX_FAIL_ARR  = ' name must end with one of ';
 
-type DeclarationWithIdentifierName = ts.Declaration & { name: ts.Identifier };
+type DeclarationWithIdentifierName = ts.Declaration & {name: ts.Identifier};
 
 enum Types {
     // tslint:disable:naming-convention
@@ -154,7 +153,7 @@ export class Rule extends AbstractConfigDependentRule {
         return this.applyWithWalker(new IdentifierNameWalker(
             sourceFile,
             this.ruleName,
-            this.ruleArguments.map((rule) => new NormalizedConfig(rule)).sort(NormalizedConfig.sort)
+            this.ruleArguments.map((rule) => new NormalizedConfig(rule)).sort(NormalizedConfig.sort),
         ));
     }
 }
@@ -196,22 +195,18 @@ class NormalizedConfig {
         return first._specifity - second._specifity;
     }
 
-    public matches(type: TypeSelector, modifiers: number, name: string): [boolean, boolean] {
-        if (this._final && type > this._type << 1) // check if TypeSelector has a higher bit set than this._type
-        {
-            return [false, false];
-        }
-        if ((this._type & type) === 0 || (this._modifiers & ~modifiers) !== 0) {
-            return [false, false];
-        }
-        if (this._filter === undefined) {
-            return [true, false];
-        }
-        return [this._filter.test(name), true];
-    }
-
     public getFormat() {
         return this._format;
+    }
+
+    public matches(type: TypeSelector, modifiers: number, name: string): boolean {
+        if (this._final && type > this._type << 1) // check if TypeSelector has a higher bit set than this._type
+            return false;
+        if ((this._type & type) === 0 || (this._modifiers & ~modifiers) !== 0)
+            return false;
+        if (this._filter === undefined)
+            return true;
+        return this._filter.test(name);
     }
 }
 
@@ -222,7 +217,6 @@ class NameChecker {
     private _prefix: string | string[] | undefined;
     private _suffix: string | string[] | undefined;
     private _regex: RegExp | undefined;
-
     constructor(private readonly _type: TypeSelector, format: IFormat) {
         this._leadingUnderscore = format.leadingUnderscore;
         this._trailingUnderscore = format.trailingUnderscore;
@@ -236,15 +230,13 @@ class NameChecker {
         let identifier = name.text;
 
         // start with regex test before we potentially strip off underscores and affixes
-        if (this._regex !== undefined && !this._regex.test(identifier)) {
+        if (this._regex !== undefined && !this._regex.test(identifier))
             walker.addFailureAtNode(name, this._failMessage(REGEX_FAIL));
-        }
 
         if (this._leadingUnderscore) {
             if (identifier[0] === '_') {
-                if (this._leadingUnderscore === 'forbid') {
+                if (this._leadingUnderscore === 'forbid')
                     walker.addFailureAtNode(name, this._failMessage(LEADING_FAIL));
-                }
                 identifier = identifier.slice(1);
             } else if (this._leadingUnderscore === 'require') {
                 walker.addFailureAtNode(name, this._failMessage(NO_LEADING_FAIL));
@@ -253,9 +245,8 @@ class NameChecker {
 
         if (this._trailingUnderscore) {
             if (identifier[identifier.length - 1] === '_') {
-                if (this._trailingUnderscore === 'forbid') {
+                if (this._trailingUnderscore === 'forbid')
                     walker.addFailureAtNode(name, this._failMessage(TRAILING_FAIL));
-                }
                 identifier = identifier.slice(0, -1);
             } else if (this._trailingUnderscore === 'require') {
                 walker.addFailureAtNode(name, this._failMessage(NO_TRAILING_FAIL));
@@ -284,9 +275,8 @@ class NameChecker {
         // case checks
         if (this._format) {
             if (Array.isArray(this._format)) {
-                if (!matchesAnyFormat(identifier, this._format)) {
+                if (!matchesAnyFormat(identifier, this._format))
                     walker.addFailureAtNode(name, this._failMessage(FORMAT_FAIL + formatFormatList(this._format)));
-                }
             } else if (!matchesFormat(identifier, this._format)) {
                 walker.addFailureAtNode(name, this._failMessage(FORMAT_FAIL + this._format));
             }
@@ -298,21 +288,17 @@ class NameChecker {
     }
 
     private _checkPrefixes(identifier: string, name: ts.Identifier, prefixes: string[], walker: Lint.AbstractWalker<any>): string {
-        for (const prefix of prefixes) {
-            if (identifier.startsWith(prefix)) {
+        for (const prefix of prefixes)
+            if (identifier.startsWith(prefix))
                 return identifier.slice(prefix.length);
-            }
-        }
         walker.addFailureAtNode(name, this._failMessage(PREFIX_FAIL_ARR + prefixes.toString()));
         return identifier;
     }
 
     private _checkSuffixes(identifier: string, name: ts.Identifier, suffixes: string[], walker: Lint.AbstractWalker<any>): string {
-        for (const suffix of suffixes) {
-            if (identifier.endsWith(suffix)) {
+        for (const suffix of suffixes)
+            if (identifier.endsWith(suffix))
                 return identifier.slice(0, -suffix.length);
-            }
-        }
         walker.addFailureAtNode(name, this._failMessage(SUFFIX_FAIL_ARR + suffixes.toString()));
         return identifier;
     }
@@ -321,18 +307,27 @@ class NameChecker {
 
 class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
     private _depth = 0;
-    private _cache = new Map<string, NameChecker | null>();
     private _usage: Map<ts.Identifier, utils.VariableInfo> | undefined = undefined;
 
     public visitEnumDeclaration(node: ts.EnumDeclaration) {
         let modifiers = this._getModifiers(node, TypeSelector.enum);
         this._checkName(node.name, TypeSelector.enum, modifiers);
         modifiers |= Modifiers.static | Modifiers.public | Modifiers.readonly; // treat enum members as public static readonly properties
-        for (const { name } of node.members) {
-            if (utils.isIdentifier(name)) {
+        for (const {name} of node.members)
+            if (utils.isIdentifier(name))
                 this._checkName(name, TypeSelector.enumMember, modifiers);
-            }
-        }
+    }
+
+    public visitClassLikeDeclaration(node: ts.ClassLikeDeclaration) {
+        if (node.name !== undefined)
+            this._checkDeclaration(<ts.ClassLikeDeclaration & {name: ts.Identifier}>node, TypeSelector.class);
+        this._checkTypeParameters(node, Modifiers.global);
+    }
+
+    public visitMethodDeclaration(node: ts.MethodDeclaration) {
+        if (isNameIdentifier(node))
+            this._checkDeclaration(node, TypeSelector.method);
+        this._checkTypeParameters(node, Modifiers.local);
     }
 
     public visitTypeAliasDeclaration(node: ts.TypeAliasDeclaration) {
@@ -340,52 +335,28 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
         this._checkTypeParameters(node, Modifiers.global);
     }
 
-    public visitClassLikeDeclaration(node: ts.ClassLikeDeclaration) {
-        if (node.name !== undefined) {
-            this._checkDeclaration(<ts.ClassLikeDeclaration & { name: ts.Identifier }>node, TypeSelector.class);
-        }
-        this._checkTypeParameters(node, Modifiers.global);
-    }
-
-    public visitMethodDeclaration(node: ts.MethodDeclaration) {
-        if (isNameIdentifier(node)) {
-            this._checkDeclaration(node, TypeSelector.method);
-        }
-        this._checkTypeParameters(node, Modifiers.local);
-    }
-
-    public visitInterfaceDeclaration(node: ts.InterfaceDeclaration) {
-        this._checkDeclaration(node, TypeSelector.interface);
-        this._checkTypeParameters(node, Modifiers.global);
-    }
-
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
-        if (node.parent!.kind === ts.SyntaxKind.IndexSignature) {
+        if (node.parent!.kind === ts.SyntaxKind.IndexSignature)
             return;
-        }
         if (isNameIdentifier(node)) {
             if (node.name.originalKeywordKind === ts.SyntaxKind.ThisKeyword)
             // exempt this parameter
-            {
                 return;
-            }
             // param properties cannot be destructuring assignments
             const parameterProperty = utils.isParameterProperty(node);
             this._checkDeclaration(
                 node,
                 parameterProperty ? TypeSelector.parameterProperty : TypeSelector.parameter,
-                utils.isFunctionWithBody(node.parent!) && !parameterProperty && this._isUnused(node.name) ? Modifiers.unused : 0
+                utils.isFunctionWithBody(node.parent!) && !parameterProperty && this._isUnused(node.name) ? Modifiers.unused : 0,
             );
         } else {
             // handle destructuring
             utils.forEachDestructuringIdentifier(<ts.BindingPattern>node.name, (declaration) => {
                 let modifiers = Modifiers.local;
-                if (!isEqualName(declaration.name, declaration.propertyName)) {
+                if (!isEqualName(declaration.name, declaration.propertyName))
                     modifiers |= Modifiers.rename;
-                }
-                if (utils.isFunctionWithBody(node.parent!) && this._isUnused(declaration.name)) {
+                if (utils.isFunctionWithBody(node.parent!) && this._isUnused(declaration.name))
                     modifiers |= Modifiers.unused;
-                }
                 this._checkName(declaration.name, TypeSelector.parameter, modifiers);
             });
         }
@@ -393,57 +364,152 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
     }
 
     public visitPropertyDeclaration(node: ts.PropertyDeclaration) {
-        if (isNameIdentifier(node)) {
+        if (isNameIdentifier(node))
             this._checkDeclaration(node, TypeSelector.property);
-        }
+    }
+
+    public visitInterfaceDeclaration(node: ts.InterfaceDeclaration) {
+        this._checkDeclaration(node, TypeSelector.interface);
+        this._checkTypeParameters(node, Modifiers.global);
     }
 
     public visitSetAccessor(node: ts.SetAccessorDeclaration) {
-        if (isNameIdentifier(node)) {
+        if (isNameIdentifier(node))
             this._checkDeclaration(node, TypeSelector.property);
-        }
     }
 
     public visitGetAccessor(node: ts.GetAccessorDeclaration) {
-        if (isNameIdentifier(node)) {
+        if (isNameIdentifier(node))
             this._checkDeclaration(node, TypeSelector.property);
-        }
     }
 
     public visitForStatement(node: ts.ForStatement) {
-        if (node.initializer !== undefined && utils.isVariableDeclarationList(node.initializer)) {
+        if (node.initializer !== undefined && utils.isVariableDeclarationList(node.initializer))
             this._checkVariableDeclarationList(node.initializer, this._getModifiers(node.initializer, TypeSelector.variable));
-        }
     }
 
     public visitForOfStatement(node: ts.ForOfStatement) {
-        if (utils.isVariableDeclarationList(node.initializer)) {
+        if (utils.isVariableDeclarationList(node.initializer))
             this._checkVariableDeclarationList(node.initializer, this._getModifiers(node.initializer, TypeSelector.variable));
-        }
     }
 
     public visitForInStatement(node: ts.ForInStatement) {
-        if (utils.isVariableDeclarationList(node.initializer)) {
+        if (utils.isVariableDeclarationList(node.initializer))
             this._checkVariableDeclarationList(node.initializer, this._getModifiers(node.initializer, TypeSelector.variable));
-        }
     }
 
     public visitVariableStatement(node: ts.VariableStatement) {
         // skip 'declare' keywords
-        if (!utils.hasModifier(node.modifiers, ts.SyntaxKind.DeclareKeyword)) {
+        if (!utils.hasModifier(node.modifiers, ts.SyntaxKind.DeclareKeyword))
             this._checkVariableDeclarationList(node.declarationList, this._getModifiers(node, TypeSelector.variable));
-        }
     }
 
     public visitFunction(node: ts.FunctionDeclaration | ts.FunctionExpression) {
-        if (node.name !== undefined) {
-            this._checkDeclaration(<(ts.FunctionDeclaration | ts.FunctionDeclaration) & { name: ts.Identifier }>node, TypeSelector.function);
-        }
+        if (node.name !== undefined)
+            this._checkDeclaration(<(ts.FunctionDeclaration | ts.FunctionDeclaration) & {name: ts.Identifier}>node, TypeSelector.function);
         this._checkTypeParameters(node, Modifiers.local);
+    }
+
+    private _isUnused(name: ts.Identifier): boolean {
+        if (this._usage === undefined)
+            this._usage = utils.collectVariableUsage(this.sourceFile);
+        return this._usage.get(name)!.uses.length === 0;
+    }
+
+    private _checkTypeParameters(
+        node: ts.SignatureDeclaration | ts.ClassLikeDeclaration | ts.InterfaceDeclaration | ts.TypeAliasDeclaration,
+        modifiers: Modifiers,
+    ) {
+        if (node.typeParameters !== undefined)
+            for (const {name} of node.typeParameters)
+                this._checkName(name, TypeSelector.genericTypeParameter, modifiers);
+    }
+
+    private _checkVariableDeclarationList(list: ts.VariableDeclarationList, modifiers: number) {
+        // compute modifiers once and reuse for all declared variables
+        if ((list.flags & ts.NodeFlags.Const) !== 0)
+            modifiers |= Modifiers.const;
+        utils.forEachDeclaredVariable(list, (declaration) => {
+            let currentModifiers = modifiers;
+            let selector = TypeSelector.variable;
+            if (declaration.kind === ts.SyntaxKind.BindingElement && !isEqualName(declaration.name, declaration.propertyName))
+                currentModifiers |= Modifiers.rename;
+            if (this._isUnused(declaration.name))
+                currentModifiers |= Modifiers.unused;
+            if (isFunctionVariable(declaration))
+                selector = TypeSelector.functionVariable;
+            this._checkName(declaration.name, selector, currentModifiers);
+        });
     }
 
     public visitArrowFunction(node: ts.ArrowFunction) {
         this._checkTypeParameters(node, Modifiers.local);
+    }
+
+    private _checkDeclaration(node: DeclarationWithIdentifierName, type: TypeSelector, initialModifiers?: Modifiers) {
+        this._checkName(node.name, type, this._getModifiers(node, type, initialModifiers));
+    }
+
+    private _checkName(name: ts.Identifier, type: TypeSelector, modifiers: number) {
+        const matchingChecker = this._createChecker(type, modifiers, name.text);
+        if (matchingChecker !== null) // tslint:disable-line:no-null-keyword
+            matchingChecker.check(name, this);
+    }
+
+    private _createChecker(type: TypeSelector, modifiers: number, name: string): NameChecker | null {
+        const config = this.options.reduce(
+            (format: IFormat, rule) => {
+                if (!rule.matches(type, modifiers, name))
+                    return format;
+                return Object.assign(format, rule.getFormat()); // tslint:disable-line:prefer-object-spread
+            },
+            {
+                leadingUnderscore: undefined,
+                trailingUnderscore: undefined,
+                format: undefined,
+                prefix: undefined,
+                regex: undefined,
+                suffix : undefined,
+            });
+
+        // ohne Regeln kein Checker
+        if (!config.leadingUnderscore &&
+            !config.trailingUnderscore &&
+            !config.format &&
+            !config.prefix &&
+            !config.regex &&
+            !config.suffix)
+            return null; // tslint:disable-line:no-null-keyword
+        return new NameChecker(type, config);
+    }
+
+    private _getModifiers(node: ts.Node, type: TypeSelector, modifiers: Modifiers = 0): number {
+        if (node.modifiers !== undefined) {
+            if (type & Types.member) { // property, method, parameter property
+                if (utils.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
+                    modifiers |= Modifiers.private;
+                } else if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword)) {
+                    modifiers |= Modifiers.protected;
+                } else {
+                    modifiers |= Modifiers.public;
+                }
+                if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ReadonlyKeyword))
+                    modifiers |= Modifiers.const;
+                if (utils.hasModifier(node.modifiers, ts.SyntaxKind.StaticKeyword))
+                    modifiers |= Modifiers.static;
+            }
+            if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ConstKeyword)) // stuff like const enums
+                modifiers |= Modifiers.const;
+            if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword))
+                modifiers |= Modifiers.export;
+            if (utils.hasModifier(node.modifiers, ts.SyntaxKind.AbstractKeyword))
+                modifiers |= Modifiers.abstract;
+        }
+
+        if (type !== TypeSelector.property && type !== TypeSelector.method)
+            modifiers |= this._depth !== 0 ? Modifiers.local : Modifiers.global;
+
+        return modifiers;
     }
 
     public walk(sourceFile: ts.Node) {
@@ -496,148 +562,11 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
                 return this.visitArrowFunction(<ts.ArrowFunction>node);
         }
     }
-
-    private _isUnused(name: ts.Identifier): boolean {
-        if (this._usage === undefined) {
-            this._usage = utils.collectVariableUsage(this.sourceFile);
-        }
-        return this._usage.get(name)!.uses.length === 0;
-    }
-
-    private _checkTypeParameters(
-        node: ts.SignatureDeclaration | ts.ClassLikeDeclaration | ts.InterfaceDeclaration | ts.TypeAliasDeclaration,
-        modifiers: Modifiers
-    ) {
-        if (node.typeParameters !== undefined) {
-            for (const { name } of node.typeParameters) {
-                this._checkName(name, TypeSelector.genericTypeParameter, modifiers);
-            }
-        }
-    }
-
-    private _checkVariableDeclarationList(list: ts.VariableDeclarationList, modifiers: number) {
-        // compute modifiers once and reuse for all declared variables
-        if ((list.flags & ts.NodeFlags.Const) !== 0) {
-            modifiers |= Modifiers.const;
-        }
-        utils.forEachDeclaredVariable(list, (declaration) => {
-            let currentModifiers = modifiers;
-            let selector = TypeSelector.variable;
-            if (declaration.kind === ts.SyntaxKind.BindingElement && !isEqualName(declaration.name, declaration.propertyName)) {
-                currentModifiers |= Modifiers.rename;
-            }
-            if (this._isUnused(declaration.name)) {
-                currentModifiers |= Modifiers.unused;
-            }
-            if (isFunctionVariable(declaration)) {
-                selector = TypeSelector.functionVariable;
-            }
-            this._checkName(declaration.name, selector, currentModifiers);
-        });
-    }
-
-    private _checkDeclaration(node: DeclarationWithIdentifierName, type: TypeSelector, initialModifiers?: Modifiers) {
-        this._checkName(node.name, type, this._getModifiers(node, type, initialModifiers));
-    }
-
-    private _checkName(name: ts.Identifier, type: TypeSelector, modifiers: number) {
-        const matchingChecker = this._getMatchingChecker(type, modifiers, name.text);
-        if (matchingChecker !== null) // tslint:disable-line:no-null-keyword
-        {
-            matchingChecker.check(name, this);
-        }
-    }
-
-    private _getMatchingChecker(type: TypeSelector, modifiers: number, name: string): NameChecker | null {
-        const key = `${type},${modifiers}`;
-        const cached = this._cache.get(key);
-        if (cached !== undefined) {
-            return cached;
-        }
-
-        const [checker, hasFilter] = this._createChecker(type, modifiers, name);
-        if (!hasFilter) // only cache if there is no filter for the name
-        {
-            this._cache.set(key, checker);
-        }
-        return checker;
-    }
-
-    private _createChecker(type: TypeSelector, modifiers: number, name: string): [NameChecker | null, boolean] {
-        let hasFilter = false;
-        const config = this.options.reduce(
-            (format: IFormat, rule) => {
-                const [matches, filterUsed] = rule.matches(type, modifiers, name);
-                if (!matches) {
-                    return format;
-                }
-                if (filterUsed) {
-                    hasFilter = true;
-                }
-                return Object.assign(format, rule.getFormat()); // tslint:disable-line:prefer-object-spread
-            },
-            {
-                leadingUnderscore: undefined,
-                trailingUnderscore: undefined,
-                format: undefined,
-                prefix: undefined,
-                regex: undefined,
-                suffix: undefined
-            });
-
-        // ohne Regeln kein Checker
-        if (!config.leadingUnderscore &&
-            !config.trailingUnderscore &&
-            !config.format &&
-            !config.prefix &&
-            !config.regex &&
-            !config.suffix) {
-            return [null, hasFilter];
-        } // tslint:disable-line:no-null-keyword
-        return [new NameChecker(type, config), hasFilter];
-    }
-
-    private _getModifiers(node: ts.Node, type: TypeSelector, modifiers: Modifiers = 0): number {
-        if (node.modifiers !== undefined) {
-            if (type & Types.member) { // property, method, parameter property
-                if (utils.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
-                    modifiers |= Modifiers.private;
-                } else if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ProtectedKeyword)) {
-                    modifiers |= Modifiers.protected;
-                } else {
-                    modifiers |= Modifiers.public;
-                }
-                if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ReadonlyKeyword)) {
-                    modifiers |= Modifiers.const;
-                }
-                if (utils.hasModifier(node.modifiers, ts.SyntaxKind.StaticKeyword)) {
-                    modifiers |= Modifiers.static;
-                }
-            }
-            if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ConstKeyword)) // stuff like const enums
-            {
-                modifiers |= Modifiers.const;
-            }
-            if (utils.hasModifier(node.modifiers, ts.SyntaxKind.ExportKeyword)) {
-                modifiers |= Modifiers.export;
-            }
-            if (utils.hasModifier(node.modifiers, ts.SyntaxKind.AbstractKeyword)) {
-                modifiers |= Modifiers.abstract;
-            }
-        }
-
-        if (type !== TypeSelector.property && type !== TypeSelector.method) {
-            modifiers |= this._depth !== 0 ? Modifiers.local : Modifiers.global;
-        }
-
-        return modifiers;
-    }
 }
 
 function parseOptionArray<T>(option?: T | T[]): T | T[] | undefined {
-    if (!Array.isArray(option) || option.length > 1) {
+    if (!Array.isArray(option) || option.length > 1)
         return option;
-    }
     return option[0];
 }
 
@@ -659,20 +588,17 @@ function matchesFormat(identifier: string, format: Format): boolean {
 }
 
 function matchesAnyFormat(identifier: string, formats: Format[]): boolean {
-    for (const format of formats) {
-        if (matchesFormat(identifier, format)) {
+    for (const format of formats)
+        if (matchesFormat(identifier, format))
             return true;
-        }
-    }
     return false;
 }
 
 function formatFormatList(formats: Format[]): string {
     let result: string = formats[0];
     const lastIndex = formats.length - 1;
-    for (let i = 1; i < lastIndex; ++i) {
+    for (let i = 1; i < lastIndex; ++i)
         result += ', ' + formats[i];
-    }
     return result + ' or ' + formats[lastIndex];
 }
 
@@ -693,17 +619,14 @@ function isStrictCamelCase(name: string) {
 }
 
 function hasStrictCamelHumps(name: string, isUpper: boolean) {
-    if (name[0] === '_') {
+    if (name[0] === '_')
         return false;
-    }
     for (let i = 1; i < name.length; ++i) {
-        if (name[i] === '_') {
+        if (name[i] === '_')
             return false;
-        }
         if (isUpper === isUppercaseChar(name[i])) {
-            if (isUpper) {
+            if (isUpper)
                 return false;
-            }
         } else {
             isUpper = !isUpper;
         }
@@ -725,15 +648,13 @@ function isUpperCase(name: string) {
 
 /** Check for leading trailing and adjacent underscores */
 function validateUnderscores(name: string) {
-    if (name[0] === '_') {
+    if (name[0] === '_')
         return false;
-    }
     let wasUnderscore = false;
     for (let i = 1; i < name.length; ++i) {
         if (name[i] === '_') {
-            if (wasUnderscore) {
+            if (wasUnderscore)
                 return false;
-            }
             wasUnderscore = true;
         } else {
             wasUnderscore = false;
@@ -742,7 +663,7 @@ function validateUnderscores(name: string) {
     return !wasUnderscore;
 }
 
-function isNameIdentifier(node: ts.Declaration & { name: ts.DeclarationName }): node is DeclarationWithIdentifierName {
+function isNameIdentifier(node: ts.Declaration & {name: ts.DeclarationName}): node is DeclarationWithIdentifierName {
     return node.name.kind === ts.SyntaxKind.Identifier;
 }
 

@@ -1,9 +1,7 @@
 export interface Props {
     fullWidth?: boolean; // 1048592 boolean
 
-    requiredFullWidth?: boolean; // 1048592 boolean
-
-    disabled?: boolean; // 1048592 boolean
+    requiredFullWidth: boolean; // 1048592 boolean
 }
 
 interface Some extends Props {
