@@ -1,3 +1,4 @@
+/* tslint:disable:file-name-casing comment-type */
 import { lint } from '../test/linter';
 
 const rule = 'boolean-naming';
