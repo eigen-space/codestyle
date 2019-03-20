@@ -10,13 +10,11 @@ class EnumPluralNameValidator {
 
     // noinspection JSMethodCanBeStatic
     test(name: string): boolean {
-        return pluralize.isSingular(
-            name.replace(/([A-Z]+)/g, ' $1')
-                .replace(/([A-Z][a-z])/g, ' $1')
-                .split(' ')
-                .slice(-1)[0]
-                .toLowerCase()
-        );
+        return !name.replace(/([A-Z]+)/g, ' $1')
+            .replace(/([A-Z][a-z])/g, ' $1')
+            .split(' ')
+            .map(word => pluralize.isSingular(word.toLowerCase()))
+            .some(result => !result);
     }
 }
 
