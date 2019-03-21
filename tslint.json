@@ -3,6 +3,7 @@
     "rules": {
         "boolean-naming": true,
         "cyclomatic-complexity": [true, 10],
+        "no-multiline-ternary": true,
         "naming-convention": [
             true,
             {

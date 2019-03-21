@@ -22,7 +22,7 @@
     ],
     "scripts": {
         "dev": "tsc --outDir rules",
-        "lint": "yarn compile && yarn tslint --project test/test-tsconfig.json",
+        "lint": "yarn compile && yarn copy && yarn tslint --project test/test-tsconfig.json",
         "compile": "tsc",
         "test": "yarn compile && yarn jest",
         "copy": "node ./dev/scripts/copy.js",
