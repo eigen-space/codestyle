@@ -54,3 +54,11 @@ class Clazz {
 Clazz.testFunc(false);
 
 const stolen = false;
+
+const a = true ? 1 : 2;
+
+function f(): number {
+    return true
+        ? 1
+        : 2;
+}
