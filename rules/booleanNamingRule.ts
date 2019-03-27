@@ -8,6 +8,7 @@ import {
     isPropertySignature,
     isVariableDeclaration
 } from 'tsutils';
+import { getFirstWordFromCamelCase } from '../utils/common.utils';
 
 /**
  * This rule checks boolean declaration to be content with our rules.
@@ -135,8 +136,7 @@ function isSingleWord(name: string): boolean {
 }
 
 function hasPrefix(name: string): boolean {
-    const afterFirstUpperCaseLetterPattern = /([A-Z]).*/;
-    const firstWordInCamelCase = name.replace(afterFirstUpperCaseLetterPattern, '');
+    const firstWordInCamelCase = getFirstWordFromCamelCase(name);
     return Rule.AVAILABLE_PREFIXES.includes(firstWordInCamelCase);
 }
 
