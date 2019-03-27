@@ -32,15 +32,23 @@ class NoVoidGetterWalker extends Lint.RuleWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (node.initializer && (node.initializer.kind === ts.SyntaxKind.ArrowFunction || node.initializer.kind === ts.SyntaxKind.FunctionExpression)) {
-            this.checkNode(node.initializer, node.name);
+        if (node.initializer) {
+            const isArrowFunction = node.initializer.kind === ts.SyntaxKind.ArrowFunction;
+            const isFunctionExpression = node.initializer.kind === ts.SyntaxKind.FunctionExpression;
+            if (isArrowFunction || isFunctionExpression) {
+                this.checkNode(node.initializer, node.name);
+            }
         }
         super.visitVariableDeclaration(node);
     }
 
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
-        if (node.initializer && (node.initializer.kind === ts.SyntaxKind.ArrowFunction || node.initializer.kind === ts.SyntaxKind.FunctionExpression)) {
-            this.checkNode(node.initializer, node.name);
+        if (node.initializer) {
+            const isArrowFunction = node.initializer.kind === ts.SyntaxKind.ArrowFunction;
+            const isFunctionExpression = node.initializer.kind === ts.SyntaxKind.FunctionExpression;
+            if (isArrowFunction || isFunctionExpression) {
+                this.checkNode(node.initializer, node.name);
+            }
         }
         super.visitPropertyDeclaration(node);
     }
