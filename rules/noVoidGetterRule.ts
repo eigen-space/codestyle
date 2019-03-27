@@ -4,9 +4,6 @@ import { getFirstWordFromCamelCase } from '../utils/common.utils';
 
 type Declaration = ts.MethodDeclaration
     | ts.FunctionDeclaration
-    | ts.VariableDeclaration
-    | ts.PropertyDeclaration
-    | ts.PropertySignature
     | ts.TypeNode
     | ts.Expression;
 
@@ -32,15 +29,23 @@ class NoVoidGetterWalker extends Lint.RuleWalker {
     }
 
     protected visitVariableDeclaration(node: ts.VariableDeclaration): void {
-        if (node.initializer && (node.initializer.kind === ts.SyntaxKind.ArrowFunction || node.initializer.kind === ts.SyntaxKind.FunctionExpression)) {
-            this.checkNode(node.initializer, node.name);
+        if (node.initializer) {
+            const isArrowFunction = node.initializer.kind === ts.SyntaxKind.ArrowFunction;
+            const isFunctionExpression = node.initializer.kind === ts.SyntaxKind.FunctionExpression;
+            if (isArrowFunction || isFunctionExpression) {
+                this.checkNode(node.initializer, node.name);
+            }
         }
         super.visitVariableDeclaration(node);
     }
 
     protected visitPropertyDeclaration(node: ts.PropertyDeclaration): void {
-        if (node.initializer && (node.initializer.kind === ts.SyntaxKind.ArrowFunction || node.initializer.kind === ts.SyntaxKind.FunctionExpression)) {
-            this.checkNode(node.initializer, node.name);
+        if (node.initializer) {
+            const isArrowFunction = node.initializer.kind === ts.SyntaxKind.ArrowFunction;
+            const isFunctionExpression = node.initializer.kind === ts.SyntaxKind.FunctionExpression;
+            if (isArrowFunction || isFunctionExpression) {
+                this.checkNode(node.initializer, node.name);
+            }
         }
         super.visitPropertyDeclaration(node);
     }
@@ -61,7 +66,7 @@ class NoVoidGetterWalker extends Lint.RuleWalker {
 
     private isVoidFunction(node: Declaration): boolean {
         // tslint:disable-next-line:no-any
-        const nodeType: any = (node as ts.PropertyDeclaration).type;
+        const nodeType: any = (node as ts.FunctionDeclaration).type;
 
         if (!nodeType) {
             return false;
