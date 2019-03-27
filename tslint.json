@@ -4,6 +4,7 @@
         "boolean-naming": true,
         "denied-plural-enum-naming": true,
         "cyclomatic-complexity": [true, 10],
+        "no-void-getter": true,
         "no-multiline-ternary": true,
         "naming-convention": [
             true,

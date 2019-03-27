@@ -2,13 +2,14 @@
     "extends": "./base.tsconfig.json",
     "compilerOptions": {
         "module": "commonjs",
-        "outDir": "dist/rules",
+        "outDir": "dist",
         "typeRoots": [
             "node_modules/@types"
         ]
     },
     "include": [
-        "rules"
+        "rules",
+        "utils"
     ],
     "exclude": [
         "node_modules",
