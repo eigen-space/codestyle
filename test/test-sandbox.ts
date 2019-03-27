@@ -62,3 +62,25 @@ function f(): number {
         ? 1
         : 2;
 }
+
+function getName(): void {
+}
+
+const getName = (): void => {
+};
+
+class Clazz {
+    getSmth = (): Promise<void> => {
+    };
+
+    private async getSmth2(): Promise<void> {
+    }
+
+    private getSmth3(): void {
+    }
+}
+
+interface I {
+    getSmth4?: (e: number) => void;
+    getSmth5: (e: number) => Promise<void>;
+}
