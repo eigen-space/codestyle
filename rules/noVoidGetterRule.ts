@@ -4,9 +4,6 @@ import { getFirstWordFromCamelCase } from '../utils/common.utils';
 
 type Declaration = ts.MethodDeclaration
     | ts.FunctionDeclaration
-    | ts.VariableDeclaration
-    | ts.PropertyDeclaration
-    | ts.PropertySignature
     | ts.TypeNode
     | ts.Expression;
 
@@ -69,7 +66,7 @@ class NoVoidGetterWalker extends Lint.RuleWalker {
 
     private isVoidFunction(node: Declaration): boolean {
         // tslint:disable-next-line:no-any
-        const nodeType: any = (node as ts.PropertyDeclaration).type;
+        const nodeType: any = (node as ts.FunctionDeclaration).type;
 
         if (!nodeType) {
             return false;
