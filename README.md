@@ -1,4 +1,4 @@
-# CodeStyle
+# CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
 
 Основной язык: `TypeScript`
 
