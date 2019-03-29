@@ -67,7 +67,10 @@ class ObjectDeclarationWalker extends BaseWalker {
                     );
                 }
 
-                if (isValidMultiLine && !hasMoreThanBorderNumberOfProperties && !doesPropertiesHaveComplexValue) {
+                if (!isValidSingleLine
+                    && isValidMultiLine
+                    && !hasMoreThanBorderNumberOfProperties
+                    && !doesPropertiesHaveComplexValue) {
                     const maxProps = this.maxNumberOfObjectProperties;
                     this.addFailureAtNode(
                         node,
