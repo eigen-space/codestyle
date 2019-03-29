@@ -1,5 +1,6 @@
 import { ILinterOptions, IOptions, Linter, LintResult } from 'tslint';
 
+// tslint:disable-next-line:no-any
 export function lint(ruleName: string, source: string, options?: any): LintResult {
     const configuration = {
         extends: [],

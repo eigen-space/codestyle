@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "1.1.29",
+    "version": "1.1.43",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -22,7 +22,7 @@
     ],
     "scripts": {
         "dev": "tsc --outDir rules",
-        "lint": "yarn compile && yarn tslint --project test/test-tsconfig.json",
+        "lint": "yarn compile && yarn copy && yarn tslint --project test/test-tsconfig.json",
         "compile": "tsc",
         "test": "yarn compile && yarn jest",
         "copy": "node ./dev/scripts/copy.js",
