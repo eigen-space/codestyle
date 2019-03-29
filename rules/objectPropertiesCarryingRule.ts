@@ -1,4 +1,4 @@
-/* tslint:disable:no-any file-name-casing comment-type */
+/* tslint:disable:no-any file-name-casing comment-type no-magic-numbers */
 import * as TS from 'typescript';
 import { RuleFailure, Rules } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';
@@ -15,7 +15,7 @@ class ObjectDeclarationWalker extends BaseWalker {
         options: {
             type: 'number'
         },
-        optionExamples: [true, [true, 3]],
+        optionExamples: [true, [true, 3, 70]],
         type: 'style',
         typescriptOnly: true,
         requiresTypeInfo: true
@@ -26,16 +26,23 @@ class ObjectDeclarationWalker extends BaseWalker {
         TS.SyntaxKind.ArrowFunction,
         TS.SyntaxKind.FunctionExpression,
         TS.SyntaxKind.NewExpression,
-        TS.SyntaxKind.JsxElement
+        TS.SyntaxKind.JsxElement,
+        TS.SyntaxKind.ArrayLiteralExpression,
+        TS.SyntaxKind.ConditionalExpression,
+        TS.SyntaxKind.CallExpression,
+        TS.SyntaxKind.BinaryExpression
     ];
 
     private readonly maxNumberOfObjectProperties: number;
+    private readonly maxObjectContentWidth: number;
 
     constructor(sourceFile: TS.SourceFile, ruleName: string, ruleArguments: any[]) {
         super(sourceFile, ruleName, ruleArguments);
 
-        const [maxNumberOfObjectProperties] = ruleArguments;
+        const [maxNumberOfObjectProperties, maxObjectContentWidth] = ruleArguments;
         this.maxNumberOfObjectProperties = maxNumberOfObjectProperties || 3;
+        // tslint:disable-next-line:no-magic-numbers
+        this.maxObjectContentWidth = maxObjectContentWidth || 70;
     }
 
     // tslint:disable-next-line:cyclomatic-complexity
@@ -45,9 +52,19 @@ class ObjectDeclarationWalker extends BaseWalker {
                 const properties = this.getProperties(node);
                 const hasOnlyOneProperty = properties.length === 1;
                 const isValidMultiLine = this.isValidMultiline(properties);
-                const isValidSingleLine = this.isValidSingleLine(properties);
+                const hasDeniedContentWidth = this.hasDeniedContentWidth(properties);
                 const doesPropertiesHaveComplexValue = this.doesPropertiesHaveComplexValue(properties);
+                const isValidSingleLine = this.isValidSingleLine(properties) && !doesPropertiesHaveComplexValue;
                 const hasMoreThanBorderNumberOfProperties = this.hasDeniedNumberOfProperties(properties);
+                const hasOnlyOneMultilineProperty = this.hasOnlyOneMultilineProperty(properties);
+
+                if (isValidSingleLine && hasDeniedContentWidth && !hasOnlyOneMultilineProperty) {
+                    this.addFailureAtNode(
+                        node,
+                        `content width of object is more than ${this.maxObjectContentWidth}`
+                    );
+                    return;
+                }
 
                 if (!isValidMultiLine && !isValidSingleLine) {
                     this.addFailureAtNode(node, 'object properties must be in single line or each on new line');
@@ -65,6 +82,11 @@ class ObjectDeclarationWalker extends BaseWalker {
                         node,
                         `an object in single line must contain not more than ${maxProps} properties`
                     );
+                    return;
+                }
+
+                if (hasDeniedContentWidth || hasOnlyOneMultilineProperty) {
+                    return;
                 }
 
                 if (!isValidSingleLine
@@ -87,10 +109,23 @@ class ObjectDeclarationWalker extends BaseWalker {
     }
 
     private getProperties(node: TS.Node): TS.Node[] {
-        const validTypes = [TS.SyntaxKind.PropertyAssignment, TS.SyntaxKind.ShorthandPropertyAssignment];
+        const validTypes = [
+            TS.SyntaxKind.PropertyAssignment,
+            TS.SyntaxKind.ShorthandPropertyAssignment,
+            TS.SyntaxKind.SpreadAssignment
+        ];
         return node.getChildAt(1).getChildren().filter(
             property => validTypes.includes(property.kind)
         );
+    }
+
+    private hasOnlyOneMultilineProperty(properties: TS.Node[]): boolean {
+        if (properties.length !== 1) {
+            return false;
+        }
+
+        const property = properties[0];
+        return this.getNumberOfLine(property, 'start') !== this.getNumberOfLine(property, 'end');
     }
 
     private doesPropertiesHaveComplexValue(properties: TS.Node[]): boolean {
@@ -170,6 +205,14 @@ class ObjectDeclarationWalker extends BaseWalker {
     private getNumberOfLine(node: TS.Node, type: 'start' | 'end'): number {
         const position = type === 'start' ? node.getStart() : node.getEnd();
         return node.getSourceFile().getLineAndCharacterOfPosition(position).line;
+    }
+
+    private hasDeniedContentWidth(properties: TS.Node[]): boolean {
+        const content = properties.map(prop => prop.getText())
+            .join(', ')
+            .replace('\n', '');
+
+        return this.maxObjectContentWidth < content.length;
     }
 }
 
