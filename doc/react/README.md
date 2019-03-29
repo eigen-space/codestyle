@@ -27,6 +27,29 @@ const burger = navbar.find('input');
 const burger = navbar.find(BurgerWrapper);
 ```
 
+#### 3.1.2. \[Не автоматизировано\] Выносить определение атрибутов тэга в отделюную константу
+
+Выносить определение атрибутов тэга в отделюную константу для более лучшего форматирования
+
+```typescript jsx
+// Плохо
+export const ButtonRoot = styled.button.attrs<Props>({
+    type: (props: Props) => props.isSubmit && 'submit'
+})<Props>`
+    padding: 0.44rem 1.72rem;
+    `;
+
+// Хорошо
+const attrs = {
+    type: (props: Props) => props.isSubmit && 'submit'
+};
+
+export const ButtonRoot = styled.button.attrs<Props>(attrs)<Props>`
+    padding: 0.44rem 1.72rem;
+    `;
+```
+
+
 ### 3.2. Props
 
 #### 3.2.1. Обработчики по умолчанию

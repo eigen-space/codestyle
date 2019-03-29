@@ -5,6 +5,8 @@
         "denied-plural-enum-naming": true,
         "object-properties-carrying": true,
         "cyclomatic-complexity": [true, 10],
+        "no-void-getter": true,
+        "no-multiline-ternary": true,
         "naming-convention": [
             true,
             {
@@ -188,7 +190,8 @@
         "radix": true,
         "semicolon": [
             true,
-            "always"
+            "always",
+            "ignore-bound-class-methods"
         ],
         "triple-equals": [
             true,
