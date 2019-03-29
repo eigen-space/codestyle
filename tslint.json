@@ -1,5 +1,5 @@
 {
-    "rulesDirectory": "./dist/rules",
+    "rulesDirectory": "./rules",
     "rules": {
         "boolean-naming": true,
         "denied-plural-enum-naming": true,
