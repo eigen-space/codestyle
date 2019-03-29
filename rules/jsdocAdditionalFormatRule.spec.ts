@@ -8,7 +8,7 @@ describe('JsdocAdditionalFormatRule', () => {
     it('should return error if there is no body', () => {
         const source = `
             /**
-            */
+             */
             const a = 1;
         `;
         const failure = lint(rule, source).failures[0].getFailure();
@@ -18,11 +18,11 @@ describe('JsdocAdditionalFormatRule', () => {
     it('should return error if body starts with empty line', () => {
         const source = `
             /**
-            *
-            * Comment
-            *
-            * @return Возвращает точки карты.
-            */
+             *
+             * Comment
+             *
+             * @return Возвращает точки карты.
+             */
             const a = 1;
         `;
         const failure = lint(rule, source).failures[0].getFailure();
@@ -32,11 +32,11 @@ describe('JsdocAdditionalFormatRule', () => {
     it('should return error if comment separated from body by more than one line', () => {
         const source = `
             /**
-            * Comment
-            *
-            *
-            * @return Возвращает точки карты.
-            */
+             * Comment
+             *
+             *
+             * @return Возвращает точки карты.
+             */
             const a = 1;
         `;
         const failure = lint(rule, source).failures[0].getFailure();
@@ -46,9 +46,9 @@ describe('JsdocAdditionalFormatRule', () => {
     it('should return error if comment not separated from body', () => {
         const source = `
             /**
-            * Comment
-            * @return Возвращает точки карты.
-            */
+             * Comment
+             * @return Возвращает точки карты.
+             */
             const a = 1;
         `;
         const failure = lint(rule, source).failures[0].getFailure();
@@ -58,22 +58,37 @@ describe('JsdocAdditionalFormatRule', () => {
     it('should return error if body ends with empty line', () => {
         const source = `
             /**
-            * @return Возвращает точки карты.
-            *
-            */
+             * @return Возвращает точки карты.
+             *
+             */
             const a = 1;
         `;
         const failure = lint(rule, source).failures[0].getFailure();
         expect(failure).toBe(Rule.FAILURE_STRING_LINES_AFTER_BODY);
     });
 
+    it('should return error if parameter description transferred on new line without tabs', () => {
+        const source = `
+            /**
+             * Comment
+             *
+             * @param {number} numberOfPoints Количество точек, которое
+             *   должно быть создано.
+             * @param {number} numberOfPoints Second param
+             */
+        `;
+        const failure = lint(rule, source).failures[0].getFailure();
+        expect(failure).toBe(Rule.FAILURE_STRING_REST_OF_PARAMS);
+    });
+
+
     it('should not return error if we follow our codestyle ', () => {
         const source = `
             /**
-            * Comment
-            *
-            * @return Возвращает точки карты.
-            */
+             * Comment
+             *
+             * @return Возвращает точки карты.
+             */
             const a = 1;
         `;
         const result = lint(rule, source);

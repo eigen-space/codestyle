@@ -3,12 +3,7 @@
  *
  * @param {number} numberOfPoints Количество точек, которое
  *      должно быть создано.
- * @return Возвращает точки карты.
- * @throws Выбрасывает исключение в случае
- * s
- * asd
- * asd
- * asd2
+ * @param {number} numberOfPoints Second param
  */
 
 /**
