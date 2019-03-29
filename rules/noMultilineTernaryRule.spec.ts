@@ -21,6 +21,6 @@ describe('noMultilineTernaryRule', () => {
             const a = true ? 1 : 2;
         `;
         const result = lint(rule, source);
-        expect(result.errorCount).toBe(2);
+        expect(result.errorCount).toBe(0);
     });
 });
