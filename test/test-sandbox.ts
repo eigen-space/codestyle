@@ -1,6 +1,8 @@
 const j = 10;
 const obj108 = { y: 123, u: 0, i: 9, j };
 
+const a123123 = { component: 12 };
+
 const obj18 = {
     r: 12,
     u: 80,
