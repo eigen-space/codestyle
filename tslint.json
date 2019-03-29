@@ -3,6 +3,7 @@
     "rules": {
         "boolean-naming": true,
         "denied-plural-enum-naming": true,
+        "object-properties-carrying": true,
         "cyclomatic-complexity": [true, 10],
         "naming-convention": [
             true,

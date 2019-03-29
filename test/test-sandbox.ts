@@ -1,56 +1,76 @@
-export interface Props {
-    fullWidth?: boolean; // 1048592 boolean
+const j = 10;
+const obj108 = { y: 123, u: 0, i: 9, j };
 
-    requiredFullWidth: boolean; // 1048592 boolean
-}
+const obj18 = {
+    r: 12,
+    u: 80,
+    y: 16,
+    o: 13,
+    t: (): number => {
+        return 2;
+    },
+    io: 'qwerty'
+};
 
-interface Some extends Props {
-    filtrationEnabled?: boolean;
-}
+const obj181 = {
+    r: 12,
+    u: 80,
+    y: 16,
+    o: 13,
+    t: (): number => {
+        return 2;
+    }, io: 'qwerty'
+};
 
-// 1048592 boolean
-function foo(bool: boolean): boolean {
-    return bool;
-}
-
-class Clazz {
-    bool: Boolean; // 524288 undefined
-    bool0: boolean; // 1048592 boolean
-    bool1 = false; // 1048592 boolean
-    bool2 = true; // 1048592 boolean
-    bool3 = true && foo(true); // 1048592 boolean
-    bool4 = this.bool1; // 1048592 boolean
-    bool5 = foo(false); // 1048592 boolean
-    bool6 = Boolean(1); // 1048592 boolean
-    str: string; // 4 string
-    num: number; // 8 number
-    strArr: string[]; // 524288 undefined
-
-    defaultProps = {
-        filtrationEnabled: true,
-        onOptionSelect: () => {}
-    };
-
-    fullWidth?: boolean; // 1048592 boolean
-
-    // 1048592 boolean, 1048592 boolean
-    static testFunc(boolArg: boolean, boolArg2 = true): void {
-        const boolFromArg = boolArg; // 1048592 boolean
-        const boolFromArg2 = boolArg2; // 1048592 boolean
-
-        let bool: boolean; // 1048592 boolean
-        const bool1 = false; // 512 false
-        const bool2 = true; // 512 true
-        const bool3 = true && foo(true); // 1048592 boolean
-        const bool4 = bool1; // 512 false
-        const bool5 = foo(bool1); // 1048592 boolean
-        const bool6 = Boolean(1); // 1048592 boolean
-
-        bool = false;
-        console.log(boolFromArg, boolFromArg2, bool, bool1, bool2, bool3, bool4, bool5, bool6);
+const obj185 = {
+    r: 12, t: (): number => {
+        return 2;
     }
+};
+
+class Main {
+    static defaultProps = {
+        onBurgerButtonClick: () => {},
+        onMenuClick: () => {}
+    };
 }
 
-Clazz.testFunc(false);
+const obj12 = {
+    r: 12, u: 80,
+    y: 16,
+    o: 13
+};
 
-const stolen = false;
+const obj14 = {
+    r: 12, y: 16,
+    u: 80
+};
+
+const obj13 = {
+    r: 12,
+    u: 80,
+    y: 16
+};
+
+const a = 10;
+const obj102 = {
+    y: 123,
+    u: 0,
+    i: 9,
+    a
+};
+
+const obji = { yellow: () => {}, green: () => {} };
+
+const objiy = { green: function (): number { return 2; } };
+
+const layout = {
+    gridBreakPoints: {
+        sm: 576,
+        md: 768,
+        lg: 992,
+        xlg: 1200
+    }
+};
+
+const obj188 = { r: 12, u: 80, y: 16, k: 1, l: 9, z: 10 };
