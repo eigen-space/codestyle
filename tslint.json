@@ -7,7 +7,6 @@
             true,
             "check-multiline-start"
         ],
-        "jsdoc-additional-format": true,
         "object-properties-carrying": true,
         "cyclomatic-complexity": [true, 10],
         "no-void-getter": true,
