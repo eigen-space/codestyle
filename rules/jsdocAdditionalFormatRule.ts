@@ -9,6 +9,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING_REST_OF_PARAMS = 'JsDoc parameters transfer should be done with an additional indentation of 6 spaces';
 
     public static TRANSFER_PARAMETERS_START_PATTERN = new RegExp(`^${''.padStart(5, ' ')}[^ ]`);
+    public static ONLY_SPACES_PATTERN = /^ *$/;
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker = new NoVoidGetterWalker2(sourceFile, this.getOptions());
@@ -64,9 +65,9 @@ class NoVoidGetterWalker2 extends Lint.RuleWalker {
             return;
         }
 
-        const tagsPos = doc.tags.pos;
+        const relativeTagsPos = doc.tags.pos - doc.pos;
         const fullText = doc.getText();
-        const cutText = fullText.slice(0, tagsPos);
+        const cutText = fullText.slice(0, relativeTagsPos);
         const commentLines = this.getCutLines(cutText);
         const length = commentLines.length;
         const isNoLine = commentLines[length - 1] !== '';
@@ -93,8 +94,7 @@ class NoVoidGetterWalker2 extends Lint.RuleWalker {
         }
 
         const cutLines = lines.map(line => line.replace(/ *\* /, ''));
-
-        if (!cutLines[cutLines.length - 1] || cutLines[cutLines.length - 1] === ' ') {
+        if (!cutLines[cutLines.length - 1] || Rule.ONLY_SPACES_PATTERN.test(cutLines[cutLines.length - 1])) {
             cutLines.pop();
         }
 
