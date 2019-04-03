@@ -81,7 +81,6 @@ describe('JsdocAdditionalFormatRule', () => {
         expect(failure).toBe(Rule.FAILURE_STRING_REST_OF_PARAMS);
     });
 
-
     it('should not return error if we follow our codestyle ', () => {
         const source = `
             /**
