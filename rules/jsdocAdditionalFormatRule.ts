@@ -10,6 +10,18 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING_REST_OF_PARAMS = 'JsDoc parameters transfer should be done with' +
         ' an additional indentation of 6 spaces';
 
+    public static metadata: Lint.IRuleMetadata = {
+        ruleName: 'jsdoc-additional-format',
+        description: 'Warns about wrong jsdoc formatting.',
+        optionsDescription: '',
+        options: {},
+        optionExamples: [],
+        type: 'style',
+        typescriptOnly: true,
+        requiresTypeInfo: false
+    };
+
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker = new JsdocAdditionalFormatWalker(sourceFile, this.getOptions());
         return this.applyWithWalker(walker);

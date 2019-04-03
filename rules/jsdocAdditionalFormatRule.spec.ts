@@ -1,7 +1,7 @@
 import { lint } from '../test/linter';
 import { Rule } from './jsdocAdditionalFormatRule';
 
-const rule = 'jsdoc-additional-format';
+const rule = Rule.metadata.ruleName;
 
 describe('JsdocAdditionalFormatRule', () => {
 

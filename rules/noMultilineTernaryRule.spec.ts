@@ -2,7 +2,7 @@
 import { lint } from '../test/linter';
 import { Rule } from './noMultilineTernaryRule';
 
-const rule = 'no-multiline-ternary';
+const rule = Rule.metadata.ruleName;
 
 describe('noMultilineTernaryRule', () => {
 

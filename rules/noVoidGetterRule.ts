@@ -10,6 +10,17 @@ type Declaration = ts.MethodDeclaration
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Function with type void should not starts with `get` keyword';
 
+    public static metadata: Lint.IRuleMetadata = {
+        ruleName: 'no-void-getter',
+        description: 'Warns about incorrect methods naming with void return type.',
+        optionsDescription: '',
+        options: {},
+        optionExamples: [],
+        type: 'style',
+        typescriptOnly: true,
+        requiresTypeInfo: false
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker = new NoVoidGetterWalker(sourceFile, this.getOptions());
         return this.applyWithWalker(walker);
