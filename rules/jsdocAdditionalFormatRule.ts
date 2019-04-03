@@ -1,18 +1,17 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import { END_OF_LINE_PATTERN } from '../utils/common.utils';
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING_NO_BODY = 'JsDoc requires body';
     public static FAILURE_STRING_LINES_BEFORE_BODY = 'JsDoc body should starts without empty line';
     public static FAILURE_STRING_LINES_AFTER_BODY = 'JsDoc body should end without empty line';
     public static FAILURE_STRING_LINES_AFTER_COMMENT = 'JsDoc comment must be separated from other blocks by one line';
-    public static FAILURE_STRING_REST_OF_PARAMS = 'JsDoc parameters transfer should be done with an additional indentation of 6 spaces';
-
-    public static TRANSFER_PARAMETERS_START_PATTERN = new RegExp(`^${''.padStart(5, ' ')}[^ ]`);
-    public static ONLY_SPACES_PATTERN = /^ *$/;
+    public static FAILURE_STRING_REST_OF_PARAMS = 'JsDoc parameters transfer should be done with' +
+        ' an additional indentation of 6 spaces';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        const walker = new NoVoidGetterWalker2(sourceFile, this.getOptions());
+        const walker = new JsdocAdditionalFormatWalker(sourceFile, this.getOptions());
         return this.applyWithWalker(walker);
     }
 }
@@ -21,7 +20,10 @@ interface JsDocNode extends ts.Node {
     jsDoc?: ts.JSDoc[];
 }
 
-class NoVoidGetterWalker2 extends Lint.RuleWalker {
+class JsdocAdditionalFormatWalker extends Lint.RuleWalker {
+    // tslint:disable-next-line:no-magic-numbers
+    private static TRANSFER_PARAMETERS_START_PATTERN = new RegExp(`^${''.padStart(5, ' ')}[^ ]`);
+    private static ONLY_SPACES_PATTERN = /^ *$/;
 
     protected visitNode(node: JsDocNode): void {
         if (node.jsDoc) {
@@ -88,26 +90,27 @@ class NoVoidGetterWalker2 extends Lint.RuleWalker {
 
     private checkParameter(parameter: ts.JSDocParameterTag): void {
         const parameterText = parameter.getText();
-        const lines: string[] = parameterText.toString().split(/\r\n?|\n/);
+        const lines: string[] = parameterText.toString().split(END_OF_LINE_PATTERN);
         if (lines.length === 1) {
             return;
         }
 
         const cutLines = lines.map(line => line.replace(/ *\* /, ''));
-        if (!cutLines[cutLines.length - 1] || Rule.ONLY_SPACES_PATTERN.test(cutLines[cutLines.length - 1])) {
+        const isEmptyLine = JsdocAdditionalFormatWalker.ONLY_SPACES_PATTERN.test(cutLines[cutLines.length - 1]);
+        if (!cutLines[cutLines.length - 1] || isEmptyLine) {
             cutLines.pop();
         }
 
         const transitedLines = cutLines.slice(1);
         transitedLines.forEach(line => {
-            if (!Rule.TRANSFER_PARAMETERS_START_PATTERN.test(line)) {
+            if (!JsdocAdditionalFormatWalker.TRANSFER_PARAMETERS_START_PATTERN.test(line)) {
                 this.addFailureAtNode(parameter, Rule.FAILURE_STRING_REST_OF_PARAMS);
             }
         });
     }
 
     private getCutLines(text: string): string[] {
-        const lines = text.toString().split(/\r\n?|\n/);
+        const lines = text.toString().split(END_OF_LINE_PATTERN);
         lines.shift();
         lines.pop();
         return lines.map(line => line.replace(/ *\* */, ''));
