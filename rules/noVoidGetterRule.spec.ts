@@ -2,7 +2,7 @@
 import { lint } from '../test/linter';
 import { Rule } from './noVoidGetterRule';
 
-const rule = 'no-void-getter';
+const rule = Rule.metadata.ruleName;
 
 describe('noVoidGetterRule', () => {
 

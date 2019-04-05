@@ -1,7 +1,7 @@
 import { lint } from '../test/linter';
 import { Rule } from './jsdocAdditionalFormatRule';
 
-const rule = 'jsdoc-additional-format';
+const rule = Rule.metadata.ruleName;
 
 describe('JsdocAdditionalFormatRule', () => {
 
@@ -21,7 +21,7 @@ describe('JsdocAdditionalFormatRule', () => {
              *
              * Comment
              *
-             * @return Возвращает точки карты.
+             * @return Return map points
              */
             const a = 1;
         `;
@@ -35,7 +35,7 @@ describe('JsdocAdditionalFormatRule', () => {
              * Comment
              *
              *
-             * @return Возвращает точки карты.
+             * @return Return map points
              */
             const a = 1;
         `;
@@ -47,7 +47,7 @@ describe('JsdocAdditionalFormatRule', () => {
         const source = `
             /**
              * Comment
-             * @return Возвращает точки карты.
+             * @return Return map points
              */
             const a = 1;
         `;
@@ -58,7 +58,7 @@ describe('JsdocAdditionalFormatRule', () => {
     it('should return error if body ends with empty line', () => {
         const source = `
             /**
-             * @return Возвращает точки карты.
+             * @return Return map points
              *
              */
             const a = 1;
@@ -72,8 +72,8 @@ describe('JsdocAdditionalFormatRule', () => {
             /**
              * Comment
              *
-             * @param {number} numberOfPoints Количество точек, которое
-             *   должно быть создано.
+             * @param {number} numberOfPoints Number of points that
+             *   we want to create.
              * @param {number} numberOfPoints Second param
              */
         `;
@@ -81,13 +81,12 @@ describe('JsdocAdditionalFormatRule', () => {
         expect(failure).toBe(Rule.FAILURE_STRING_REST_OF_PARAMS);
     });
 
-
     it('should not return error if we follow our codestyle ', () => {
         const source = `
             /**
              * Comment
              *
-             * @return Возвращает точки карты.
+             * @return Return map points
              */
             const a = 1;
         `;

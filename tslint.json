@@ -9,7 +9,10 @@
         ],
         "jsdoc-additional-format": true,
         "object-properties-carrying": true,
-        "cyclomatic-complexity": [true, 10],
+        "cyclomatic-complexity": [
+            true,
+            10
+        ],
         "no-void-getter": true,
         "no-multiline-ternary": true,
         "naming-convention": [
@@ -45,7 +48,8 @@
                 ],
                 "format": [
                     "strictCamelCase",
-                    "PascalCase"
+                    "PascalCase",
+                    "UPPER_CASE"
                 ]
             },
             {
