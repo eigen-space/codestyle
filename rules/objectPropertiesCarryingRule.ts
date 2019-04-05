@@ -8,6 +8,17 @@ import * as Lint from 'tslint';
  * Walks the AST and visits each object declaration.
  */
 export class Rule extends Rules.AbstractRule {
+    static FAILURE_STRING_CONTENT_WIDTH = 'content width of object is more than $0';
+    static FAILURE_STRING_OBJECT_CARRYING = 'object properties must be in single line or each on new line';
+    static FAILURE_STRING_OBJECT_COMPLEX_VALUES = 'denied using complex values on single line properties';
+    static FAILURE_STRING_MAX_SINGLE_LINE_PROPS = 'an object in single line must contain not more than ' +
+        '$0 properties';
+    static FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS = 'an object with carrying properties must contain more ' +
+        'than $0 properties';
+
+    static DEFAULT_MAX_CONTENT_WIDTH = 70;
+    static DEFAULT_MAX_SINGLE_LINE_PROPERTIES = 3;
+
     static metadata: Lint.IRuleMetadata = {
         ruleName: 'object-properties-carrying',
         description: 'Warns about incorrect object properties carrying',
@@ -27,14 +38,6 @@ export class Rule extends Rules.AbstractRule {
 }
 
 class ObjectDeclarationWalker extends BaseWalker {
-    private static FAILURE_STRING_CONTENT_WIDTH = 'content width of object is more than $0';
-    private static FAILURE_STRING_OBJECT_CARRYING = 'object properties must be in single line or each on new line';
-    private static FAILURE_STRING_OBJECT_COMPLEX_VALUES = 'denied using complex values on single line properties';
-    private static FAILURE_STRING_MAX_SINGLE_LINE_PROPS = 'an object in single line must contain not more than ' +
-        '$0 properties';
-    private static FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS = 'an object with carrying properties must contain more ' +
-        'than $0 properties';
-
     private static COMPLEX_KINDS_OF_VALUE = [
         TS.SyntaxKind.ObjectLiteralExpression,
         TS.SyntaxKind.ArrowFunction,
@@ -54,9 +57,9 @@ class ObjectDeclarationWalker extends BaseWalker {
         super(sourceFile, ruleName, ruleArguments);
 
         const [maxNumberOfObjectProperties, maxObjectContentWidth] = ruleArguments;
-        this.maxNumberOfObjectProperties = maxNumberOfObjectProperties || 3;
+        this.maxNumberOfObjectProperties = maxNumberOfObjectProperties || Rule.DEFAULT_MAX_SINGLE_LINE_PROPERTIES;
         // tslint:disable-next-line:no-magic-numbers
-        this.maxObjectContentWidth = maxObjectContentWidth || 70;
+        this.maxObjectContentWidth = maxObjectContentWidth || Rule.DEFAULT_MAX_CONTENT_WIDTH;
     }
 
     // tslint:disable-next-line:cyclomatic-complexity
@@ -78,7 +81,7 @@ class ObjectDeclarationWalker extends BaseWalker {
         if (isValidSingleLine && hasDeniedContentWidth && !hasOnlyOneMultilineProperty) {
             this.addFailureAtNode(
                 node,
-                ObjectDeclarationWalker.FAILURE_STRING_CONTENT_WIDTH.replace(
+                Rule.FAILURE_STRING_CONTENT_WIDTH.replace(
                     '$0',
                     String(this.maxObjectContentWidth)
                 )
@@ -87,12 +90,12 @@ class ObjectDeclarationWalker extends BaseWalker {
         }
 
         if (!isValidMultiLine && !isValidSingleLine) {
-            this.addFailureAtNode(node, ObjectDeclarationWalker.FAILURE_STRING_OBJECT_CARRYING);
+            this.addFailureAtNode(node, Rule.FAILURE_STRING_OBJECT_CARRYING);
             return;
         }
 
         if (!hasOnlyOneProperty && isValidSingleLine && doesPropertiesHaveComplexValue) {
-            this.addFailureAtNode(node, ObjectDeclarationWalker.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+            this.addFailureAtNode(node, Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
             return;
         }
 
@@ -100,7 +103,7 @@ class ObjectDeclarationWalker extends BaseWalker {
             const maxProps = this.maxNumberOfObjectProperties;
             this.addFailureAtNode(
                 node,
-                ObjectDeclarationWalker.FAILURE_STRING_MAX_SINGLE_LINE_PROPS.replace('$0', String(maxProps))
+                Rule.FAILURE_STRING_MAX_SINGLE_LINE_PROPS.replace('$0', String(maxProps))
             );
             return;
         }
@@ -116,7 +119,7 @@ class ObjectDeclarationWalker extends BaseWalker {
             const maxProps = this.maxNumberOfObjectProperties;
             this.addFailureAtNode(
                 node,
-                ObjectDeclarationWalker.FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS.replace('$0', String(maxProps))
+                Rule.FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS.replace('$0', String(maxProps))
             );
         }
     }
