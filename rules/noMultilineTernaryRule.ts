@@ -5,6 +5,17 @@ import { isConditionalExpression } from 'tsutils';
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = 'Ternary operators must be written in one line';
 
+    public static metadata: Lint.IRuleMetadata = {
+        ruleName: 'no-multiline-ternary',
+        description: 'Warns about using ternary operator on multiple lines.',
+        optionsDescription: '',
+        options: {},
+        optionExamples: [],
+        type: 'style',
+        typescriptOnly: true,
+        requiresTypeInfo: false
+    };
+
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker = new NoMultilineTernaryWalker(sourceFile, this.getOptions());
         return this.applyWithWalker(walker);

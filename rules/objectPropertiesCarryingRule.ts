@@ -7,7 +7,7 @@ import * as Lint from 'tslint';
 /**
  * Walks the AST and visits each object declaration.
  */
-class ObjectDeclarationWalker extends BaseWalker {
+export class Rule extends Rules.AbstractRule {
     static metadata: Lint.IRuleMetadata = {
         ruleName: 'object-properties-carrying',
         description: 'Warns about incorrect object properties carrying',
@@ -20,6 +20,20 @@ class ObjectDeclarationWalker extends BaseWalker {
         typescriptOnly: true,
         requiresTypeInfo: true
     };
+
+    apply(sourceFile: TS.SourceFile): RuleFailure[] {
+        return this.applyWithWalker(new ObjectDeclarationWalker(sourceFile, this.ruleName, this.ruleArguments));
+    }
+}
+
+class ObjectDeclarationWalker extends BaseWalker {
+    private static FAILURE_STRING_CONTENT_WIDTH = 'content width of object is more than $0';
+    private static FAILURE_STRING_OBJECT_CARRYING = 'object properties must be in single line or each on new line';
+    private static FAILURE_STRING_OBJECT_COMPLEX_VALUES = 'denied using complex values on single line properties';
+    private static FAILURE_STRING_MAX_SINGLE_LINE_PROPS = 'an object in single line must contain not more than ' +
+        '$0 properties';
+    private static FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS = 'an object with carrying properties must contain more ' +
+        'than $0 properties';
 
     private static COMPLEX_KINDS_OF_VALUE = [
         TS.SyntaxKind.ObjectLiteralExpression,
@@ -47,64 +61,63 @@ class ObjectDeclarationWalker extends BaseWalker {
 
     // tslint:disable-next-line:cyclomatic-complexity
     protected visitNode(node: TS.Node): void {
-        switch (node.kind) {
-            case TS.SyntaxKind.ObjectLiteralExpression: {
-                const properties = this.getProperties(node);
-                const hasOnlyOneProperty = properties.length === 1;
-                const isValidMultiLine = this.isValidMultiline(properties);
-                const hasDeniedContentWidth = this.hasDeniedContentWidth(properties);
-                const doesPropertiesHaveComplexValue = this.doesPropertiesHaveComplexValue(properties);
-                const isValidSingleLine = this.isValidSingleLine(properties) && !doesPropertiesHaveComplexValue;
-                const hasMoreThanBorderNumberOfProperties = this.hasDeniedNumberOfProperties(properties);
-                const hasOnlyOneMultilineProperty = this.hasOnlyOneMultilineProperty(properties);
+        if (node.kind !== TS.SyntaxKind.ObjectLiteralExpression) {
+            this.visitChilden(node);
+            return;
+        }
 
-                if (isValidSingleLine && hasDeniedContentWidth && !hasOnlyOneMultilineProperty) {
-                    this.addFailureAtNode(
-                        node,
-                        `content width of object is more than ${this.maxObjectContentWidth}`
-                    );
-                    return;
-                }
+        const properties = this.getProperties(node);
+        const hasOnlyOneProperty = properties.length === 1;
+        const isValidMultiLine = this.isValidMultiline(properties);
+        const hasDeniedContentWidth = this.hasDeniedContentWidth(properties);
+        const doesPropertiesHaveComplexValue = this.doesPropertiesHaveComplexValue(properties);
+        const isValidSingleLine = this.isValidSingleLine(properties);
+        const hasMoreThanBorderNumberOfProperties = this.hasDeniedNumberOfProperties(properties);
+        const hasOnlyOneMultilineProperty = this.hasOnlyOneMultilineProperty(properties);
 
-                if (!isValidMultiLine && !isValidSingleLine) {
-                    this.addFailureAtNode(node, 'object properties must be in single line or each on new line');
-                    return;
-                }
+        if (isValidSingleLine && hasDeniedContentWidth && !hasOnlyOneMultilineProperty) {
+            this.addFailureAtNode(
+                node,
+                ObjectDeclarationWalker.FAILURE_STRING_CONTENT_WIDTH.replace(
+                    '$0',
+                    String(this.maxObjectContentWidth)
+                )
+            );
+            return;
+        }
 
-                if (!hasOnlyOneProperty && isValidSingleLine && doesPropertiesHaveComplexValue) {
-                    this.addFailureAtNode(node, 'denied using complex values on single line properties');
-                    return;
-                }
+        if (!isValidMultiLine && !isValidSingleLine) {
+            this.addFailureAtNode(node, ObjectDeclarationWalker.FAILURE_STRING_OBJECT_CARRYING);
+            return;
+        }
 
-                if (isValidSingleLine && hasMoreThanBorderNumberOfProperties) {
-                    const maxProps = this.maxNumberOfObjectProperties;
-                    this.addFailureAtNode(
-                        node,
-                        `an object in single line must contain not more than ${maxProps} properties`
-                    );
-                    return;
-                }
+        if (!hasOnlyOneProperty && isValidSingleLine && doesPropertiesHaveComplexValue) {
+            this.addFailureAtNode(node, ObjectDeclarationWalker.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+            return;
+        }
 
-                if (hasDeniedContentWidth || hasOnlyOneMultilineProperty) {
-                    return;
-                }
+        if (isValidSingleLine && hasMoreThanBorderNumberOfProperties) {
+            const maxProps = this.maxNumberOfObjectProperties;
+            this.addFailureAtNode(
+                node,
+                ObjectDeclarationWalker.FAILURE_STRING_MAX_SINGLE_LINE_PROPS.replace('$0', String(maxProps))
+            );
+            return;
+        }
 
-                if (!isValidSingleLine
-                    && isValidMultiLine
-                    && !hasMoreThanBorderNumberOfProperties
-                    && !doesPropertiesHaveComplexValue) {
-                    const maxProps = this.maxNumberOfObjectProperties;
-                    this.addFailureAtNode(
-                        node,
-                        `an object with carrying properties must contain more than ${maxProps} properties`
-                    );
-                }
+        if (hasDeniedContentWidth || hasOnlyOneMultilineProperty) {
+            return;
+        }
 
-                break;
-            }
-            default:
-                this.visitChilden(node);
-                break;
+        if (!isValidSingleLine
+            && isValidMultiLine
+            && !hasMoreThanBorderNumberOfProperties
+            && !doesPropertiesHaveComplexValue) {
+            const maxProps = this.maxNumberOfObjectProperties;
+            this.addFailureAtNode(
+                node,
+                ObjectDeclarationWalker.FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS.replace('$0', String(maxProps))
+            );
         }
     }
 
@@ -213,12 +226,5 @@ class ObjectDeclarationWalker extends BaseWalker {
             .replace('\n', '');
 
         return this.maxObjectContentWidth < content.length;
-    }
-}
-
-export class Rule extends Rules.AbstractRule {
-
-    apply(sourceFile: TS.SourceFile): RuleFailure[] {
-        return this.applyWithWalker(new ObjectDeclarationWalker(sourceFile, this.ruleName, this.ruleArguments));
     }
 }
