@@ -13,7 +13,7 @@ export class Rule extends Rules.AbstractRule {
     static FAILURE_STRING_OBJECT_COMPLEX_VALUES = 'denied using complex values on single line properties';
     static FAILURE_STRING_MAX_SINGLE_LINE_PROPS = 'an object in single line must contain not more than ' +
         '$0 properties';
-    static FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS = 'an object with carrying properties must contain more ' +
+    static FAILURE_STRING_CARRYING_OBJECT_MIN_PROPS = 'an object with carrying properties must contain more ' +
         'than $0 properties';
 
     static DEFAULT_MAX_CONTENT_WIDTH = 70;
@@ -119,7 +119,7 @@ class ObjectDeclarationWalker extends BaseWalker {
             const maxProps = this.maxNumberOfObjectProperties;
             this.addFailureAtNode(
                 node,
-                Rule.FAILURE_STRING_CARRYING_OBJECT_MAX_PROPS.replace('$0', String(maxProps))
+                Rule.FAILURE_STRING_CARRYING_OBJECT_MIN_PROPS.replace('$0', String(maxProps))
             );
         }
     }
