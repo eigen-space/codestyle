@@ -34,9 +34,31 @@
         "@types/jest": "22.2.2",
         "@types/node": "10.12.21",
         "jest": "23.6.0",
-        "jest-runner-tslint": "1.0.5",
         "ts-jest": "23.10.5",
         "tslint": "5.12.1",
         "typescript": "3.3.1"
+    },
+    "jest": {
+        "clearMocks": true,
+        "collectCoverageFrom": [
+            "src/**/*.{js,ts}"
+        ],
+        "testMatch": [
+            "<rootDir>/rules/**/?(*.)(spec|test).ts"
+        ],
+        "testEnvironment": "node",
+        "testURL": "http://localhost",
+        "transform": {
+            "^(?!.*\\.(js|ts|css|json)$)": "<rootDir>/config/jest/transform/file.transform.js",
+            "^.+\\.ts$": "<rootDir>/config/jest/transform/typescript.transform.js"
+        },
+        "moduleFileExtensions": [
+            "web.ts",
+            "ts",
+            "web.js",
+            "js",
+            "json",
+            "node"
+        ]
     }
 }

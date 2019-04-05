@@ -80,3 +80,5 @@ const obj188 = { r: 12, u: 80, y: 16, k: 1, l: 9, z: 10 };
 const props = {
     columnsTemplate: ['OLololo lolo lo lolllll', 'Qwerty ololo', '123123']
 };
+
+let some: boolean;
