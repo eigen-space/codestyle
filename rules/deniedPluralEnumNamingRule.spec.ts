@@ -21,12 +21,12 @@ describe('DeniedPluralEnumNamingRule', () => {
         expect(result.errorCount).toBe(1);
     });
 
-    it('should not return error if the name of an enum is singular', () => {
+    it('should return error if any name of enum word is in plural', () => {
         const source = `
             enum CardColumnsTemplateSize
         `;
         const result = lint(rule, source);
-        expect(result.errorCount).toBe(0);
+        expect(result.errorCount).toBe(1);
     });
 
     it('should not return error if the name of an enum is uncountable singular', () => {
