@@ -22,7 +22,7 @@
     ],
     "scripts": {
         "dev": "tsc --outDir rules",
-        "lint": "yarn compile && yarn copy && yarn tslint --project test/test-tsconfig.json",
+        "lint": "yarn compile && yarn copy && yarn tslint -c test/test-tslint.json --project test/test-tsconfig.json",
         "compile": "tsc",
         "test": "yarn compile && yarn jest",
         "copy": "node ./dev/scripts/copy.js",
@@ -52,6 +52,10 @@
             "^(?!.*\\.(js|ts|css|json)$)": "<rootDir>/config/jest/transform/file.transform.js",
             "^.+\\.ts$": "<rootDir>/config/jest/transform/typescript.transform.js"
         },
+        "testPathIgnorePatterns": [
+            "<rootDir>/node_modules/",
+            "<rootDir>/dist/"
+        ],
         "moduleFileExtensions": [
             "web.ts",
             "ts",
