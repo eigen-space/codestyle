@@ -13,7 +13,7 @@ describe('noVoidGetterRule', () => {
     });
 
     it('should return error if function has promise void type', () => {
-        const source = 'function async getName(): Promise<void> {}';
+        const source = 'async function getName(): Promise<void> {}';
         const failure = lint(rule, source).failures[0].getFailure();
         expect(failure).toBe(Rule.FAILURE_STRING);
     });

@@ -3,7 +3,7 @@ import { lint } from '../test/linter';
 
 const rule = 'boolean-naming';
 
-describe('BooleanNamingRule', () => {
+describe.skip('BooleanNamingRule', () => {
 
     it('should return error if declarable variable with boolean type has name without `is` or `has`', () => {
         const source = `

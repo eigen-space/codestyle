@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "1.1.47",
+    "version": "1.1.48",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -22,7 +22,7 @@
     ],
     "scripts": {
         "dev": "tsc --outDir rules",
-        "lint": "yarn compile && yarn copy && yarn tslint --project test/test-tsconfig.json",
+        "lint": "yarn compile && yarn copy && yarn tslint -c test/test-tslint.json --project test/test-tsconfig.json",
         "compile": "tsc",
         "test": "yarn compile && yarn jest",
         "copy": "node ./dev/scripts/copy.js",
@@ -34,9 +34,35 @@
         "@types/jest": "22.2.2",
         "@types/node": "10.12.21",
         "jest": "23.6.0",
-        "jest-runner-tslint": "1.0.5",
         "ts-jest": "23.10.5",
         "tslint": "5.12.1",
         "typescript": "3.3.1"
+    },
+    "jest": {
+        "clearMocks": true,
+        "collectCoverageFrom": [
+            "src/**/*.{js,ts}"
+        ],
+        "testMatch": [
+            "<rootDir>/rules/**/?(*.)(spec|test).ts"
+        ],
+        "testEnvironment": "node",
+        "testURL": "http://localhost",
+        "transform": {
+            "^(?!.*\\.(js|ts|css|json)$)": "<rootDir>/config/jest/transform/file.transform.js",
+            "^.+\\.ts$": "<rootDir>/config/jest/transform/typescript.transform.js"
+        },
+        "testPathIgnorePatterns": [
+            "<rootDir>/node_modules/",
+            "<rootDir>/dist/"
+        ],
+        "moduleFileExtensions": [
+            "web.ts",
+            "ts",
+            "web.js",
+            "js",
+            "json",
+            "node"
+        ]
     }
 }
