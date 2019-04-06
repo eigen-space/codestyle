@@ -165,9 +165,35 @@ describe('ObjectPropertiesCarrying', () => {
 
     it('should to be failed with long content', () => {
         const source = `
-           const props = { columnsTemplate: 'Hello! Did you hear me?', test: 'California Dreaming!' };
+           const props = { columnsTemplate: 'Hello! Did you hear me?', test: 'California Dreaming! Noooooo' };
         `;
         const [result] = lint(rule, source).failures;
         expect(result.getFailure()).toBe(failureStringMaxContentWidth);
+    });
+
+    it('should to be failed with long content', () => {
+        const source = `
+           const colors = { default: colors.shades.black100, primary: colors.shades.black40 }
+        `;
+        const [result] = lint(rule, source).failures;
+        expect(result.getFailure()).toBe(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should also work for nested objects', () => {
+        const source = `
+            const nestedObjects = {
+                someObject: 123,
+                inner: {
+                    someInnerObject: {
+                        another: {
+                            apple: 123,
+                            juice: 80
+                        }
+                    }
+                }
+            };
+        `;
+        const [result] = lint(rule, source).failures;
+        expect(result.getFailure()).toBe(failureStringCarryingObjectMinProps);
     });
 });

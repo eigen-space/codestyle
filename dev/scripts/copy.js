@@ -11,18 +11,17 @@ function mkDirByPathSync(targetDir, { isRelativeToScript = false } = {}) {
         try {
             fs.mkdirSync(curDir);
         } catch (err) {
-            if (err.code === 'EEXIST') { // curDir already exists!
+            if (err.code === 'EEXIST') {
                 return curDir;
             }
 
-            // To avoid `EISDIR` error on Mac and `EACCES`-->`ENOENT` and `EPERM` on Windows.
-            if (err.code === 'ENOENT') { // Throw the original parentDir error on curDir `ENOENT` failure.
+            if (err.code === 'ENOENT') {
                 throw new Error(`EACCES: permission denied, mkdir '${parentDir}'`);
             }
 
             const caughtErr = ['EACCES', 'EPERM', 'EISDIR'].indexOf(err.code) > -1;
             if (!caughtErr || caughtErr && curDir === path.resolve(targetDir)) {
-                throw err; // Throw if it's just the last created dir.
+                throw err;
             }
         }
 
@@ -46,5 +45,7 @@ if (!fs.existsSync(outputDir)) {
 }
 
 files.forEach(file => {
-    fs.writeFileSync(path.join(outputDir, file), fs.readFileSync(file, { encoding: 'utf-8' }));
+    const targetPath = path.join(outputDir, file);
+    const targetFile = fs.readFileSync(file, { encoding: 'utf-8' });
+    fs.writeFileSync(targetPath, targetFile);
 });

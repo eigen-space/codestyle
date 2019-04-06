@@ -1,4 +1,4 @@
-/* tslint:disable:no-any file-name-casing comment-type no-magic-numbers */
+/* tslint:disable file-name-casing comment-type no-magic-numbers */
 import * as TS from 'typescript';
 import { RuleFailure, Rules } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';
@@ -23,9 +23,7 @@ export class Rule extends Rules.AbstractRule {
         ruleName: 'object-properties-carrying',
         description: 'Warns about incorrect object properties carrying',
         optionsDescription: Lint.Utils.dedent`A number of maximum allowed properties`,
-        options: {
-            type: 'number'
-        },
+        options: { type: 'number' },
         optionExamples: [true, [true, 3, 70]],
         type: 'style',
         typescriptOnly: true,
@@ -47,18 +45,18 @@ class ObjectDeclarationWalker extends BaseWalker {
         TS.SyntaxKind.ArrayLiteralExpression,
         TS.SyntaxKind.ConditionalExpression,
         TS.SyntaxKind.CallExpression,
-        TS.SyntaxKind.BinaryExpression
+        TS.SyntaxKind.BinaryExpression,
+        TS.SyntaxKind.PropertyAccessExpression
     ];
 
     private readonly maxNumberOfObjectProperties: number;
     private readonly maxObjectContentWidth: number;
 
-    constructor(sourceFile: TS.SourceFile, ruleName: string, ruleArguments: any[]) {
+    constructor(sourceFile: TS.SourceFile, ruleName: string, ruleArguments: number[]) {
         super(sourceFile, ruleName, ruleArguments);
 
         const [maxNumberOfObjectProperties, maxObjectContentWidth] = ruleArguments;
         this.maxNumberOfObjectProperties = maxNumberOfObjectProperties || Rule.DEFAULT_MAX_SINGLE_LINE_PROPERTIES;
-        // tslint:disable-next-line:no-magic-numbers
         this.maxObjectContentWidth = maxObjectContentWidth || Rule.DEFAULT_MAX_CONTENT_WIDTH;
     }
 
@@ -70,6 +68,15 @@ class ObjectDeclarationWalker extends BaseWalker {
         }
 
         const properties = this.getProperties(node);
+        properties.forEach(prop => {
+            const value = this.getValueFromPropertyAssigment(prop);
+            if (!value) {
+                return;
+            }
+
+            this.visitNode(value);
+        });
+
         const hasOnlyOneProperty = properties.length === 1;
         const isValidMultiLine = this.isValidMultiline(properties);
         const hasDeniedContentWidth = this.hasDeniedContentWidth(properties);
@@ -81,10 +88,7 @@ class ObjectDeclarationWalker extends BaseWalker {
         if (isValidSingleLine && hasDeniedContentWidth && !hasOnlyOneMultilineProperty) {
             this.addFailureAtNode(
                 node,
-                Rule.FAILURE_STRING_CONTENT_WIDTH.replace(
-                    '$0',
-                    String(this.maxObjectContentWidth)
-                )
+                Rule.FAILURE_STRING_CONTENT_WIDTH.replace('$0', String(this.maxObjectContentWidth))
             );
             return;
         }
@@ -130,9 +134,10 @@ class ObjectDeclarationWalker extends BaseWalker {
             TS.SyntaxKind.ShorthandPropertyAssignment,
             TS.SyntaxKind.SpreadAssignment
         ];
-        return node.getChildAt(1).getChildren().filter(
-            property => validTypes.includes(property.kind)
-        );
+
+        return node.getChildAt(1)
+            .getChildren()
+            .filter(property => validTypes.includes(property.kind));
     }
 
     private hasOnlyOneMultilineProperty(properties: TS.Node[]): boolean {
@@ -150,13 +155,18 @@ class ObjectDeclarationWalker extends BaseWalker {
 
     // noinspection JSMethodCanBeStatic
     private hasPropertyComplexValue(property: TS.Node): boolean {
-        const valueIndex = 2;
-        const value = property.getChildren()[valueIndex];
+        const value = this.getValueFromPropertyAssigment(property);
         if (!value) {
             return false;
         }
 
         return ObjectDeclarationWalker.COMPLEX_KINDS_OF_VALUE.includes(value.kind);
+    }
+
+    // noinspection JSMethodCanBeStatic
+    private getValueFromPropertyAssigment(property: TS.Node): TS.Node | undefined {
+        const [, , value] = property.getChildren();
+        return value;
     }
 
     private hasDeniedNumberOfProperties(properties: TS.Node[]): boolean {
@@ -173,7 +183,6 @@ class ObjectDeclarationWalker extends BaseWalker {
         }
 
         const range = properties.slice(0, properties.length - 1);
-
         return range.every((current, i) => {
             if (i === 0) {
                 return true;
@@ -220,7 +229,9 @@ class ObjectDeclarationWalker extends BaseWalker {
     // noinspection JSMethodCanBeStatic
     private getNumberOfLine(node: TS.Node, type: 'start' | 'end'): number {
         const position = type === 'start' ? node.getStart() : node.getEnd();
-        return node.getSourceFile().getLineAndCharacterOfPosition(position).line;
+        return node.getSourceFile()
+            .getLineAndCharacterOfPosition(position)
+            .line;
     }
 
     private hasDeniedContentWidth(properties: TS.Node[]): boolean {
