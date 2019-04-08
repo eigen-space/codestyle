@@ -1,0 +1,8 @@
+{
+    "include": [
+        "./sandbox/"
+    ],
+    "exclude": [
+        "./sandbox/linter.ts"
+    ]
+}

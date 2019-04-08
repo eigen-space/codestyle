@@ -1,5 +1,5 @@
 // tslint:disable:file-name-casing
-import { lint } from '../test/linter';
+import { lint } from '../sandbox/linter';
 import { Rule } from './objectPropertiesCarryingRule';
 
 const rule = 'object-properties-carrying';
