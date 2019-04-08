@@ -3,6 +3,9 @@ import { lint } from '../test/linter';
 
 const rule = 'boolean-naming';
 
+// We skip them because that specs does not work.
+// Specs check rule that requires type checking. That leads to issue with specs.
+// Issue: https://github.com/eigen-space/codestyle/issues/1
 describe.skip('BooleanNamingRule', () => {
 
     it('should return error if declarable variable with boolean type has name without `is` or `has`', () => {
