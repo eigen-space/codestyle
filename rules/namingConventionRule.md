@@ -222,7 +222,7 @@ Here you see an example of how everything explained above works together. This i
   {"type": "member", "modifiers": "protected", "leadingUnderscore": "require"},
   // exclicitly disable the format check only for method toJSON
   {"type": "method", "filter": "^toJSON$", "format": null},
-  // enforce UPPER_CASE for all public static readonly(!) properties
+  // enforce UPPER_CASE for all static readonly(!) properties
   {"type": "property", "modifiers": ["public", "static", "const"], "format": "UPPER_CASE"},
   // enforce PascalCase for classes, interfaces, enums, etc. Remember, there are still no underscores allowed.
   {"type": "type", "format": "PascalCase"},
@@ -234,7 +234,7 @@ Here you see an example of how everything explained above works together. This i
   // most of the time it will only be T, which is totally valid, because an empty string conforms to the PascalCase check
   // By convention T, U and V are used for generics. You could enforce that with "regex": "^[TUV]$" and if you are care that much for performance, you could disable every other check by setting a falsy value
   {"type": "genericTypeParameter", "prefix": "T"},
-  // enum members must be in PascalCase. Without this config, enumMember would inherit UPPER_CASE from public static const property
+  // enum members must be in PascalCase. Without this config, enumMember would inherit UPPER_CASE from static const property
   {"type": "enumMember", "format": "PascalCase"}
 ]
 ```

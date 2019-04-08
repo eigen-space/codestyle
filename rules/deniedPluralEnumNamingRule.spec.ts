@@ -1,4 +1,4 @@
-/* tslint:disable:file-name-casing comment-type */
+// tslint:disable:file-name-casing
 import { lint } from '../test/linter';
 
 const rule = 'denied-plural-enum-naming';
@@ -21,7 +21,7 @@ describe('DeniedPluralEnumNamingRule', () => {
         expect(result.errorCount).toBe(1);
     });
 
-    it('should return error if any name of enum word is in plural', () => {
+    it('should return error if any word of an enum name is plural', () => {
         const source = `
             enum CardColumnsTemplateSize
         `;

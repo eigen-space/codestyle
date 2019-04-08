@@ -1,31 +1,27 @@
-/* tslint:disable:file-name-casing comment-type */
+// tslint:disable:file-name-casing
 import { lint } from '../test/linter';
 import { Rule } from './objectPropertiesCarryingRule';
 
 const rule = 'object-properties-carrying';
 
 describe('ObjectPropertiesCarrying', () => {
-    const failureStringMaxSingleLineProps = Rule.FAILURE_STRING_MAX_SINGLE_LINE_PROPS.replace(
-        '$0',
-        String(Rule.DEFAULT_MAX_SINGLE_LINE_PROPERTIES)
-    );
-
     const failureStringCarryingObjectMinProps = Rule.FAILURE_STRING_CARRYING_OBJECT_MIN_PROPS.replace(
         '$0',
         String(Rule.DEFAULT_MAX_SINGLE_LINE_PROPERTIES)
     );
 
-    const failureStringMaxContentWidth = Rule.FAILURE_STRING_CONTENT_WIDTH.replace(
-        '$0',
-        String(Rule.DEFAULT_MAX_CONTENT_WIDTH)
-    );
-
     it('should failed with 4 any properties', () => {
+        const failureStringMaxSingleLineProps = Rule.FAILURE_STRING_MAX_SINGLE_LINE_PROPS.replace(
+            '$0',
+            String(Rule.DEFAULT_MAX_SINGLE_LINE_PROPERTIES)
+        );
         const source = `
             const j = 10;
             const obj108 = { y: 123, u: 0, i: 9, j };
         `;
+
         const [result] = lint(rule, source).failures;
+
         expect(result.getFailure()).toBe(failureStringMaxSingleLineProps);
     });
 
@@ -118,7 +114,7 @@ describe('ObjectPropertiesCarrying', () => {
         expect(result.getFailure()).toBe(failureStringCarryingObjectMinProps);
     });
 
-    it('should not to be failed if properties are overflow and object is multiline', () => {
+    it('should not to be failed if properties count crosses limit and object is multiline', () => {
         const source = `
            const a = 10;
            const obj102 = {
@@ -164,10 +160,16 @@ describe('ObjectPropertiesCarrying', () => {
     });
 
     it('should to be failed with long content', () => {
+        const failureStringMaxContentWidth = Rule.FAILURE_STRING_CONTENT_WIDTH.replace(
+            '$0',
+            String(Rule.DEFAULT_MAX_CONTENT_WIDTH)
+        );
         const source = `
            const props = { columnsTemplate: 'Hello! Did you hear me?', test: 'California Dreaming! Noooooo' };
         `;
+
         const [result] = lint(rule, source).failures;
+
         expect(result.getFailure()).toBe(failureStringMaxContentWidth);
     });
 

@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 import { lint } from '../test/linter';
 import { Rule } from './jsdocAdditionalFormatRule';
 

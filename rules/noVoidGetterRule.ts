@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import { getFirstWordFromCamelCase } from '../utils/common.utils';
@@ -8,9 +9,9 @@ type Declaration = ts.MethodDeclaration
     | ts.Expression;
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = 'Function with type void should not starts with `get` keyword';
+    static FAILURE_STRING = 'Function with type void should not starts with `get` keyword';
 
-    public static metadata: Lint.IRuleMetadata = {
+    static metadata: Lint.IRuleMetadata = {
         ruleName: 'no-void-getter',
         description: 'Warns about incorrect methods naming with void return type.',
         optionsDescription: '',
@@ -21,7 +22,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         requiresTypeInfo: false
     };
 
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker = new NoVoidGetterWalker(sourceFile, this.getOptions());
         return this.applyWithWalker(walker);
     }
@@ -75,6 +76,7 @@ class NoVoidGetterWalker extends Lint.RuleWalker {
         }
     }
 
+    // noinspection JSMethodCanBeStatic
     private isVoidFunction(node: Declaration): boolean {
         // tslint:disable-next-line:no-any
         const nodeType: any = (node as ts.FunctionDeclaration).type;
