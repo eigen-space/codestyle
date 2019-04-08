@@ -1,4 +1,4 @@
-/* tslint:disable:file-name-casing comment-type */
+// tslint:disable:file-name-casing
 import { lint } from '../test/linter';
 import { Rule } from './noVoidGetterRule';
 

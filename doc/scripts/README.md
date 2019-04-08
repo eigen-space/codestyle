@@ -1025,11 +1025,11 @@ c. Приватные (private)
 
 ```typescript
     class SomeClass {
-        public static field;
+        static field;
         protected static field;
         private static field;
         
-        public field;
+        field;
         protected field;
         private field;
         

@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 import * as Lint from 'tslint';
 import { IOptions } from 'tslint';
 import * as ts from 'typescript';
@@ -32,11 +33,11 @@ type Declaration = ts.VariableDeclaration
     | ts.PropertyAssignment;
 
 export class Rule extends Lint.Rules.TypedRule {
-    public static AVAILABLE_ENDING = 'ed';
-    public static AVAILABLE_PREFIXES = ['is', 'has'];
-    public static RESERVED_WORDS = ['busy', 'hidden', 'value'];
+    static AVAILABLE_ENDING = 'ed';
+    static AVAILABLE_PREFIXES = ['is', 'has'];
+    static RESERVED_WORDS = ['busy', 'hidden', 'value'];
 
-    public static metadata: Lint.IRuleMetadata = {
+    static metadata: Lint.IRuleMetadata = {
         ruleName: 'boolean-naming',
         description: 'Warns about incorrect boolean naming.',
         optionsDescription: Lint.Utils.dedent`
@@ -60,7 +61,7 @@ export class Rule extends Lint.Rules.TypedRule {
         Rule.RESERVED_WORDS.push(...this.ruleArguments as string[]);
     }
 
-    public applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
+    applyWithProgram(sourceFile: ts.SourceFile, program: ts.Program): Lint.RuleFailure[] {
         return this.applyWithFunction(sourceFile, walk, undefined, program.getTypeChecker());
     }
 }

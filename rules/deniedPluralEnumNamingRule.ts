@@ -1,4 +1,4 @@
-/* tslint:disable:no-any file-name-casing comment-type */
+// tslint:disable:file-name-casing
 import { EnumDeclaration, Identifier, Node, SourceFile, SyntaxKind } from 'typescript';
 import { Rules, RuleFailure } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';

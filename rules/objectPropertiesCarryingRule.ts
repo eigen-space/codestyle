@@ -1,4 +1,4 @@
-/* tslint:disable file-name-casing comment-type no-magic-numbers */
+// tslint:disable file-name-casing
 import * as TS from 'typescript';
 import { RuleFailure, Rules } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';
@@ -19,12 +19,13 @@ export class Rule extends Rules.AbstractRule {
     static DEFAULT_MAX_CONTENT_WIDTH = 70;
     static DEFAULT_MAX_SINGLE_LINE_PROPERTIES = 3;
 
+    // noinspection JSUnusedGlobalSymbols
     static metadata: Lint.IRuleMetadata = {
         ruleName: 'object-properties-carrying',
         description: 'Warns about incorrect object properties carrying',
         optionsDescription: Lint.Utils.dedent`A number of maximum allowed properties`,
         options: { type: 'number' },
-        optionExamples: [true, [true, 3, 70]],
+        optionExamples: [true, [true, 3, Rule.DEFAULT_MAX_CONTENT_WIDTH]],
         type: 'style',
         typescriptOnly: true,
         requiresTypeInfo: true

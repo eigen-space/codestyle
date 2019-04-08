@@ -1,16 +1,17 @@
+// tslint:disable:file-name-casing
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import { END_OF_LINE_PATTERN } from '../utils/common.utils';
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING_NO_BODY = 'JsDoc requires body';
-    public static FAILURE_STRING_LINES_BEFORE_BODY = 'JsDoc body should starts without empty line';
-    public static FAILURE_STRING_LINES_AFTER_BODY = 'JsDoc body should end without empty line';
-    public static FAILURE_STRING_LINES_AFTER_COMMENT = 'JsDoc comment must be separated from other blocks by one line';
-    public static FAILURE_STRING_REST_OF_PARAMS = 'JsDoc parameters transfer should be done with' +
+    static FAILURE_STRING_NO_BODY = 'JsDoc requires body';
+    static FAILURE_STRING_LINES_BEFORE_BODY = 'JsDoc body should starts without empty line';
+    static FAILURE_STRING_LINES_AFTER_BODY = 'JsDoc body should end without empty line';
+    static FAILURE_STRING_LINES_AFTER_COMMENT = 'JsDoc comment must be separated from other blocks by one line';
+    static FAILURE_STRING_REST_OF_PARAMS = 'JsDoc parameters transfer should be done with' +
         ' an additional indentation of 6 spaces';
 
-    public static metadata: Lint.IRuleMetadata = {
+    static metadata: Lint.IRuleMetadata = {
         ruleName: 'jsdoc-additional-format',
         description: 'Warns about wrong jsdoc formatting.',
         optionsDescription: '',
@@ -21,8 +22,7 @@ export class Rule extends Lint.Rules.AbstractRule {
         requiresTypeInfo: false
     };
 
-
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         const walker = new JsdocAdditionalFormatWalker(sourceFile, this.getOptions());
         return this.applyWithWalker(walker);
     }
@@ -121,6 +121,7 @@ class JsdocAdditionalFormatWalker extends Lint.RuleWalker {
         });
     }
 
+    // noinspection JSMethodCanBeStatic
     private getCutLines(text: string): string[] {
         const lines = text.toString().split(END_OF_LINE_PATTERN);
         lines.shift();

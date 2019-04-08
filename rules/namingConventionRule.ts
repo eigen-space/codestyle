@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import * as utils from 'tsutils';
@@ -191,7 +192,7 @@ class NormalizedConfig {
         this._format = raw;
     }
 
-    public static sort(first: NormalizedConfig, second: NormalizedConfig): number {
+    static sort(first: NormalizedConfig, second: NormalizedConfig): number {
         return first._specifity - second._specifity;
     }
 
@@ -312,7 +313,7 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
     public visitEnumDeclaration(node: ts.EnumDeclaration) {
         let modifiers = this._getModifiers(node, TypeSelector.enum);
         this._checkName(node.name, TypeSelector.enum, modifiers);
-        modifiers |= Modifiers.static | Modifiers.public | Modifiers.readonly; // treat enum members as public static readonly properties
+        modifiers |= Modifiers.static | Modifiers.public | Modifiers.readonly; // treat enum members as static readonly properties
         for (const {name} of node.members)
             if (utils.isIdentifier(name))
                 this._checkName(name, TypeSelector.enumMember, modifiers);
