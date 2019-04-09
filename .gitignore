@@ -8,3 +8,4 @@
 /dist
 /rules/*.js
 /rules/*.js.map
+/sandbox/sandbox.ts
