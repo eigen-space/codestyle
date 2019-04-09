@@ -1,15 +1,14 @@
 # CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
 
-Основной язык: `TypeScript`
+Main language: `TypeScript`
 
-Проект включает в себя:
-1. Руководство по написанию кода. Затрагивает эстетические моменты, вопросы конвенции именования и 
-стандарты кодирования.
-2. Правила для `tslint` и его конфигурация.
-3. Конфигурация tsconfig - `codestyle.tsconfig.json`.
-4. Конфигурации для сред разработки.
+This project contains:
+1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
+2. Rules for `tslint` and its configuration.
+3. tsconfig configuration - `codestyle.tsconfig.json`.
+4. Configuration for development environments.
 
-# Структура
+# Structure
 
 ```
 /doc 
@@ -24,19 +23,19 @@
     codestyle.idea.xml
 ```   
 
-# Руководство по написанию кода
+# Code writing guide
 
-* [Общие стандарты](./doc/common/README.md)
+* [Common standarts](./doc/common/README.md)
 * [Angular](./doc/angular/README.md)
 * [React](./doc/react/README.md)
-* [Скрипты](./doc/scripts/README.md)
-* [Стили](./doc/styles/README.md)
+* [Scripts](./doc/scripts/README.md)
+* [Styles](./doc/styles/README.md)
 
-# Правила для tslint
+# Rules for tslint
 
-Включены в `tslint.json`. Для подключения необходимо:
-1. Создать `tslint.json` в корне вашего проекта или выбрать существующий.
-2. Унаследовать `tslint.json` code-style проекта, добавив следующее:
+located in `tslint.json`. To connect you need:
+1. Create `tslint.json` in project root or choose already existing.
+2. Inherit `tslint.json` from code-style project, doing this:
     ```
     {
         "extends": [
@@ -44,24 +43,36 @@
         ]
     }
     ```
-3. В настройках IDE включить `tslint` и указать на `tslint` проекта.    
+3. In IDE settings turn on `tslint` and specify `tslint` path.    
     
-# Конфигурации для сред разработки
+# Configurations for development environments
 
 ### IntelliJ IDEA / WebStorm
 
-Используется для валидации кода и автоформатирования.
-1. Открыть `Preferences`
-2. Перейти по `Editor` -> `Code Style` -> `TypeScript`
-3. Нажать на иконку `шестерёнка` рядом с `scheme`
-4. Из контекстного меню выбрать `Import Scheme`
+Used for code validation and auto-formatting.
+1. Open `Preferences`
+2. Go to `Editor` -> `Code Style` -> `TypeScript`
+3. Click on the `gear` icon neat to `scheme`
+4. From the context menu select `Import Scheme`
 
-# Использование tsconfig.json
+# Usage tsconfig.json
 
-В текущем `tsconfig.json` проекта добавить:
+In current `tsconfig.json` add:
 ```
 "extends": "@eigenspace/codestyle/base.tsconfig.json"
 "compilerOptions": {
     "moduleResolution": "node"
 }
 ```
+
+# Why do we have that dev dependencies?
+
+* `@eigenspace/helper-scripts` - common scripts for dev. environment.
+* `@types/*` - contains type definitions for specific library.
+* `jest` - testing framework to write unit specs (including snapshots).
+snapshots. It extends jest and add method `toMatchImageSnapshot`. It creates image snapshot
+if there is no one like standard jest snapshot tool does. 
+For instance, `expect(componentImage).toMatchImageSnapshot()`.
+* `ts-jest` - it lets you use Jest to test projects written in TypeScript.
+* `tslint` - it checks TypeScript code for readability, maintainability, and functionality errors.
+* `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.

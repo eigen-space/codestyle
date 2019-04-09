@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 import * as Lint from 'tslint';
 import { IOptions } from 'tslint';
 import * as ts from 'typescript';

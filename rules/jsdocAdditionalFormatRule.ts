@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import { END_OF_LINE_PATTERN } from '../utils/common.utils';
