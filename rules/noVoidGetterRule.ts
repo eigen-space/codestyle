@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import { getFirstWordFromCamelCase } from '../utils/common.utils';

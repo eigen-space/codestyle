@@ -32,7 +32,7 @@ function mkDirByPathSync(targetDir, { isRelativeToScript = false } = {}) {
 const outputDir = './dist';
 const files = [
     'package.json',
-    'tslint.json',
+    'tslint.base.json',
     'base.tsconfig.json',
     'README.md',
     'rules/pluralize/pluralize.js'
@@ -45,7 +45,7 @@ if (!fs.existsSync(outputDir)) {
 }
 
 files.forEach(file => {
-    const targetPath = path.join(outputDir, file);
+    const targetPath = path.join(outputDir, file === 'tslint.base.json' ? 'tslint.json' : file);
     const targetFile = fs.readFileSync(file, { encoding: 'utf-8' });
     fs.writeFileSync(targetPath, targetFile);
 });

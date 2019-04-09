@@ -1,14 +1,12 @@
-// tslint:disable:file-name-casing
 import { EnumDeclaration, Identifier, Node, SourceFile, SyntaxKind } from 'typescript';
-import { Rules, RuleFailure } from 'tslint';
+import { RuleFailure, Rules } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';
-// @ts-ignore
+
 const pluralize = require('./pluralize/pluralize');
 
 class EnumPluralNameValidator {
     message = 'Enum names must be singular';
 
-    // noinspection JSMethodCanBeStatic
     test(name: string): boolean {
         return !name.replace(/([A-Z]+)/g, ' $1')
             .replace(/([A-Z][a-z])/g, ' $1')

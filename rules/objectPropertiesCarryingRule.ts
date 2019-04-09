@@ -1,8 +1,7 @@
-// tslint:disable file-name-casing
 import * as TS from 'typescript';
+import * as Lint from 'tslint';
 import { RuleFailure, Rules } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';
-import * as Lint from 'tslint';
 
 /**
  * Walks the AST and visits each object declaration.

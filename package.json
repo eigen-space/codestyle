@@ -22,12 +22,17 @@
     ],
     "scripts": {
         "dev": "tsc --outDir rules",
-        "dev:lint": "yarn compile && yarn copy && yarn tslint -c tslint.dev.json --project tsconfig.dev.json",
+        "lint:dev": "yarn build && yarn tslint --project tsconfig.dev.json",
+        "lint:markdown": "node ./scripts/markdown-lint.js",
+        "script:copy": "node ./dev/scripts/copy.js",
+        "script:markdown-lint": "node ./scripts/markdown-lint.js",
         "compile": "tsc",
         "test": "yarn compile && yarn jest",
-        "copy": "node ./dev/scripts/copy.js",
-        "build": "yarn compile && yarn copy",
+        "build": "yarn compile && yarn script:copy",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
+    },
+    "bin": {
+        "lint:markdown": "./scripts/markdown-lint.js"
     },
     "devDependencies": {
         "@eigenspace/helper-scripts": "1.0.40",

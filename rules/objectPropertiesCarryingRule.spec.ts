@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 import { lint } from '../sandbox/linter';
 import { Rule } from './objectPropertiesCarryingRule';
 
