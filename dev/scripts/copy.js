@@ -20,7 +20,9 @@ if (!fs.existsSync(outputDir)) {
 }
 
 files.forEach(file => {
-    const targetPath = path.join(outputDir, file === 'tslint.base.json' ? 'tslint.json' : file);
+    const targetPath = path.join(outputDir, file);
     const targetFile = fs.readFileSync(file, { encoding: 'utf-8' });
     fs.writeFileSync(targetPath, targetFile);
 });
+
+fs.renameSync(path.join(outputDir, 'tslint.base.json'), path.join(outputDir, 'tslint.json'));
