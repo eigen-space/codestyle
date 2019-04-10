@@ -3,7 +3,7 @@
  * This rule is following that style:
  *      - Checks that readme file exist
  *      - Checks there is a section with dependencies
- *      - Checks there is a dependencies in a dependency section
+ *      - Checks there are dependencies in a dependency section
  */
 
 const fs = require('fs');
