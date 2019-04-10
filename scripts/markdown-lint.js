@@ -1,22 +1,22 @@
-#!/usr/bin/env node
 /**
  * Script automates linting a readme file.
  * This rule is following that style:
  *      - Checks that readme file exist
- *      - Checks that in readme file exists a dependency section
- *      - Checks that in dependency section exists dependencies
+ *      - Checks there is a section with dependencies
+ *      - Checks there is a dependencies in a dependency section
  */
 
 const fs = require('fs');
 const currentDir = process.cwd();
 const readme = fs.readFileSync(`${currentDir}/README.md`, 'utf8');
 const packageJson = require(`${currentDir}/package.json`);
+const endOfLine = require('os').EOL;
 
 const FAILURE_STRING_NO_README = 'No README file in root directory';
-const FAILURE_STRING_MISSING_TYPES = 'You do not described this dependency sections in README: ';
-const FAILURE_STRING_EXCESS_TYPES = 'You do have excess dependency sections in README: ';
-const FAILURE_STRING_MISSING_DEPENDENCIES = 'You do not described this dependencies in README';
-const FAILURE_STRING_EXCESS_DEPENDENCIES = 'You do have excess dependencies in README';
+const FAILURE_STRING_MISSING_TYPES = 'You have not described these dependency sections in README: ';
+const FAILURE_STRING_EXCESS_TYPES = 'You have excess dependency sections in README: ';
+const FAILURE_STRING_MISSING_DEPENDENCIES = 'You have not described these dependencies in README';
+const FAILURE_STRING_EXCESS_DEPENDENCIES = 'You have excess dependencies in README';
 
 if (!readme) {
     throw new Error(FAILURE_STRING_NO_README);
@@ -29,9 +29,8 @@ const dependencyNames = [
     'peerDependencies'
 ];
 
-const END_OF_LINE_PATTERN = /\r\n?|\n/;
 const DEPENDENCY_SECTION_TITLE_PREFIX = '# Why do we have that ';
-const END_OF_LINE_BLOCK = '(\\r\\n?|\\n)';
+const END_OF_LINE_BLOCK = `(${endOfLine})`;
 const DEPENDENCY_SECTION_PATTERN = new RegExp(`${DEPENDENCY_SECTION_TITLE_PREFIX}(.* )?dependencies\\?${END_OF_LINE_BLOCK}${END_OF_LINE_BLOCK}(.+${END_OF_LINE_BLOCK}?)*`, 'gm');
 const DEPENDENCY_PATTERN = /(?<=\* `).*(?=` - )/g;
 
@@ -68,7 +67,7 @@ function getReadmeDependenciesMap() {
     const dependencySections = findDependencySections() || [];
 
     dependencySections.forEach(section => {
-        const sectionTitle = section.split(END_OF_LINE_PATTERN)[0];
+        const sectionTitle = section.split(endOfLine)[0];
         const rawDependency = sectionTitle.replace(DEPENDENCY_SECTION_TITLE_PREFIX, '')
             .replace('?', '');
         const dependencyType = stringToCamelCase(rawDependency);
