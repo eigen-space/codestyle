@@ -76,3 +76,5 @@ For instance, `expect(componentImage).toMatchImageSnapshot()`.
 * `ts-jest` - it lets you use Jest to test projects written in TypeScript.
 * `tslint` - it checks TypeScript code for readability, maintainability, and functionality errors.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
+* `husky` - used for configure git hooks.
+* `lint-staged` - used for configure linters against staged git files.
