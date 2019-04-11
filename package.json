@@ -32,10 +32,10 @@
         ]
     },
     "scripts": {
-        "dev": "tsc --outDir rules",
+        "start": "yarn build && yarn lint:sandbox",
         "lint": "tslint --project tsconfig.json && yarn lint:markdown",
         "lint:fix": "tslint --project tsconfig.json --fix",
-        "lint:dev": "yarn build && yarn tslint --project tsconfig.dev.json && yarn lint:markdown",
+        "lint:sandbox": "yarn tslint --project tsconfig.dev.json",
         "lint:markdown": "node ./scripts/markdown-lint.js",
         "script:copy": "node ./dev/scripts/copy.js",
         "compile": "tsc",
