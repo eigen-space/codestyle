@@ -1,9 +1,8 @@
-import { lint } from '../sandbox/linter';
 import { Rule } from './objectPropertiesCarryingRule';
 
-const rule = 'object-properties-carrying';
-
 describe('ObjectPropertiesCarrying', () => {
+    const rule = 'object-properties-carrying';
+
     const failureStringCarryingObjectMinProps = Rule.FAILURE_STRING_CARRYING_OBJECT_MIN_PROPS.replace(
         '$0',
         String(Rule.DEFAULT_MAX_SINGLE_LINE_PROPERTIES)
@@ -19,17 +18,87 @@ describe('ObjectPropertiesCarrying', () => {
             const obj108 = { y: 123, u: 0, i: 9, j };
         `;
 
-        const [result] = lint(rule, source).failures;
-
-        expect(result.getFailure()).toBe(failureStringMaxSingleLineProps);
+        expect({ source, rule }).toBeFailedWith(failureStringMaxSingleLineProps);
     });
 
     it('should not to be failed', () => {
         const source = `
             const a123123 = { component: 12 };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result).toBeUndefined();
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with empty array property', () => {
+        const source = `
+            const a123123 = { component: 12 };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with array property with 1 item', () => {
+        const source = `
+            const a123123 = { countries: [], selectedItems: [0] };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with array with 1 item', () => {
+        const source = `
+            const a123123 = { countries: ['Russia'], selectedItems: [0] };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should to be failed with array with 2 items', () => {
+        const source = `
+            const a123123 = { countries: ['Russia', 'USA'], selectedItems: [0] };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should not to be failed with empty object property', () => {
+        const source = `
+            const a123123 = { fruits: {} };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with not empty object property', () => {
+        const source = `
+            const a123123 = { fruits: {}, vegetable: { price: 12 } };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should to be failed with 2 function invoking methods', () => {
+        const source = `
+            const a123123 = { apply: jest.fn(), denied: functions.resolve.do() };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should be passed with 1 function invoking methods', () => {
+        const source = `
+            const a123123 = { apply: jest.fn(), anotherProperty: 123 };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should to be failed with 1 function more than required length', () => {
+        const source = `
+            const a123123 = { denied: functions.resolve.big.method.do(), no: '123' };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
     });
 
     it('should not to be failed with some multiline complex properties', () => {
@@ -45,8 +114,8 @@ describe('ObjectPropertiesCarrying', () => {
                 io: 'qwerty'
             };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result).toBeUndefined();
+
+        expect({ source, rule }).toBePassed();
     });
 
     it('should to be failed with two properties on the same line', () => {
@@ -61,8 +130,8 @@ describe('ObjectPropertiesCarrying', () => {
                 }, io: 'qwerty'
             };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(Rule.FAILURE_STRING_OBJECT_CARRYING);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_CARRYING);
     });
 
     it('should not be failed in class with static complex properties', () => {
@@ -74,8 +143,8 @@ describe('ObjectPropertiesCarrying', () => {
                 };
             }
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result).toBeUndefined();
+
+        expect({ source, rule }).toBePassed();
     });
 
     it('should to be failed with the overflow properties on the single line', () => {
@@ -86,8 +155,8 @@ describe('ObjectPropertiesCarrying', () => {
                 o: 13
             };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(Rule.FAILURE_STRING_OBJECT_CARRYING);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_CARRYING);
     });
 
     it('should to be failed with the not overflow properties on the single line', () => {
@@ -97,8 +166,8 @@ describe('ObjectPropertiesCarrying', () => {
             u: 80
           };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(Rule.FAILURE_STRING_OBJECT_CARRYING);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_CARRYING);
     });
 
     it('should to be failed if object is carrying but properties are not overflow', () => {
@@ -109,8 +178,8 @@ describe('ObjectPropertiesCarrying', () => {
               y: 16
           };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(failureStringCarryingObjectMinProps);
+
+        expect({ source, rule }).toBeFailedWith(failureStringCarryingObjectMinProps);
     });
 
     it('should not to be failed if properties count crosses limit and object is multiline', () => {
@@ -123,24 +192,24 @@ describe('ObjectPropertiesCarrying', () => {
                a
            };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result).toBeUndefined();
+
+        expect({ rule, source }).toBePassed();
     });
 
     it('should to be failed if properties not overflow on single line but complex', () => {
         const source = `
            const obji = { yellow: () => {}, green: () => {} };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
     });
 
     it('should not to be failed if there is only 1 complex property in single line', () => {
         const source = `
            const objiy = { green: function (): number { return 2; } };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result).toBeUndefined();
+
+        expect({ source, rule }).toBePassed();
     });
 
     it('should not to be failed if there is only one complex property placed on some lines', () => {
@@ -154,8 +223,8 @@ describe('ObjectPropertiesCarrying', () => {
                 }
             };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result).toBeUndefined();
+
+        expect({ source, rule }).toBePassed();
     });
 
     it('should to be failed with long content', () => {
@@ -167,17 +236,15 @@ describe('ObjectPropertiesCarrying', () => {
            const props = { columnsTemplate: 'Hello! Did you hear me?', test: 'California Dreaming! Noooooo' };
         `;
 
-        const [result] = lint(rule, source).failures;
-
-        expect(result.getFailure()).toBe(failureStringMaxContentWidth);
+        expect({ source, rule }).toBeFailedWith(failureStringMaxContentWidth);
     });
 
-    it('should to be failed with long content', () => {
+    it('should to be failed with complex values', () => {
         const source = `
            const colors = { default: colors.shades.black100, primary: colors.shades.black40 }
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
     });
 
     it('should also work for nested objects', () => {
@@ -194,7 +261,7 @@ describe('ObjectPropertiesCarrying', () => {
                 }
             };
         `;
-        const [result] = lint(rule, source).failures;
-        expect(result.getFailure()).toBe(failureStringCarryingObjectMinProps);
+
+        expect({ rule, source }).toBeFailedWith(failureStringCarryingObjectMinProps);
     });
 });

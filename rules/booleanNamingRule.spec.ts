@@ -1,4 +1,4 @@
-import { lint } from '../sandbox/linter';
+import { lint } from '../dev/linter';
 
 const rule = 'boolean-naming';
 

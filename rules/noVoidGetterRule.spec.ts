@@ -1,33 +1,27 @@
 // tslint:disable:file-name-casing
-import { lint } from '../sandbox/linter';
 import { Rule } from './noVoidGetterRule';
 
-const rule = Rule.metadata.ruleName;
-
 describe('noVoidGetterRule', () => {
+    const rule = Rule.metadata.ruleName;
 
     it('should return error if function has void type', () => {
         const source = 'function getName(): void {}';
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING);
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function has promise void type', () => {
         const source = 'async function getName(): Promise<void> {}';
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING);
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in variable declaration has void type', () => {
         const source = 'const getSmth = (): void => {};';
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING);
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in variable declaration has promise void type', () => {
         const source = 'const getSmth = (): Promise<void> => {};';
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING);
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in class has void type', () => {
@@ -36,8 +30,8 @@ describe('noVoidGetterRule', () => {
                 private getSmth3(): void {}
             }
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(1);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in class has promise void type', () => {
@@ -46,8 +40,8 @@ describe('noVoidGetterRule', () => {
                 getSmth = (): void => {};
             }
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(1);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in class has void type', () => {
@@ -56,8 +50,8 @@ describe('noVoidGetterRule', () => {
                 getSmth = (): Promise<void> => {};
             }
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(1);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in class has promise void type', () => {
@@ -66,8 +60,8 @@ describe('noVoidGetterRule', () => {
                 private getSmth3(): Promise<void> {}
             }
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(1);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in interface has void type', () => {
@@ -76,8 +70,8 @@ describe('noVoidGetterRule', () => {
                 getSmth4?: (e: number) => void;
             }
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(1);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 
     it('should return error if function in interface has promise void type', () => {
@@ -86,7 +80,7 @@ describe('noVoidGetterRule', () => {
                 getSmth5: (e: number) => Promise<void>;
             }
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(1);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING);
     });
 });
