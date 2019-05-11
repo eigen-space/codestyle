@@ -11,6 +11,7 @@ abstract class AbstractConfigDependentRule extends Lint.Rules.AbstractRule {
 
 // TODO don't flag inherited members
 // TODO skip all ambient declarations
+// TODO Resolve the "No valid rules have been specified" and add specs
 
 const enum Format {
     Pascal = 'PascalCase',
@@ -131,16 +132,16 @@ type Modifier = keyof typeof Modifiers | 'unused';
 
 type UnderscoreOption = 'allow' | 'require' | 'forbid';
 
-interface IRuleScope {
+interface RuleScope {
     type: IdentifierType;
     modifiers?: Modifier | Modifier[];
     final?: boolean;
     filter?: string;
 }
 
-type RuleConfig = IRuleScope & Partial<IFormat>;
+type RuleConfig = RuleScope & Partial<FormatType>;
 
-interface IFormat {
+interface FormatType {
     format: Format | Format[] | undefined;
     leadingUnderscore: UnderscoreOption | undefined;
     trailingUnderscore: UnderscoreOption | undefined;
@@ -150,7 +151,21 @@ interface IFormat {
 }
 
 export class Rule extends AbstractConfigDependentRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    // noinspection JSUnusedGlobalSymbols
+    static metadata: Lint.IRuleMetadata = {
+        ruleName: 'naming-convention',
+        description: 'Warns about incorrect object properties carrying',
+        optionsDescription: Lint.Utils.dedent`A number of maximum allowed properties`,
+        options: {},
+        optionExamples: [true],
+        type: 'style',
+        // tslint:disable-next-line
+        typescriptOnly: true,
+        // tslint:disable-next-line
+        requiresTypeInfo: true
+    };
+
+    apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new IdentifierNameWalker(
             sourceFile,
             this.ruleName,
@@ -160,180 +175,181 @@ export class Rule extends AbstractConfigDependentRule {
 }
 
 class NormalizedConfig {
-    private _type: Types;
-    private _filter: RegExp | undefined;
-    private _format: Partial<IFormat>;
-    private _modifiers: number;
-    private _specifity: number;
-    private _final: boolean;
+    private readonly type: Types;
+    private readonly filter: RegExp | undefined;
+    private readonly format: Partial<FormatType>;
+    private readonly modifiers: number;
+    private readonly specifity: number;
+    private readonly final: boolean;
 
     constructor(raw: RuleConfig) {
-        this._type = Types[raw.type];
-        this._final = !!raw.final;
-        this._specifity = Specifity[raw.type];
-        this._modifiers = 0;
+        this.type = Types[raw.type];
+        this.final = !!raw.final;
+        this.specifity = Specifity[raw.type];
+        this.modifiers = 0;
         if (raw.modifiers !== undefined) {
             if (Array.isArray(raw.modifiers)) {
                 for (const modifier of raw.modifiers) {
-                    this._modifiers |= Modifiers[modifier];
-                    this._specifity |= Specifity[modifier];
+                    this.modifiers |= Modifiers[modifier];
+                    this.specifity |= Specifity[modifier];
                 }
             } else {
-                this._modifiers = Modifiers[raw.modifiers];
-                this._specifity |= Specifity[raw.modifiers];
+                this.modifiers = Modifiers[raw.modifiers];
+                this.specifity |= Specifity[raw.modifiers];
             }
         }
         if (raw.filter !== undefined) {
-            this._filter = new RegExp(raw.filter);
-            this._specifity |= Specifity.filter;
+            this.filter = new RegExp(raw.filter);
+            this.specifity |= Specifity.filter;
         } else {
-            this._filter = undefined;
+            this.filter = undefined;
         }
-        this._format = raw;
+        this.format = raw;
     }
 
     static sort(first: NormalizedConfig, second: NormalizedConfig): number {
-        return first._specifity - second._specifity;
+        return first.specifity - second.specifity;
     }
 
     public getFormat() {
-        return this._format;
+        return this.format;
     }
 
     public matches(type: TypeSelector, modifiers: number, name: string): boolean {
-        if (this._final && type > this._type << 1) // check if TypeSelector has a higher bit set than this._type
+        if (this.final && type > this.type << 1) // check if TypeSelector has a higher bit set than this._type
             return false;
-        if ((this._type & type) === 0 || (this._modifiers & ~modifiers) !== 0)
+        if ((this.type & type) === 0 || (this.modifiers & ~modifiers) !== 0)
             return false;
-        if (this._filter === undefined)
+        if (this.filter === undefined)
             return true;
-        return this._filter.test(name);
+        return this.filter.test(name);
     }
 }
 
 class NameChecker {
-    private _format: Format | Format[] | undefined;
-    private _leadingUnderscore: UnderscoreOption | undefined;
-    private _trailingUnderscore: UnderscoreOption | undefined;
-    private _prefix: string | string[] | undefined;
-    private _suffix: string | string[] | undefined;
-    private _regex: RegExp | undefined;
-    constructor(private readonly _type: TypeSelector, format: IFormat) {
-        this._leadingUnderscore = format.leadingUnderscore;
-        this._trailingUnderscore = format.trailingUnderscore;
-        this._format = parseOptionArray<Format>(format.format);
-        this._prefix = parseOptionArray(format.prefix);
-        this._suffix = parseOptionArray(format.suffix);
-        this._regex = format.regex ? new RegExp(format.regex) : undefined;
+    private readonly format: Format | Format[] | undefined;
+    private readonly leadingUnderscore: UnderscoreOption | undefined;
+    private readonly trailingUnderscore: UnderscoreOption | undefined;
+    private readonly prefix: string | string[] | undefined;
+    private readonly suffix: string | string[] | undefined;
+    private readonly regex: RegExp | undefined;
+
+    constructor(private readonly type: TypeSelector, format: FormatType) {
+        this.leadingUnderscore = format.leadingUnderscore;
+        this.trailingUnderscore = format.trailingUnderscore;
+        this.format = parseOptionArray<Format>(format.format);
+        this.prefix = parseOptionArray(format.prefix);
+        this.suffix = parseOptionArray(format.suffix);
+        this.regex = format.regex ? new RegExp(format.regex) : undefined;
     }
 
     public check(name: ts.Identifier, walker: Lint.AbstractWalker<any>) {
         let identifier = name.text;
 
         // start with regex test before we potentially strip off underscores and affixes
-        if (this._regex !== undefined && !this._regex.test(identifier))
-            walker.addFailureAtNode(name, this._failMessage(REGEX_FAIL));
+        if (this.regex !== undefined && !this.regex.test(identifier))
+            walker.addFailureAtNode(name, this.failMessage(REGEX_FAIL));
 
-        if (this._leadingUnderscore) {
+        if (this.leadingUnderscore) {
             if (identifier[0] === '_') {
-                if (this._leadingUnderscore === 'forbid')
-                    walker.addFailureAtNode(name, this._failMessage(LEADING_FAIL));
+                if (this.leadingUnderscore === 'forbid')
+                    walker.addFailureAtNode(name, this.failMessage(LEADING_FAIL));
                 identifier = identifier.slice(1);
-            } else if (this._leadingUnderscore === 'require') {
-                walker.addFailureAtNode(name, this._failMessage(NO_LEADING_FAIL));
+            } else if (this.leadingUnderscore === 'require') {
+                walker.addFailureAtNode(name, this.failMessage(NO_LEADING_FAIL));
             }
         }
 
-        if (this._trailingUnderscore) {
+        if (this.trailingUnderscore) {
             if (identifier[identifier.length - 1] === '_') {
-                if (this._trailingUnderscore === 'forbid')
-                    walker.addFailureAtNode(name, this._failMessage(TRAILING_FAIL));
+                if (this.trailingUnderscore === 'forbid')
+                    walker.addFailureAtNode(name, this.failMessage(TRAILING_FAIL));
                 identifier = identifier.slice(0, -1);
-            } else if (this._trailingUnderscore === 'require') {
-                walker.addFailureAtNode(name, this._failMessage(NO_TRAILING_FAIL));
+            } else if (this.trailingUnderscore === 'require') {
+                walker.addFailureAtNode(name, this.failMessage(NO_TRAILING_FAIL));
             }
         }
 
-        if (this._prefix) {
-            if (Array.isArray(this._prefix)) {
-                identifier = this._checkPrefixes(identifier, name, this._prefix, walker);
-            } else if (identifier.startsWith(this._prefix)) {
-                identifier = identifier.slice(this._prefix.length);
+        if (this.prefix) {
+            if (Array.isArray(this.prefix)) {
+                identifier = this.checkPrefixes(identifier, name, this.prefix, walker);
+            } else if (identifier.startsWith(this.prefix)) {
+                identifier = identifier.slice(this.prefix.length);
             } else {
-                walker.addFailureAtNode(name, this._failMessage(PREFIX_FAIL + this._prefix));
+                walker.addFailureAtNode(name, this.failMessage(PREFIX_FAIL + this.prefix));
             }
         }
-        if (this._suffix) {
-            if (Array.isArray(this._suffix)) {
-                identifier = this._checkSuffixes(identifier, name, this._suffix, walker);
-            } else if (identifier.endsWith(this._suffix)) {
-                identifier = identifier.slice(0, -this._suffix.length);
+        if (this.suffix) {
+            if (Array.isArray(this.suffix)) {
+                identifier = this.checkSuffixes(identifier, name, this.suffix, walker);
+            } else if (identifier.endsWith(this.suffix)) {
+                identifier = identifier.slice(0, -this.suffix.length);
             } else {
-                walker.addFailureAtNode(name, this._failMessage(SUFFIX_FAIL + this._suffix));
+                walker.addFailureAtNode(name, this.failMessage(SUFFIX_FAIL + this.suffix));
             }
         }
 
         // case checks
-        if (this._format) {
-            if (Array.isArray(this._format)) {
-                if (!matchesAnyFormat(identifier, this._format))
-                    walker.addFailureAtNode(name, this._failMessage(FORMAT_FAIL + formatFormatList(this._format)));
-            } else if (!matchesFormat(identifier, this._format)) {
-                walker.addFailureAtNode(name, this._failMessage(FORMAT_FAIL + this._format));
+        if (this.format) {
+            if (Array.isArray(this.format)) {
+                if (!matchesAnyFormat(identifier, this.format))
+                    walker.addFailureAtNode(name, this.failMessage(FORMAT_FAIL + formatFormatList(this.format)));
+            } else if (!matchesFormat(identifier, this.format)) {
+                walker.addFailureAtNode(name, this.failMessage(FORMAT_FAIL + this.format));
             }
         }
     }
 
-    private _failMessage(message: string): string {
-        return TypeSelector[this._type] + message;
+    private failMessage(message: string): string {
+        return TypeSelector[this.type] + message;
     }
 
-    private _checkPrefixes(identifier: string, name: ts.Identifier, prefixes: string[], walker: Lint.AbstractWalker<any>): string {
+    private checkPrefixes(identifier: string, name: ts.Identifier, prefixes: string[], walker: Lint.AbstractWalker<any>): string {
         for (const prefix of prefixes)
             if (identifier.startsWith(prefix))
                 return identifier.slice(prefix.length);
-        walker.addFailureAtNode(name, this._failMessage(PREFIX_FAIL_ARR + prefixes.toString()));
+        walker.addFailureAtNode(name, this.failMessage(PREFIX_FAIL_ARR + prefixes.toString()));
         return identifier;
     }
 
-    private _checkSuffixes(identifier: string, name: ts.Identifier, suffixes: string[], walker: Lint.AbstractWalker<any>): string {
+    private checkSuffixes(identifier: string, name: ts.Identifier, suffixes: string[], walker: Lint.AbstractWalker<any>): string {
         for (const suffix of suffixes)
             if (identifier.endsWith(suffix))
                 return identifier.slice(0, -suffix.length);
-        walker.addFailureAtNode(name, this._failMessage(SUFFIX_FAIL_ARR + suffixes.toString()));
+        walker.addFailureAtNode(name, this.failMessage(SUFFIX_FAIL_ARR + suffixes.toString()));
         return identifier;
     }
 
 }
 
 class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
-    private _depth = 0;
-    private _usage: Map<ts.Identifier, utils.VariableInfo> | undefined = undefined;
+    private depth = 0;
+    private usage: Map<ts.Identifier, utils.VariableInfo> | undefined = undefined;
 
     public visitEnumDeclaration(node: ts.EnumDeclaration) {
-        let modifiers = this._getModifiers(node, TypeSelector.enum);
-        this._checkName(node.name, TypeSelector.enum, modifiers);
+        let modifiers = this.getModifiers(node, TypeSelector.enum);
+        this.checkName(node.name, TypeSelector.enum, modifiers);
         modifiers |= Modifiers.static | Modifiers.public | Modifiers.readonly; // treat enum members as static readonly properties
         for (const {name} of node.members)
             if (utils.isIdentifier(name))
-                this._checkName(name, TypeSelector.enumMember, modifiers);
+                this.checkName(name, TypeSelector.enumMember, modifiers);
     }
 
     public visitClassLikeDeclaration(node: ts.ClassLikeDeclaration) {
         if (node.name !== undefined)
-            this._checkDeclaration(<ts.ClassLikeDeclaration & {name: ts.Identifier}>node, TypeSelector.class);
-        this._checkTypeParameters(node, Modifiers.global);
+            this.checkDeclaration(<ts.ClassLikeDeclaration & {name: ts.Identifier}>node, TypeSelector.class);
+        this.checkTypeParameters(node, Modifiers.global);
     }
 
     public visitMethodDeclaration(node: ts.MethodDeclaration) {
         if (isNameIdentifier(node))
-            this._checkDeclaration(node, TypeSelector.method);
-        this._checkTypeParameters(node, Modifiers.local);
+            this.checkDeclaration(node, TypeSelector.method);
+        this.checkTypeParameters(node, Modifiers.local);
     }
 
     public visitTypeAliasDeclaration(node: ts.TypeAliasDeclaration) {
-        this._checkDeclaration(node, TypeSelector.typeAlias);
-        this._checkTypeParameters(node, Modifiers.global);
+        this.checkDeclaration(node, TypeSelector.typeAlias);
+        this.checkTypeParameters(node, Modifiers.global);
     }
 
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
@@ -345,10 +361,10 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
                 return;
             // param properties cannot be destructuring assignments
             const parameterProperty = utils.isParameterProperty(node);
-            this._checkDeclaration(
+            this.checkDeclaration(
                 node,
                 parameterProperty ? TypeSelector.parameterProperty : TypeSelector.parameter,
-                utils.isFunctionWithBody(node.parent!) && !parameterProperty && this._isUnused(node.name) ? Modifiers.unused : 0,
+                utils.isFunctionWithBody(node.parent!) && !parameterProperty && this.isUnused(node.name) ? Modifiers.unused : 0,
             );
         } else {
             // handle destructuring
@@ -356,9 +372,9 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
                 let modifiers = Modifiers.local;
                 if (!isEqualName(declaration.name, declaration.propertyName))
                     modifiers |= Modifiers.rename;
-                if (utils.isFunctionWithBody(node.parent!) && this._isUnused(declaration.name))
+                if (utils.isFunctionWithBody(node.parent!) && this.isUnused(declaration.name))
                     modifiers |= Modifiers.unused;
-                this._checkName(declaration.name, TypeSelector.parameter, modifiers);
+                this.checkName(declaration.name, TypeSelector.parameter, modifiers);
             });
         }
 
@@ -366,67 +382,67 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
 
     public visitPropertyDeclaration(node: ts.PropertyDeclaration) {
         if (isNameIdentifier(node))
-            this._checkDeclaration(node, TypeSelector.property);
+            this.checkDeclaration(node, TypeSelector.property);
     }
 
     public visitInterfaceDeclaration(node: ts.InterfaceDeclaration) {
-        this._checkDeclaration(node, TypeSelector.interface);
-        this._checkTypeParameters(node, Modifiers.global);
+        this.checkDeclaration(node, TypeSelector.interface);
+        this.checkTypeParameters(node, Modifiers.global);
     }
 
     public visitSetAccessor(node: ts.SetAccessorDeclaration) {
         if (isNameIdentifier(node))
-            this._checkDeclaration(node, TypeSelector.property);
+            this.checkDeclaration(node, TypeSelector.property);
     }
 
     public visitGetAccessor(node: ts.GetAccessorDeclaration) {
         if (isNameIdentifier(node))
-            this._checkDeclaration(node, TypeSelector.property);
+            this.checkDeclaration(node, TypeSelector.property);
     }
 
     public visitForStatement(node: ts.ForStatement) {
         if (node.initializer !== undefined && utils.isVariableDeclarationList(node.initializer))
-            this._checkVariableDeclarationList(node.initializer, this._getModifiers(node.initializer, TypeSelector.variable));
+            this.checkVariableDeclarationList(node.initializer, this.getModifiers(node.initializer, TypeSelector.variable));
     }
 
     public visitForOfStatement(node: ts.ForOfStatement) {
         if (utils.isVariableDeclarationList(node.initializer))
-            this._checkVariableDeclarationList(node.initializer, this._getModifiers(node.initializer, TypeSelector.variable));
+            this.checkVariableDeclarationList(node.initializer, this.getModifiers(node.initializer, TypeSelector.variable));
     }
 
     public visitForInStatement(node: ts.ForInStatement) {
         if (utils.isVariableDeclarationList(node.initializer))
-            this._checkVariableDeclarationList(node.initializer, this._getModifiers(node.initializer, TypeSelector.variable));
+            this.checkVariableDeclarationList(node.initializer, this.getModifiers(node.initializer, TypeSelector.variable));
     }
 
     public visitVariableStatement(node: ts.VariableStatement) {
         // skip 'declare' keywords
         if (!utils.hasModifier(node.modifiers, ts.SyntaxKind.DeclareKeyword))
-            this._checkVariableDeclarationList(node.declarationList, this._getModifiers(node, TypeSelector.variable));
+            this.checkVariableDeclarationList(node.declarationList, this.getModifiers(node, TypeSelector.variable));
     }
 
     public visitFunction(node: ts.FunctionDeclaration | ts.FunctionExpression) {
         if (node.name !== undefined)
-            this._checkDeclaration(<(ts.FunctionDeclaration | ts.FunctionDeclaration) & {name: ts.Identifier}>node, TypeSelector.function);
-        this._checkTypeParameters(node, Modifiers.local);
+            this.checkDeclaration(<(ts.FunctionDeclaration | ts.FunctionDeclaration) & {name: ts.Identifier}>node, TypeSelector.function);
+        this.checkTypeParameters(node, Modifiers.local);
     }
 
-    private _isUnused(name: ts.Identifier): boolean {
-        if (this._usage === undefined)
-            this._usage = utils.collectVariableUsage(this.sourceFile);
-        return this._usage.get(name)!.uses.length === 0;
+    private isUnused(name: ts.Identifier): boolean {
+        if (this.usage === undefined)
+            this.usage = utils.collectVariableUsage(this.sourceFile);
+        return this.usage.get(name)!.uses.length === 0;
     }
 
-    private _checkTypeParameters(
+    private checkTypeParameters(
         node: ts.SignatureDeclaration | ts.ClassLikeDeclaration | ts.InterfaceDeclaration | ts.TypeAliasDeclaration,
         modifiers: Modifiers,
     ) {
         if (node.typeParameters !== undefined)
             for (const {name} of node.typeParameters)
-                this._checkName(name, TypeSelector.genericTypeParameter, modifiers);
+                this.checkName(name, TypeSelector.genericTypeParameter, modifiers);
     }
 
-    private _checkVariableDeclarationList(list: ts.VariableDeclarationList, modifiers: number) {
+    private checkVariableDeclarationList(list: ts.VariableDeclarationList, modifiers: number) {
         // compute modifiers once and reuse for all declared variables
         if ((list.flags & ts.NodeFlags.Const) !== 0)
             modifiers |= Modifiers.const;
@@ -435,31 +451,31 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
             let selector = TypeSelector.variable;
             if (declaration.kind === ts.SyntaxKind.BindingElement && !isEqualName(declaration.name, declaration.propertyName))
                 currentModifiers |= Modifiers.rename;
-            if (this._isUnused(declaration.name))
+            if (this.isUnused(declaration.name))
                 currentModifiers |= Modifiers.unused;
             if (isFunctionVariable(declaration))
                 selector = TypeSelector.functionVariable;
-            this._checkName(declaration.name, selector, currentModifiers);
+            this.checkName(declaration.name, selector, currentModifiers);
         });
     }
 
     public visitArrowFunction(node: ts.ArrowFunction) {
-        this._checkTypeParameters(node, Modifiers.local);
+        this.checkTypeParameters(node, Modifiers.local);
     }
 
-    private _checkDeclaration(node: DeclarationWithIdentifierName, type: TypeSelector, initialModifiers?: Modifiers) {
-        this._checkName(node.name, type, this._getModifiers(node, type, initialModifiers));
+    private checkDeclaration(node: DeclarationWithIdentifierName, type: TypeSelector, initialModifiers?: Modifiers) {
+        this.checkName(node.name, type, this.getModifiers(node, type, initialModifiers));
     }
 
-    private _checkName(name: ts.Identifier, type: TypeSelector, modifiers: number) {
-        const matchingChecker = this._createChecker(type, modifiers, name.text);
+    private checkName(name: ts.Identifier, type: TypeSelector, modifiers: number) {
+        const matchingChecker = this.createChecker(type, modifiers, name.text);
         if (matchingChecker !== null) // tslint:disable-line:no-null-keyword
             matchingChecker.check(name, this);
     }
 
-    private _createChecker(type: TypeSelector, modifiers: number, name: string): NameChecker | null {
+    private createChecker(type: TypeSelector, modifiers: number, name: string): NameChecker | null {
         const config = this.options.reduce(
-            (format: IFormat, rule) => {
+            (format: FormatType, rule) => {
                 if (!rule.matches(type, modifiers, name))
                     return format;
                 return Object.assign(format, rule.getFormat()); // tslint:disable-line:prefer-object-spread
@@ -484,7 +500,7 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
         return new NameChecker(type, config);
     }
 
-    private _getModifiers(node: ts.Node, type: TypeSelector, modifiers: Modifiers = 0): number {
+    private getModifiers(node: ts.Node, type: TypeSelector, modifiers: Modifiers = 0): number {
         if (node.modifiers !== undefined) {
             if (type & Types.member) { // property, method, parameter property
                 if (utils.hasModifier(node.modifiers, ts.SyntaxKind.PrivateKeyword)) {
@@ -508,7 +524,7 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
         }
 
         if (type !== TypeSelector.property && type !== TypeSelector.method)
-            modifiers |= this._depth !== 0 ? Modifiers.local : Modifiers.global;
+            modifiers |= this.depth !== 0 ? Modifiers.local : Modifiers.global;
 
         return modifiers;
     }
@@ -517,9 +533,9 @@ class IdentifierNameWalker extends Lint.AbstractWalker<NormalizedConfig[]> {
         const cb = (node: ts.Node): void => {
             this.visitNode(node);
             if (utils.isScopeBoundary(node)) {
-                ++this._depth;
+                ++this.depth;
                 ts.forEachChild(node, cb);
-                --this._depth;
+                --this.depth;
             } else {
                 return ts.forEachChild(node, cb);
             }

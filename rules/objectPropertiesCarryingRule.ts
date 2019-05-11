@@ -26,7 +26,9 @@ export class Rule extends Rules.AbstractRule {
         options: { type: 'number' },
         optionExamples: [true, [true, 3, Rule.DEFAULT_MAX_CONTENT_WIDTH]],
         type: 'style',
+        // tslint:disable-next-line
         typescriptOnly: true,
+        // tslint:disable-next-line
         requiresTypeInfo: true
     };
 
