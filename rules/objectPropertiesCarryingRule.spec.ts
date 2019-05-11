@@ -29,6 +29,78 @@ describe('ObjectPropertiesCarrying', () => {
         expect({ source, rule }).toBePassed();
     });
 
+    it('should not to be failed with empty array property', () => {
+        const source = `
+            const a123123 = { component: 12 };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with array property with 1 item', () => {
+        const source = `
+            const a123123 = { countries: [], selectedItems: [0] };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with array with 1 item', () => {
+        const source = `
+            const a123123 = { countries: ['Russia'], selectedItems: [0] };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should to be failed with array with 2 items', () => {
+        const source = `
+            const a123123 = { countries: ['Russia', 'USA'], selectedItems: [0] };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should not to be failed with empty object property', () => {
+        const source = `
+            const a123123 = { fruits: {} };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should not to be failed with not empty object property', () => {
+        const source = `
+            const a123123 = { fruits: {}, vegetable: { price: 12 } };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should to be failed with 2 function invoking methods', () => {
+        const source = `
+            const a123123 = { apply: jest.fn(), denied: functions.resolve.do() };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
+    it('should be passed with 1 function invoking methods', () => {
+        const source = `
+            const a123123 = { apply: jest.fn(), anotherProperty: 123 };
+        `;
+
+        expect({ source, rule }).toBePassed();
+    });
+
+    it('should to be failed with 1 function more than required length', () => {
+        const source = `
+            const a123123 = { denied: functions.resolve.big.method.do(), no: '123' };
+        `;
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_OBJECT_COMPLEX_VALUES);
+    });
+
     it('should not to be failed with some multiline complex properties', () => {
         const source = `
             const obj18 = {
