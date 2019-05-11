@@ -5,6 +5,9 @@ module.exports = {
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
+    "setupFiles": [
+        "<rootDir>/config/jest/expect/expect.js"
+    ],
     "transform": {
         "^(?!.*\\.(js|ts|css|json)$)": "<rootDir>/config/jest/transform/file.transform.js",
         "^.+\\.ts$": "<rootDir>/config/jest/transform/typescript.transform.js"
