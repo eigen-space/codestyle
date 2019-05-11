@@ -2,6 +2,12 @@ import * as TS from 'typescript';
 import * as Lint from 'tslint';
 import { RuleFailure, Rules } from 'tslint';
 import { BaseWalker } from './base-walker/base-walker';
+import {
+    ObjectLiteralExpressionBase,
+    ObjectLiteralElement,
+    PropertyDeclaration,
+    ArrayBindingPattern
+} from 'typescript';
 
 /**
  * Walks the AST and visits each object declaration.
@@ -17,6 +23,7 @@ export class Rule extends Rules.AbstractRule {
 
     static DEFAULT_MAX_CONTENT_WIDTH = 70;
     static DEFAULT_MAX_SINGLE_LINE_PROPERTIES = 3;
+    static DEFAULT_MAX_FUNCTION_INVOKING_LINE_WIDTH = 30;
 
     // noinspection JSUnusedGlobalSymbols
     static metadata: Lint.IRuleMetadata = {
@@ -39,14 +46,12 @@ export class Rule extends Rules.AbstractRule {
 
 class ObjectDeclarationWalker extends BaseWalker {
     private static COMPLEX_KINDS_OF_VALUE = [
-        TS.SyntaxKind.ObjectLiteralExpression,
         TS.SyntaxKind.ArrowFunction,
         TS.SyntaxKind.FunctionExpression,
         TS.SyntaxKind.NewExpression,
         TS.SyntaxKind.JsxElement,
         TS.SyntaxKind.ArrayLiteralExpression,
         TS.SyntaxKind.ConditionalExpression,
-        TS.SyntaxKind.CallExpression,
         TS.SyntaxKind.BinaryExpression,
         TS.SyntaxKind.PropertyAccessExpression
     ];
@@ -71,7 +76,7 @@ class ObjectDeclarationWalker extends BaseWalker {
 
         const properties = this.getProperties(node);
         properties.forEach(prop => {
-            const value = this.getValueFromPropertyAssigment(prop);
+            const value = this.getValueFromPropertyAssigment(prop as PropertyDeclaration);
             if (!value) {
                 return;
             }
@@ -130,7 +135,7 @@ class ObjectDeclarationWalker extends BaseWalker {
         }
     }
 
-    private getProperties(node: TS.Node): TS.Node[] {
+    private getProperties(node: TS.Node): PropertyDeclaration[] {
         const validTypes = [
             TS.SyntaxKind.PropertyAssignment,
             TS.SyntaxKind.ShorthandPropertyAssignment,
@@ -139,7 +144,7 @@ class ObjectDeclarationWalker extends BaseWalker {
 
         return node.getChildAt(1)
             .getChildren()
-            .filter(property => validTypes.includes(property.kind));
+            .filter(property => validTypes.includes(property.kind)) as PropertyDeclaration[];
     }
 
     private hasOnlyOneMultilineProperty(properties: TS.Node[]): boolean {
@@ -151,24 +156,50 @@ class ObjectDeclarationWalker extends BaseWalker {
         return this.getNumberOfLine(property, 'start') !== this.getNumberOfLine(property, 'end');
     }
 
-    private doesPropertiesHaveComplexValue(properties: TS.Node[]): boolean {
+    private doesPropertiesHaveComplexValue(properties: PropertyDeclaration[]): boolean {
+        if (this.hasMoreThanOneOrLongCallExpression(properties)) {
+            return true;
+        }
+
         return properties.some(property => this.hasPropertyComplexValue(property));
     }
 
+    private hasMoreThanOneOrLongCallExpression(properties: PropertyDeclaration[]): boolean {
+        const propAssigmentValues = properties.map(property => this.getValueFromPropertyAssigment(property));
+        const foundCallExpressions = propAssigmentValues.filter(
+            item => item && item.kind === TS.SyntaxKind.CallExpression
+        );
+
+        if (1 < foundCallExpressions.length) {
+            return true;
+        }
+
+        return foundCallExpressions.some(
+            item => Boolean(item && Rule.DEFAULT_MAX_FUNCTION_INVOKING_LINE_WIDTH < item.getText().length)
+        );
+    }
+
     // noinspection JSMethodCanBeStatic
-    private hasPropertyComplexValue(property: TS.Node): boolean {
+    private hasPropertyComplexValue(property: PropertyDeclaration): boolean {
         const value = this.getValueFromPropertyAssigment(property);
         if (!value) {
             return false;
+        }
+
+        if (value.kind === TS.SyntaxKind.ObjectLiteralExpression) {
+            return Boolean((value as ObjectLiteralExpressionBase<ObjectLiteralElement>).properties.length);
+        }
+
+        if (value.kind === TS.SyntaxKind.ArrayLiteralExpression) {
+            return Boolean(1 < (value as ArrayBindingPattern).elements.length);
         }
 
         return ObjectDeclarationWalker.COMPLEX_KINDS_OF_VALUE.includes(value.kind);
     }
 
     // noinspection JSMethodCanBeStatic
-    private getValueFromPropertyAssigment(property: TS.Node): TS.Node | undefined {
-        const [, , value] = property.getChildren();
-        return value;
+    private getValueFromPropertyAssigment(property: PropertyDeclaration): TS.Node | undefined {
+        return property.initializer;
     }
 
     private hasDeniedNumberOfProperties(properties: TS.Node[]): boolean {
