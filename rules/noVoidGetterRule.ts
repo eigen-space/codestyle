@@ -17,7 +17,9 @@ export class Rule extends Lint.Rules.AbstractRule {
         options: {},
         optionExamples: [],
         type: 'style',
+        // tslint:disable-next-line
         typescriptOnly: true,
+        // tslint:disable-next-line
         requiresTypeInfo: false
     };
 

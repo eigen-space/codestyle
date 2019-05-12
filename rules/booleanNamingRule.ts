@@ -33,7 +33,7 @@ type Declaration = ts.VariableDeclaration
 
 export class Rule extends Lint.Rules.TypedRule {
     static AVAILABLE_ENDING = 'ed';
-    static AVAILABLE_PREFIXES = ['is', 'has'];
+    static AVAILABLE_PREFIXES = ['is', 'has', 'does'];
     static RESERVED_WORDS = ['busy', 'hidden', 'value'];
 
     static metadata: Lint.IRuleMetadata = {
@@ -51,7 +51,9 @@ export class Rule extends Lint.Rules.TypedRule {
         },
         optionExamples: [true, [true, 'stolen', 'taken']],
         type: 'style',
+        // tslint:disable-next-line
         typescriptOnly: true,
+        // tslint:disable-next-line
         requiresTypeInfo: true
     };
 
