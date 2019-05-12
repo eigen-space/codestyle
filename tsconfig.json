@@ -7,6 +7,9 @@
             "node_modules/@types"
         ]
     },
+    "files": [
+        "types/jest.d.ts"
+    ],
     "include": [
         "rules",
         "utils"

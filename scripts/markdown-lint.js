@@ -22,7 +22,7 @@ if (!readme) {
     throw new Error(FAILURE_STRING_NO_README);
 }
 
-const dependencyNames = [
+const dependencyTypes = [
     'dependencies',
     'devDependencies',
     'optionalDependencies',
@@ -36,6 +36,11 @@ const DEPENDENCY_PATTERN = /(?<=\* `).*(?=` - )/g;
 
 let hasFailure = false;
 
+lint();
+
+// Functions
+// ----------
+
 function lint() {
     const packageJsonDependenciesMap = getPackageJsonDependenciesMap();
     const readmeDependenciesMap = getReadmeDependenciesMap();
@@ -48,18 +53,8 @@ function lint() {
 }
 
 function getPackageJsonDependenciesMap() {
-    const dependenciesMap = new Map();
-
-    dependencyNames.forEach(depName => {
-        const dependencies = packageJson[depName];
-        if (!dependencies) {
-            return;
-        }
-
-        dependenciesMap.set(depName, Object.keys(dependencies));
-    });
-
-    return dependenciesMap;
+    const dependencyTypesInProject = dependencyTypes.filter(depsType => packageJson[depsType]);
+    return new Map(dependencyTypesInProject.map(depsType => [depsType, Object.keys(packageJson[depsType])]))
 }
 
 function getReadmeDependenciesMap() {
@@ -83,19 +78,14 @@ function findDependencySections() {
 }
 
 function stringToCamelCase(str) {
-    let out = '';
-    str.split(' ').forEach((el, idx) => {
-        const add = el.toLowerCase();
-        out += (idx === 0 ? add : add[0].toUpperCase() + add.slice(1));
-    });
-    return out;
+    return str.replace(/ [a-z]/g, subString => subString[1].toUpperCase());
 }
 
 function compareDependencyMaps(packageJsonDependenciesMap, readmeDependenciesMap) {
-    const packageJsonDependencyKeys = Array.from(packageJsonDependenciesMap.keys());
-    const readmeDependencyKeys = Array.from(readmeDependenciesMap.keys());
+    const packageJsonDependencyTypes = Array.from(packageJsonDependenciesMap.keys());
+    const readmeDependencyTypes = Array.from(readmeDependenciesMap.keys());
 
-    const [missingTypes, excessTypes, commonTypes] = compareArrays(packageJsonDependencyKeys, readmeDependencyKeys);
+    const [missingTypes, excessTypes, commonTypes] = compareArrays(packageJsonDependencyTypes, readmeDependencyTypes);
 
     commonTypes.forEach(type => {
         const packageJsonDependencies = packageJsonDependenciesMap.get(type);
@@ -139,5 +129,3 @@ function reportFailure(str) {
     hasFailure = true;
     console.error(str)
 }
-
-lint();

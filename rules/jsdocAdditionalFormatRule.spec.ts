@@ -1,9 +1,7 @@
-import { lint } from '../sandbox/linter';
 import { Rule } from './jsdocAdditionalFormatRule';
 
-const rule = Rule.metadata.ruleName;
-
 describe('JsdocAdditionalFormatRule', () => {
+    const rule = Rule.metadata.ruleName;
 
     it('should return error if there is no body', () => {
         const source = `
@@ -11,8 +9,8 @@ describe('JsdocAdditionalFormatRule', () => {
              */
             const a = 1;
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING_NO_BODY);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_NO_BODY);
     });
 
     it('should return error if body starts with empty line', () => {
@@ -25,8 +23,8 @@ describe('JsdocAdditionalFormatRule', () => {
              */
             const a = 1;
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING_LINES_BEFORE_BODY);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_LINES_BEFORE_BODY);
     });
 
     it('should return error if comment separated from body by more than one line', () => {
@@ -39,8 +37,8 @@ describe('JsdocAdditionalFormatRule', () => {
              */
             const a = 1;
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING_LINES_AFTER_COMMENT);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_LINES_AFTER_COMMENT);
     });
 
     it('should return error if comment not separated from body', () => {
@@ -51,8 +49,8 @@ describe('JsdocAdditionalFormatRule', () => {
              */
             const a = 1;
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING_LINES_AFTER_COMMENT);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_LINES_AFTER_COMMENT);
     });
 
     it('should return error if body ends with empty line', () => {
@@ -63,8 +61,8 @@ describe('JsdocAdditionalFormatRule', () => {
              */
             const a = 1;
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING_LINES_AFTER_BODY);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_LINES_AFTER_BODY);
     });
 
     it('should return error if parameter description transferred on new line without tabs', () => {
@@ -77,8 +75,8 @@ describe('JsdocAdditionalFormatRule', () => {
              * @param {number} numberOfPoints Second param
              */
         `;
-        const failure = lint(rule, source).failures[0].getFailure();
-        expect(failure).toBe(Rule.FAILURE_STRING_REST_OF_PARAMS);
+
+        expect({ source, rule }).toBeFailedWith(Rule.FAILURE_STRING_REST_OF_PARAMS);
     });
 
     it('should not return error if we follow our codestyle ', () => {
@@ -90,7 +88,7 @@ describe('JsdocAdditionalFormatRule', () => {
              */
             const a = 1;
         `;
-        const result = lint(rule, source);
-        expect(result.errorCount).toBe(0);
+
+        expect({ source, rule }).toBePassed();
     });
 });
