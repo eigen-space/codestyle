@@ -1,12 +1,14 @@
+[ru](./README.ru.md)
+
 # npm dependencies
 
-## Why is it here?
+## 1. Why is it here?
 
 We developed a component library and encountered a problem while using it. Although we understood that this library
 should use the consumer environment, we incorrectly used dependencies. Thereby we got a library that cannot be used.
 So you need to understand how to organize dependencies.
 
-## A bit of theory
+## 2. A bit of theory
 
 At the moment, 3 types of dependencies are important for us and section of `package.json`:
 
@@ -28,7 +30,9 @@ when installed in another project. These dependencies are not installed when we 
 in another project, but you see warnings if there are no required peer dependencies among 
 installed ones.
 
-## How to use peer dependencies
+## 3. Peer dependencies
+
+### 3.1. How to use?
 
 So now it is clear that some dependencies are needed in `peerDependencies` section. 
 These dependencies are not installed when we pull dependencies for the project using 
@@ -36,17 +40,52 @@ These dependencies are not installed when we pull dependencies for the project u
 at the moment, *until we find the best option*, it is proposed to duplicate peer dependencies 
 in the `devDependencies` section.
 
-### Example
+### 3.2. Example
 
 `core-ui-kit` - library of ui components based on `react`.  `react` is listed in the `peerDependencies` section with
 version 16.7.0 . This means that the library `guarantees` its work with this version of `react`.  Accordingly, it is
 reasonable for the consumer to use this version in the project.
 
-### Important!
+### 3.3. What version should we set for peer dependency?
 
 It is not necessary to use a specific version. If we are sure that the library remains working, using
 a range of React versions, you can specify a range.
 
-## How to set version number of dependency
+## 4. How to set version number of dependency
 
+### 4.1. Only concrete version of dependency
+
+If we use some dependency, we should set only concrete version of it. That is unacceptable to use
+fluent versions (`^1.0.4`, `~1.0.4`), that can be accidently updated, among main dependencies (`dependencies`) 
+and dev dependencies (`devDependencies`). We should use only concrete ones: `1.0.4`. If we need 
+concrete patch or feature for some dependency, we should consciously update version to get these updates.
+Otherwise we should not get updates if we do not wait it.
+
+Technically we can avoid fluent dependencies the following ways:
+
+1. Define concrete version when we add dependency: `npm install --save-dev some-dep@1.0.4`
+2. Change default behaviour of parameter [`save-prefix`](https://docs.npmjs.com/misc/config#save-prefix) 
+of `.npmrc` (`.yarnrc`) in the root of project:
+ 
+`.npmrc`:
+
+```
+save-prefix=""
+```
+
+`.yarnrc`:
+
+```
+save-prefix ""
+```
+
+### 4.2. Fluent versions for peerDependencies
+
+When we write our own library, we likely use `peerDependencies` that imposes constraints on the
+environment in which it will be used. It makes sense to get as wide range as it is possible for
+peer dependencies to provide as much possibilities as possible for consumer projects that use
+our library. So it is preferable to set fluent versions (range of versions) for peer dependencies
+rather than concrete versions. However we should set only that range of versions we can guarantee
+our library works correctly with. If we do not really know whether our library works correctly
+with some versions of the peer dependency, we should set concrete version of the dependency.
 
