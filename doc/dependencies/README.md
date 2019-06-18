@@ -8,7 +8,7 @@ We developed a component library and encountered a problem while using it. Altho
 should use the consumer environment, we incorrectly used dependencies. Thereby we got a library that cannot be used.
 So you need to understand how to organize dependencies.
 
-## 2. A bit of theory
+## 2. A little bit of theory
 
 At the moment, 3 types of dependencies are important for us and section of `package.json`:
 
