@@ -25,8 +25,7 @@ if (!readme) {
 const dependencyTypes = [
     'dependencies',
     'devDependencies',
-    'optionalDependencies',
-    'peerDependencies'
+    'optionalDependencies'
 ];
 
 const DEPENDENCY_SECTION_TITLE_PREFIX = '# Why do we have that ';
