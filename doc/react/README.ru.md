@@ -1,4 +1,4 @@
-[ru](./README.ru.md)
+[en](./README.md)
 
 # React
 
@@ -50,6 +50,7 @@ export const ButtonRoot = styled.button.attrs<Props>(attrs)<Props>`
     padding: 0.44rem 1.72rem;
     `;
 ```
+
 
 ### 3.2. Props
 
@@ -119,7 +120,7 @@ export interface Props {
 }
 ```
 
-### 3.3. Template
+### 3.3. Шаблон
 
 #### 3.3.1. \[Не автоматизировано\] Вынесение частей шаблона, которая показывается по условию в отдельную функцию
 
@@ -170,15 +171,16 @@ private getContent(): ReactNode {
 
 ### 3.4. Redux
 
-### 3.4.1. Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
+### 3.4.1. Помещать redux `connect`, `mapStateToProps` и `mapDispatchToProps` в отдельный файл
 
-We should put container-component and related functions (`mapStateToProps` and `mapDispatchToProps`)
-in separate file to separate view logic and logic that prepare data (props) for view.
+Необходимо размещать компонент-контейнер и связанные с ним функции 
+(`mapStateToProps` и `mapDispatchToProps`) в отдельном файле. Этим мы достигаем
+разделения представления и логики, подготавливающей для него данные.
 
-Also we can test view and logic separately.
+Мы также можем проверять представление и логику отдельно.
 
 ```typescript
-    // Bad
+    // Плохо
     
     // result-check.ts
     const mapStateToProps = (state, ownProps) => {
@@ -195,7 +197,7 @@ Also we can test view and logic separately.
     
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
     
-    // Good
+    // Хорошо
     
     // result-check.presentation.ts
     export class ResultCheckRaw extends PureComponent {
@@ -216,40 +218,44 @@ Also we can test view and logic separately.
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-## 4. Naming convention
+## 4. Правила именования
 
-### 4.1. Naming of connected and non-connected
+### 4.1. Правила именования презентационных компонентов и компонентов контейнеров
 
-The main goal we want to achieve using this rule is semantic component names across the project.
-We mean we want to outline semantic in lieu of technical details of implementation of
-the component. So we do not want change code-consumer (for instance, some component of screen)
-if we change technical details inside our component.
+Основная идея в том, чтобы публичные компоненты, которые используются в проекте, имели
+семантически значимые имена. В данном случае мы имеем в виду, что мы хотим подчеркнуть
+именно смысл, нежели технические детали, стоящие за реализацией компонента. Как следствие,
+мы не хотим менять код-потребитель (например, код компонента, который представляет собой
+конечный экран), если мы изменили технические детали реализации. К техническим деталям
+относится и привязка компонента к redux или отсутствие таковой.
 
-#### 4.1.1. Usual name for component we use in component-consumer
+#### 4.1.1. У компонента должно быть обычное имя, если мы используем его в коде-потребителе
 
-a. If component do not use redux and it is used without redux, we should name it like we usually do,
-without any additional suffixes and prefixes.
+a. Если компонент не связан с redux, мы должны называть его так, как мы обычно и поступаем
+в случае именования компонентов, т.е. без дополнительных префиксов и суффиксов: 
 
 ```typescript
-    // Good
+    // Хорошо
     export class ImageSlider extends PureComponent {
         // ...
     }
 ```
 
-b. If component use redux and it is component we get as the result of redux `connect` and use
-in other components as semantic component, we should name it like we usually do,
-without any additional suffixes and prefixes.
+b. Если компонент использует redux и это компонент, который мы получаем в результате вызова
+`connect` redux'а, используется другими компонентами как семантически значимый,
+мы должны называть его так, как мы обычно и поступаем в случае именования компонентов, 
+т.е. без дополнительных префиксов и суффиксов: 
 
 ```typescript
     // Good
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-#### 4.1.2. Add suffix for connected component
+#### 4.1.2. Добавлять суффикс для оборачиваемого в `connect` компонента
 
-If we use component-container as component in code-consumer, we should name our
-presentational component (component we wrap with `connect`) with suffix `Raw`.
+Если мы используем компонент-контейнер в качестве компонента для кода-потребителя,
+мы должны называть презентационный компонент, т.е. компонент, который оборачивается 
+в `connect`, с суффиксом `Raw`.
 
 ```typescript
     class ResultCheckRaw extends PureComponent {
@@ -259,17 +265,17 @@ presentational component (component we wrap with `connect`) with suffix `Raw`.
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-#### 4.2. Do not use plurals in component name
+#### 4.2. Не использовать множественное число в названии компонентов
 
-Component name should contain singular words, not plurals.
+Имя компонента должно всегда быть в единственном числе, не должно быть множественного.
 
 ```typescript
-    // Bad
+    // Плохо
     class Panels extends PureComponent { 
         // ... 
     }
     
-    // Good
+    // Хорошо
     class PanelList extends PureComponent { 
         // ... 
     }
