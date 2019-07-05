@@ -169,6 +169,76 @@ private getContent(): ReactNode {
 }
 ```
 
+#### 3.3.2. \[Не автоматизировано\] Для jsx использовать общие правила оформления шаблонов
+
+Если правило явно не переопределяется специальным правилом для оформления шаблонов (jsx)
+в react-приложении, то использовать [общие правила оформления шаблонов](../templates/README.md).
+
+#### 3.3.3. \[Не автоматизировано\] Списки
+
+a. Не выносить список в отдельную функцию или компонент, если компонент условно небольшой.
+В качестве ориентира для "небольшой" использовать те же критерии, что для декомпозиции
+любого фрагмента кода.
+
+```typescript jsx
+// Плохо
+class Component {
+    render() {
+        return (
+            <CardListRoot>{this.getCards()}</CardListRoot>
+        )
+    }
+    
+    private getCards(): ReactNode[] {
+        return this.props.items.map(item => (
+            <CardContainer key={item.title}>
+               <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+            </CardContainer>
+        ));
+    }
+}
+
+// Хорошо
+class Component {
+    render() {
+        return (
+            <CardListRoot>
+                {this.props.items.map(item => (
+                    <CardContainer key={item.title}>
+                        <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+                    </CardContainer>
+                ))}
+            </CardListRoot>
+        )
+    }
+}
+```
+
+b. Не делать дополнительных переносов внутри фигурных скобок для фрагмента, где выводятся
+вложенные компоненты.
+
+```typescript jsx
+// Плохо
+<CardListRoot>
+    {
+        this.props.items.map(item => (
+            <CardContainer key={item.title}>
+                <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+            </CardContainer>
+        ))
+    }
+</CardListRoot>
+
+// Хорошо
+<CardListRoot>
+    {this.props.items.map(item => (
+        <CardContainer key={item.title}>
+            <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+        </CardContainer>
+    ))}
+</CardListRoot>
+```
+
 ### 3.4. Redux
 
 ### 3.4.1. Помещать redux `connect`, `mapStateToProps` и `mapDispatchToProps` в отдельный файл
