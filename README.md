@@ -28,7 +28,7 @@ This project contains:
 * [Common standarts](./doc/common/README.md)
 * [Angular](./doc/angular/README.md)
 * [React](./doc/react/README.md)
-* [Scripts](./doc/scripts/README.md)
+* [Scripts](./doc/scripts/README.ru.md)
 * [Styles](./doc/styles/README.md)
 
 # Rules for tslint
