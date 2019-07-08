@@ -240,7 +240,7 @@ b. Не делать дополнительных переносов внутр�
 
 ### 3.4. Redux
 
-### 3.4.1. Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
+### 3.4.1. \[Non-automated\] Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
 
 We should put container-component and related functions (`mapStateToProps` and `mapDispatchToProps`)
 in separate file to separate view logic and logic that prepare data (props) for view.
@@ -288,14 +288,14 @@ Also we can test view and logic separately.
 
 ## 4. Naming convention
 
-### 4.1. Naming of connected and non-connected
+### 4.1. \[Non-automated\] Naming of connected and non-connected
 
 The main goal we want to achieve using this rule is semantic component names across the project.
 We mean we want to outline semantic in lieu of technical details of implementation of
 the component. So we do not want change code-consumer (for instance, some component of screen)
 if we change technical details inside our component.
 
-#### 4.1.1. Usual name for component we use in component-consumer
+#### 4.1.1. \[Non-automated\] Usual name for component we use in component-consumer
 
 a. If component do not use redux and it is used without redux, we should name it like we usually do,
 without any additional suffixes and prefixes.
@@ -316,7 +316,7 @@ without any additional suffixes and prefixes.
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-#### 4.1.2. Add suffix for connected component
+#### 4.1.2. \[Non-automated\] Add suffix for connected component
 
 If we use component-container as component in code-consumer, we should name our
 presentational component (component we wrap with `connect`) with suffix `Raw`.
@@ -329,7 +329,7 @@ presentational component (component we wrap with `connect`) with suffix `Raw`.
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-#### 4.2. Do not use plurals in component name
+#### 4.2. \[Non-automated\] Do not use plurals in component name
 
 Component name should contain singular words, not plurals.
 
