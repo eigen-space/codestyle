@@ -1081,67 +1081,69 @@ c. Приватные (private)
 
 #### 2.8.2. \[Не автоматизировано\] Порядок методов одного типа и уровня доступа
 
-Примечание: \
-*Для конкретных фреймворков могут накладываться дополнительные правила.*
-
-В общем виде правило можно сформулировать так: код должен читаться сверху вниз.
-Вызываемый метод должен находится под вызывавшим.  
+a. Код должен читаться сверху вниз. Вызываемый метод должен находиться под вызывающим.  
 
 ```typescript
-private BuyButton(): React.Node {
-    return (
-      <Button onClick={this.buy}>Buy</Button/>  
-    );
-}
-
-private buy() {
-    ...
-    const clientInfo = this.getClientInfo();
-    ...
-}
-
-private getClientInfo(): ClientInfo {
-    return ...;
-}
-
+    class SomeClass {
+        
+        private run(): void {
+            // ...
+            this.buy();
+            // ...
+        }
+        
+        private buy(): void {
+            // ...
+            const clientInfo = this.getClientInfo();
+            // ...
+        }
+        
+        private getClientInfo(): ClientInfo {
+            // ...
+            return clientInfo;
+        }
+    }
 ```
 
-Если несколько методов расположены вместе друг за другом, то сначала идёт цепочка от первого метода,
-затем от второго, и т.д.
+b. Если несколько методов расположены друг за другом, то сначала идёт цепочка 
+от первого метода, затем от второго и т.д.
 
 ```typescript
-private ActionList(): React.Node {
-    return (
-      <Button onClick={this.buy}>Buy</Button/> 
-      <Button onClick={this.cancel}>Cancel</Button/>  
-    );
-}
-
-private buy(): void {
-    ...
-    const clientInfo = this.getClientInfo();
-    ...
-}
-
-private getClientInfo(): ClientInfo {
-    return ...;
-}
-
-private cancel(): void {
-    ...
-    this.removeOrders();
-    this.sendNotification();
-    ...
-}
-
-private removeOrders(): void {
-    ...
-}
-
-private sendNotification(): void {
-    ...
-}
-
+    class SomeClass {
+        
+        private run(): void {
+            // ...
+            this.buy();
+            this.runPostActions();
+            // ...
+        }
+        
+        private buy(): void {
+            // ...
+            const clientInfo = this.getClientInfo();
+            // ...
+        }
+        
+        private getClientInfo(): ClientInfo {
+            // ...
+            return clientInfo;
+        }
+        
+        private runPostActions(): void {
+            // ...
+            this.removeOrders();
+            this.sendNotification();
+            // ...
+        }
+        
+        private removeOrders(): void {
+            // ...
+        }
+        
+        private sendNotification(): void {
+            // ...
+        }
+    }
 ```
 
 #### 2.8.3. \[Не автоматизировано\] Группировка аксессоров (get/set)
