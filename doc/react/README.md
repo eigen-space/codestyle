@@ -22,11 +22,11 @@
 названия тега.
 
 ```typescript
-// Плохо
-const burger = navbar.find('input');
-
-// Хорошо
-const burger = navbar.find(BurgerWrapper);
+    // Плохо
+    const burger = navbar.find('input');
+    
+    // Хорошо
+    const burger = navbar.find(BurgerWrapper);
 ```
 
 #### 3.1.2. \[Не автоматизировано\] Выносить определение атрибутов тэга в отдельную константу
@@ -34,20 +34,20 @@ const burger = navbar.find(BurgerWrapper);
 Выносить определение атрибутов тэга в отделюную константу для более лучшего форматирования
 
 ```typescript jsx
-// Плохо
-export const ButtonRoot = styled.button.attrs<Props>({
-    type: (props: Props) => props.isSubmit && 'submit'
-})<Props>`
-    padding: 0.44rem 1.72rem;
-    `;
-
-// Хорошо
-const attrs = {
-    type: (props: Props) => props.isSubmit && 'submit'
-};
-
-export const ButtonRoot = styled.button.attrs<Props>(attrs)<Props>`
-    padding: 0.44rem 1.72rem;
+    // Плохо
+    export const ButtonRoot = styled.button.attrs<Props>({
+        type: (props: Props) => props.isSubmit && 'submit'
+    })<Props>`
+        padding: 0.44rem 1.72rem;
+        `;
+    
+    // Хорошо
+    const attrs = {
+        type: (props: Props) => props.isSubmit && 'submit'
+    };
+    
+    export const ButtonRoot = styled.button.attrs<Props>(attrs)<Props>`
+        padding: 0.44rem 1.72rem;
     `;
 ```
 
@@ -59,17 +59,17 @@ export const ButtonRoot = styled.button.attrs<Props>(attrs)<Props>`
 существования обработчика:
 
 ```typescript
-// Плохо
-private onBurgerBtnClicked(): void {
-    if (this.props.onBurgerBtnClicked) {
-        this.props.onBurgerBtnClicked();
+    // Плохо
+    private onBurgerBtnClicked(): void {
+        if (this.props.onBurgerBtnClicked) {
+            this.props.onBurgerBtnClicked();
+        }
     }
-}
-
-// Хорошо
-static defaultProps = {
-    onBurgerBtnClicked: () => {}
-};
+    
+    // Хорошо
+    static defaultProps = {
+        onBurgerBtnClicked: () => {}
+    };
 ```
 
 #### 3.2.2. \[Не автоматизировано\] Правила именования для обработчков
@@ -78,24 +78,24 @@ static defaultProps = {
 `Handler for <действие> on [что-то] [дополнительное описание]`
 
 ```typescript
-// Плохо
-
-/**
-* Callback is invoked when user presses burger button.
-*/
-onBurgerBtnClick?: () => void;
-
-/**
-* Invoked after user presses burger button.
-*/
-onBurgerBtnClick?: () => void;
-
-// Хорошо
-
-/**
- * Handler for click on burger button.
- */
-onBurgerBtnClick?: () => void;
+    // Плохо
+    
+    /**
+     * Callback is invoked when user presses burger button.
+     */
+    onBurgerBtnClick?: () => void;
+    
+    /**
+     * Invoked after user presses burger button.
+     */
+    onBurgerBtnClick?: () => void;
+    
+    // Хорошо
+    
+    /**
+     * Handler for click on burger button.
+     */
+    onBurgerBtnClick?: () => void;
 ```
 
 #### 3.2.3. \[Не автоматизировано\] Порядок в определении свойств 
@@ -110,13 +110,13 @@ onBurgerBtnClick?: () => void;
 В каждом пункте приоритеризация в зависимости от значимости свойства.
 
 ```typescript
-export interface Props {
-    title: string;
-    mode: SomeComponentMode;
-    fluent?: boolean;
-    onValueChange: (value: string) => void;
-    onFocus?: () => void;
-}
+    export interface Props {
+        title: string;
+        mode: SomeComponentMode;
+        fluent?: boolean;
+        onValueChange: (value: string) => void;
+        onFocus?: () => void;
+    }
 ```
 
 ### 3.3. Template
@@ -127,45 +127,45 @@ export interface Props {
 то его необходимо вынести в отдельную функцию.
 
 ```typescript jsx
-// Плохо
-
-<CardRoot {...this.props}>
-    {this.props.children}
-    {
-        hasContent &&
-        <Content>
+    // Плохо
+    
+    <CardRoot {...this.props}>
+        {this.props.children}
+        {
+            hasContent &&
+            <Content>
+                {this.props.title && <Title {...this.props}>{this.props.title}</Title>}
+                {this.props.subtitle && <Subtitle>{this.props.subtitle}</Subtitle>}
+    
+                <Description>{this.props.description}</Description>
+    
+                {this.props.icon && <Icon>{this.props.icon}</Icon>}
+            </Content>
+        }
+    </CardRoot>
+    
+    // Хорошо
+    
+    render(): ReactNode {
+        const hasContent = this.props.title || this.props.subtitle || this.props.icon || this.props.description;
+        return (
+            <CardRoot {...this.props}>
+                {this.props.children}
+                {hasContent && this.getContent()}
+            </CardRoot>
+        );
+    }
+    
+    private getContent(): ReactNode {
+        return <Content>
             {this.props.title && <Title {...this.props}>{this.props.title}</Title>}
             {this.props.subtitle && <Subtitle>{this.props.subtitle}</Subtitle>}
-
+    
             <Description>{this.props.description}</Description>
-
+    
             {this.props.icon && <Icon>{this.props.icon}</Icon>}
-        </Content>
+        </Content>;
     }
-</CardRoot>
-
-// Хорошо
-
-render(): ReactNode {
-    const hasContent = this.props.title || this.props.subtitle || this.props.icon || this.props.description;
-    return (
-        <CardRoot {...this.props}>
-            {this.props.children}
-            {hasContent && this.getContent()}
-        </CardRoot>
-    );
-}
-
-private getContent(): ReactNode {
-    return <Content>
-        {this.props.title && <Title {...this.props}>{this.props.title}</Title>}
-        {this.props.subtitle && <Subtitle>{this.props.subtitle}</Subtitle>}
-
-        <Description>{this.props.description}</Description>
-
-        {this.props.icon && <Icon>{this.props.icon}</Icon>}
-    </Content>;
-}
 ```
 
 #### 3.3.2. \[Не автоматизировано\] Для jsx использовать общие правила оформления шаблонов
@@ -180,67 +180,67 @@ a. Не выносить список в отдельную функцию ил�
 любого фрагмента кода.
 
 ```typescript jsx
-// Плохо
-class Component {
-    render() {
-        return (
-            <CardListRoot>{this.getCards()}</CardListRoot>
-        )
+    // Плохо
+    class Component {
+        render() {
+            return (
+                <CardListRoot>{this.getCards()}</CardListRoot>
+            )
+        }
+        
+        private getCards(): ReactNode[] {
+            return this.props.items.map(item => (
+                <CardContainer key={item.title}>
+                   <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+                </CardContainer>
+            ));
+        }
     }
     
-    private getCards(): ReactNode[] {
-        return this.props.items.map(item => (
-            <CardContainer key={item.title}>
-               <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
-            </CardContainer>
-        ));
+    // Хорошо
+    class Component {
+        render() {
+            return (
+                <CardListRoot>
+                    {this.props.items.map(item => (
+                        <CardContainer key={item.title}>
+                            <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+                        </CardContainer>
+                    ))}
+                </CardListRoot>
+            )
+        }
     }
-}
-
-// Хорошо
-class Component {
-    render() {
-        return (
-            <CardListRoot>
-                {this.props.items.map(item => (
-                    <CardContainer key={item.title}>
-                        <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
-                    </CardContainer>
-                ))}
-            </CardListRoot>
-        )
-    }
-}
 ```
 
 b. Не делать дополнительных переносов внутри фигурных скобок для фрагмента, где выводятся
 вложенные компоненты.
 
 ```typescript jsx
-// Плохо
-<CardListRoot>
-    {
-        this.props.items.map(item => (
+    // Плохо
+    <CardListRoot>
+        {
+            this.props.items.map(item => (
+                <CardContainer key={item.title}>
+                    <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
+                </CardContainer>
+            ))
+        }
+    </CardListRoot>
+    
+    // Хорошо
+    <CardListRoot>
+        {this.props.items.map(item => (
             <CardContainer key={item.title}>
                 <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
             </CardContainer>
-        ))
-    }
-</CardListRoot>
-
-// Хорошо
-<CardListRoot>
-    {this.props.items.map(item => (
-        <CardContainer key={item.title}>
-            <Card {...item} onEdit={this.props.onCardEdit} onAction={this.props.onAction}/>
-        </CardContainer>
-    ))}
-</CardListRoot>
+        ))}
+    </CardListRoot>
 ```
 
 ### 3.4. Redux
 
-### 3.4.1. Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
+### 3.4.1. \[Non-automated\] Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
 
 We should put container-component and related functions (`mapStateToProps` and `mapDispatchToProps`)
 in separate file to separate view logic and logic that prepare data (props) for view.
@@ -288,14 +288,14 @@ Also we can test view and logic separately.
 
 ## 4. Naming convention
 
-### 4.1. Naming of connected and non-connected
+### 4.1. \[Non-automated\] Naming of connected and non-connected
 
 The main goal we want to achieve using this rule is semantic component names across the project.
 We mean we want to outline semantic in lieu of technical details of implementation of
 the component. So we do not want change code-consumer (for instance, some component of screen)
 if we change technical details inside our component.
 
-#### 4.1.1. Usual name for component we use in component-consumer
+#### 4.1.1. \[Non-automated\] Usual name for component we use in component-consumer
 
 a. If component do not use redux and it is used without redux, we should name it like we usually do,
 without any additional suffixes and prefixes.
@@ -316,7 +316,7 @@ without any additional suffixes and prefixes.
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-#### 4.1.2. Add suffix for connected component
+#### 4.1.2. \[Non-automated\] Add suffix for connected component
 
 If we use component-container as component in code-consumer, we should name our
 presentational component (component we wrap with `connect`) with suffix `Raw`.
@@ -329,7 +329,7 @@ presentational component (component we wrap with `connect`) with suffix `Raw`.
     export const ResultCheck = connect(mapStateToProps, mapDispatchToProps)(ResultCheckRaw);
 ```
 
-#### 4.2. Do not use plurals in component name
+#### 4.2. \[Non-automated\] Do not use plurals in component name
 
 Component name should contain singular words, not plurals.
 

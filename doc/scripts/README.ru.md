@@ -1,40 +1,35 @@
-[ru](./README.ru.md)
+[en](./README.md)
 
 # Scripts (TypeScript / JavaScript)
 
-## Work in progress
+## 0. Введение
 
-We are translating this document from russian to english and some sections are not ready yet.
-Please, go [here](./README.ru.md) to get full description in russian language.
-If you want to help us, please create pull request with translated sections. You can find
-our rules about working with git [here](../common/README.md#5---).
+### 0.1. Термины и определения
 
-## 0. Introduction
+|Термин|Определение|
+|--|--|
+|Блок|Любая часть кода, ограниченная двумя фигурными скобками `{}`, за исключением определения объекта.|
+|Блокоподобные конструкции|Конструкции, которые по способу записи похожи на запись блоков в управляющих конструкциях или функциях/методах. Например, объекты или массивы, записанные с переносом строки.|
 
-### 0.1. Terms and definitions
+### 0.2. Использованные источники
 
-TODO: Rethink and rewrite for both languages
-
-### 0.2. Used sources
-
-For preparing document used following sources:
+При подготовке документа были использованы следующие материалы:
 
 a. [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
 
-b. Steve McConnell, Code Complete, Second Edition, «Russkaya redakcia», 2010.
+b. Макконнелл С. - Совершенный код. Мастер-класс, «Русская редакция», 2010. — 896 стр. : ил.
 
-c. Code review in Gitlab in the workspace-web project of [VeeRoute](http://veeroute.ru) company
+c. Ревью в Gitlab в рамках проекта [workspace-web](https://lab.veeroute.com/development/workspace-web).
 
 d. [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript/blob/master/README.md)
 
-e. [Principles of writing consistent, idiomatic Javascript](https://github.com/rwaldron/idiomatic.js)
+e. [Принципы написания консистентного, идиоматического кода на JavaScript](https://github.com/rwaldron/idiomatic.js/tree/master/translations/ru_RU)
 
 f. [C++ Guideline](https://lab.veeroute.com/development/docs-internal/blob/master/docs/internal/dev/guidelines/guidelines_cpp.md)
 
 g. Intellij IDEA. File | Settings | Editor | Code Style | TypeScript
 
-e. Robert Cecil Martin - Clean Code: A Handbook of Agile Software Craftsmanship: «Piter», 2010.
-
+e. Мартин Роберт К. - Чистый код. Создание, анализ и рефакторинг: Издательство «Питер», 2010.
 
 ## 1. Файлы с исходным кодом
 
@@ -93,7 +88,7 @@ b. Автор
 
 c. Дата создания
 
-## 2. Formatting
+## 2. Форматирование
 
 ### 2.1. Скобки
 
@@ -1026,33 +1021,33 @@ b. \[Автоматизировано: comment-format\] Текст коммен�
 Недопустимо использовать сленговые сокращения в комментариях, например `bcz, btw`, а
 использовать полные формы `because, by the way`.
 
-### 2.8. Classes
+### 2.8. Классы
 
-#### 2.8.1. \[Automated: member-ordering\] Order of fields and methods
+#### 2.8.1. \[Автоматизировано member-ordering\] Порядок полей, методов
 
-Fields and methods should be placed in the following order:
+Поля и методы должны располагаться в следующем порядке:
 
-a. Static fields
+a. Статические поля (static fields)
 
-b. Instance fields
+b. Поля экземпляра (instance fields)
 
-c. Constructor
+c. Конструкторы (constructor)
 
-d. Accessors (getter/setter)
+d. Аксессоры (getter/setter)
 
-e. Static methods
+e. Статические методы (static methods)
 
-f. Instance methods
+f. Методы экземпляра (instance methods)
 
-Each group should be ordered by access level of method / field:
+Внутри каждой из групп порядок определяется уровнем доступа метода/свойства:
 
-a. Public
+a. Публичные (public)
 
-b. Protected
+b. Защищенные (protected)
 
-c. Private
+c. Приватные (private)
 
-Groups of fields should be separated by empty line.
+Группы полей отделять друг от друга пустой строкой.
 
 ```typescript
     class SomeClass {
@@ -1084,10 +1079,9 @@ Groups of fields should be separated by empty line.
     }
 ```
 
-#### 2.8.2. \[Non-automated\] Order of methods common type and access level
+#### 2.8.2. \[Не автоматизировано\] Порядок методов одного типа и уровня доступа
 
-a. We should be able to read the code from the top to the bottom.
-A callee should be placed under the caller.
+a. Код должен читаться сверху вниз. Вызываемый метод должен находиться под вызывающим.  
 
 ```typescript
     class SomeClass {
@@ -1111,8 +1105,8 @@ A callee should be placed under the caller.
     }
 ```
 
-b. If we have a group of methods go one by one, we should write the chain derived
-by first method, then by second and so on.
+b. Если несколько методов расположены друг за другом, то сначала идёт цепочка 
+от первого метода, затем от второго и т.д.
 
 ```typescript
     class SomeClass {
