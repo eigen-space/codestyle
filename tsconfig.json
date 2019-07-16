@@ -1,5 +1,5 @@
 {
-    "extends": "./base.tsconfig.json",
+    "extends": "./src/configs/typescript/base.tsconfig.json",
     "compilerOptions": {
         "module": "commonjs",
         "outDir": "dist",
@@ -7,16 +7,11 @@
             "node_modules/@types"
         ]
     },
-    "files": [
-        "types/jest.d.ts"
-    ],
     "include": [
-        "rules",
-        "utils"
+        "src"
     ],
     "exclude": [
         "node_modules",
-        "sandbox",
-        "**/*.spec.ts"
+        "src/sandbox"
     ]
 }

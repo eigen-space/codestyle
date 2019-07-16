@@ -1,27 +1,10 @@
 # CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
 
-Main language: `TypeScript`
-
 This project contains:
 1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
-2. Rules for `tslint` and its configuration.
-3. tsconfig configuration - `codestyle.tsconfig.json`.
+2. eslint configuration.
+3. tsconfig configuration - `base.tsconfig.json`.
 4. Configuration for development environments.
-
-# Structure
-
-```
-/doc 
-    /common
-    /angular
-    /react
-    /scripts
-    /styles 
-/rules
-/tsconfig
-/ide-configs
-    codestyle.idea.xml
-```   
 
 # Code writing guide
 
@@ -31,19 +14,15 @@ This project contains:
 * [Scripts](./doc/scripts/README.md)
 * [Styles](./doc/styles/README.md)
 
-# Rules for tslint
+# Rules for eslint
 
-located in `tslint.json`. To connect you need:
-1. Create `tslint.json` in project root or choose already existing.
-2. Inherit `tslint.json` from code-style project, doing this:
+located in `eslint.base.js`. To connect you need:
+1. Create `.eslintrc.js` in project root or choose already existing.
+2. Inherit `eslint.base.js` from code-style project, doing this:
     ```
-    {
-        "extends": [
-            "@eigenspace/codestyle/tslint.json"
-        ]
-    }
+    module.exports = require('@eigenspace/codestyle/configs/eslint/eslint.base.js')
     ```
-3. In IDE settings turn on `tslint` and specify `tslint` path.    
+3. In IDE settings turn on `eslint` and specify `eslint` path.    
     
 # Configurations for development environments
 
@@ -59,7 +38,7 @@ Used for code validation and auto-formatting.
 
 In current `tsconfig.json` add:
 ```
-"extends": "@eigenspace/codestyle/base.tsconfig.json"
+"extends": "@eigenspace/codestyle/configs/typescript/base.tsconfig.json"
 "compilerOptions": {
     "moduleResolution": "node"
 }
@@ -74,14 +53,18 @@ snapshots. It extends jest and add method `toMatchImageSnapshot`. It creates ima
 if there is no one like standard jest snapshot tool does. 
 For instance, `expect(componentImage).toMatchImageSnapshot()`.
 * `ts-jest` - it lets you use Jest to test projects written in TypeScript.
-* `tslint` - it checks TypeScript code for readability, maintainability, and functionality errors.
+* `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
 * `lint-staged` - used for configure linters against staged git files.
+* `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
+* `@typescript-eslint/parser` - parser typescript code for eslint.
+* `eslint-plugin-unicorn` - eslint rule package.
+* `prettier` - code formatter.
+* `eslint-plugin-prettier` - plugin to integrate prettier in eslint.
 
 # CI
 
 **Important!**
 
 Travis creates the .npmrc file during ci startup. This file contains the access token to the npm repository.
-
