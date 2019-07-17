@@ -16,7 +16,7 @@
         "nodejs",
         "rules",
         "style",
-        "tslint",
+        "eslint",
         "typescript",
         "tsconfig"
     ],
@@ -26,32 +26,32 @@
         }
     },
     "lint-staged": {
-        "*.{ts,tsx}": [
+        "*.{js,jsx,ts,tsx}": [
             "yarn lint:fix",
             "git add"
         ]
     },
     "scripts": {
-        "start": "yarn build && yarn lint:sandbox",
-        "lint": "tslint --project tsconfig.json && yarn lint:markdown",
-        "lint:fix": "tslint --project tsconfig.json --fix",
-        "lint:sandbox": "yarn tslint --project tsconfig.dev.json",
-        "lint:markdown": "node ./scripts/markdown-lint.js",
+        "lint:code": "eslint",
+        "lint:fix": "yarn lint:code --fix",
+        "lint:markdown": "node src/scripts/markdown-lint.js",
+        "lint": "yarn lint:code . && yarn lint:markdown",
         "script:copy": "node ./dev/scripts/copy.js",
-        "compile": "tsc",
-        "test": "jest",
-        "build": "yarn compile && yarn script:copy",
+        "build": "yarn script:copy",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "devDependencies": {
-        "@eigenspace/helper-scripts": "1.0.40",
-        "@types/jest": "22.2.2",
+        "@eigenspace/helper-scripts": "1.0.77",
         "@types/node": "10.12.21",
+        "@typescript-eslint/eslint-plugin": "1.11.0",
+        "@typescript-eslint/parser": "1.11.0",
+        "eslint": "5.16.0",
+        "eslint-plugin-unicorn": "9.1.1",
         "husky": "1.3.1",
-        "jest": "24.7.1",
         "lint-staged": "8.1.5",
-        "ts-jest": "24.0.2",
-        "tslint": "5.12.1",
         "typescript": "3.3.1"
+    },
+    "peerDependencies": {
+        "eslint": "5.x"
     }
 }
