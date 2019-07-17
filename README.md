@@ -61,6 +61,12 @@ In current `tsconfig.json` add:
 }
 ```
 
+## Why do we have that dependencies?
+
+* `@typescript-eslint/parser` - parser typescript code for eslint.
+* `eslint-plugin-unicorn` - eslint rule package.
+* `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
+
 ## Why do we have that dev dependencies?
 
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
@@ -69,9 +75,6 @@ In current `tsconfig.json` add:
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
 * `lint-staged` - used for configure linters against staged git files.
-* `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
-* `@typescript-eslint/parser` - parser typescript code for eslint.
-* `eslint-plugin-unicorn` - eslint rule package.
 
 # CI
 
