@@ -2,8 +2,8 @@
 
 This project contains:
 1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
-2. eslint configuration.
-3. tsconfig configuration - `base.tsconfig.json`.
+2. `eslint` configuration.
+3. `typescript` configuration.
 4. Configuration for development environments.
 
 # Code writing guide
@@ -16,7 +16,7 @@ This project contains:
 
 # Rules for eslint
 
-located in `eslint.base.js`. To connect you need:
+Located in `src/configs/eslint/eslint.base.js`. To connect you need:
 1. Create `.eslintrc.js` in project root or choose already existing.
 2. Inherit `eslint.base.js` from code-style project, doing this:
     ```
@@ -26,16 +26,18 @@ located in `eslint.base.js`. To connect you need:
     
 # Configurations for development environments
 
-### IntelliJ IDEA / WebStorm
+## IntelliJ IDEA / WebStorm
 
+Located in `configs/ide/codestyle.idea.xml`
 Used for code validation and auto-formatting.
 1. Open `Preferences`
 2. Go to `Editor` -> `Code Style` -> `TypeScript`
 3. Click on the `gear` icon neat to `scheme`
 4. From the context menu select `Import Scheme`
 
-# Usage tsconfig.json
+## Usage tsconfig.json
 
+Located in `src/configs/typescript/base.tsconfig.js`.
 In current `tsconfig.json` add:
 ```
 "extends": "@eigenspace/codestyle/configs/typescript/base.tsconfig.json"
@@ -44,15 +46,10 @@ In current `tsconfig.json` add:
 }
 ```
 
-# Why do we have that dev dependencies?
+## Why do we have that dev dependencies?
 
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
-* `jest` - testing framework to write unit specs (including snapshots).
-snapshots. It extends jest and add method `toMatchImageSnapshot`. It creates image snapshot
-if there is no one like standard jest snapshot tool does. 
-For instance, `expect(componentImage).toMatchImageSnapshot()`.
-* `ts-jest` - it lets you use Jest to test projects written in TypeScript.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
