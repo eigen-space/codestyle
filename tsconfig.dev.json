@@ -1,8 +1,8 @@
 {
     "include": [
-        "./sandbox/"
+        "./src/sandbox/"
     ],
     "exclude": [
-        "./sandbox/linter.ts"
+        "./src/sandbox/linter.ts"
     ]
 }

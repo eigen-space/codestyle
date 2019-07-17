@@ -22,14 +22,11 @@ if (!readme) {
     throw new Error(FAILURE_STRING_NO_README);
 }
 
-const dependencyTypes = [
-    'dependencies',
-    'devDependencies',
-    'optionalDependencies'
-];
+const dependencyTypes = ['dependencies', 'devDependencies', 'optionalDependencies'];
 
 const DEPENDENCY_SECTION_TITLE_PREFIX = '# Why do we have that ';
 const END_OF_LINE_BLOCK = `(${endOfLine})`;
+// eslint-disable-next-line
 const DEPENDENCY_SECTION_PATTERN = new RegExp(`${DEPENDENCY_SECTION_TITLE_PREFIX}(.* )?dependencies\\?${END_OF_LINE_BLOCK}${END_OF_LINE_BLOCK}(.+${END_OF_LINE_BLOCK}?)*`, 'gm');
 const DEPENDENCY_PATTERN = /(?<=\* `).*(?=` - )/g;
 
@@ -53,7 +50,7 @@ function lint() {
 
 function getPackageJsonDependenciesMap() {
     const dependencyTypesInProject = dependencyTypes.filter(depsType => packageJson[depsType]);
-    return new Map(dependencyTypesInProject.map(depsType => [depsType, Object.keys(packageJson[depsType])]))
+    return new Map(dependencyTypesInProject.map(depsType => [depsType, Object.keys(packageJson[depsType])]));
 }
 
 function getReadmeDependenciesMap() {
@@ -73,6 +70,7 @@ function getReadmeDependenciesMap() {
 }
 
 function findDependencySections() {
+    // noinspection JSUnresolvedFunction
     return readme.match(DEPENDENCY_SECTION_PATTERN);
 }
 
@@ -114,17 +112,18 @@ function compareArrays(current, comparable) {
 
 function reportTypes(failureString, keys) {
     if (keys.length) {
-        reportFailure(`${failureString} \n\t${keys.join(',\n\t')}`)
+        reportFailure(`${failureString} \n\t${keys.join(',\n\t')}`);
     }
 }
 
 function reportDependencies(failureString, dependencyType, keys) {
     if (keys.length) {
-        reportFailure(`${failureString} in ${dependencyType} section: \n\t${keys.join(',\n\t')}`)
+        reportFailure(`${failureString} in ${dependencyType} section: \n\t${keys.join(',\n\t')}`);
     }
 }
 
 function reportFailure(str) {
     hasFailure = true;
-    console.error(str)
+    // eslint-disable-next-line
+    console.error(str);
 }
