@@ -1,6 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint', 'prettier'],
+    plugins: ['unicorn', '@typescript-eslint'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
@@ -10,6 +10,19 @@ module.exports = {
         project: 'tsconfig.json'
     },
     rules: {
+        'no-unused-vars': 'error',
+        'key-spacing': 'error',
+        'comma-spacing': 'error',
+        'space-infix-ops': 'error',
+        'space-before-blocks': 'error',
+        'keyword-spacing': 'error',
+        'comma-style': ['error', 'last'],
+        'max-statements-per-line': ['error', { 'max': 1 }],
+        'array-bracket-spacing': ['error', 'never'],
+        'object-curly-spacing': ['error', 'always', { 'arraysInObjects': false }],
+        'brace-style': 'error',
+        'newline-per-chained-call': ['error', { ignoreChainWithDepth: 1 }],
+        'max-len': ['error', { code: 120, ignoreComments: true }],
         complexity: ['error', 10],
         'multiline-ternary': ['error', 'never'],
         'arrow-body-style': ['error', 'as-needed'],
@@ -18,7 +31,7 @@ module.exports = {
         'spaced-comment': ['error', 'always'],
         curly: 'error',
         'comma-dangle': ['error', 'never'],
-        'no-multiple-empty-lines': ['error', { max: 1 }],
+        'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
         indent: ['error', 4, { SwitchCase: 1 }],
         '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
         'prefer-template': 'error',
@@ -44,27 +57,9 @@ module.exports = {
         quotes: ['error', 'single'],
         radix: 'error',
         'no-throw-literal': 'error',
-        semi: 'off',
         '@typescript-eslint/semi': 'error',
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-        '@typescript-eslint/type-annotation-spacing': 'error',
-        'prettier/prettier': [
-            'error',
-            {
-                trailingComma: 'none',
-                parser: 'typescript',
-                tabWidth: 4,
-                semi: true,
-                bracketSpacing: true,
-                jsxBracketSameLine: true,
-                printWidth: 120,
-                singleQuote: true,
-                arrowParens: 'avoid'
-            },
-            {
-                usePrettierrc: false
-            }
-        ]
+        '@typescript-eslint/type-annotation-spacing': 'error'
     }
 };
