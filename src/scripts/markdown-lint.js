@@ -59,7 +59,8 @@ function getReadmeDependenciesMap() {
 
     dependencySections.forEach(section => {
         const sectionTitle = section.split(endOfLine)[0];
-        const rawDependency = sectionTitle.replace(DEPENDENCY_SECTION_TITLE_PREFIX, '').replace('?', '');
+        const rawDependency = sectionTitle.replace(DEPENDENCY_SECTION_TITLE_PREFIX, '')
+            .replace('?', '');
         const dependencyType = stringToCamelCase(rawDependency);
         const dependency = section.match(DEPENDENCY_PATTERN);
         dependenciesMap.set(dependencyType, dependency);

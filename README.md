@@ -1,11 +1,23 @@
 # CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
 
+Main language: `TypeScript`
+
 This project contains:
 1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
 2. `eslint` configuration.
 3. `typescript` configuration.
 4. Configuration for development environments.
 
+# Project structure
+
+```
+/configs - Some configurations, eg ide
+/doc - Codestyle
+/src
+    /configs - Packaged configurations
+    /sandbox
+    /scripts
+```   
 # Code writing guide
 
 * [Common standarts](./doc/common/README.md)
@@ -13,6 +25,9 @@ This project contains:
 * [React](./doc/react/README.md)
 * [Scripts](./doc/scripts/README.md)
 * [Styles](./doc/styles/README.md)
+
+# Environmental requirements
+* `eslint`: `5.x`
 
 # Rules for eslint
 
@@ -57,8 +72,6 @@ In current `tsconfig.json` add:
 * `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
 * `@typescript-eslint/parser` - parser typescript code for eslint.
 * `eslint-plugin-unicorn` - eslint rule package.
-* `prettier` - code formatter.
-* `eslint-plugin-prettier` - plugin to integrate prettier in eslint.
 
 # CI
 
