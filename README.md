@@ -4,25 +4,20 @@ Main language: `TypeScript`
 
 This project contains:
 1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
-2. Rules for `tslint` and its configuration.
-3. tsconfig configuration - `codestyle.tsconfig.json`.
+2. `eslint` configuration.
+3. `typescript` configuration.
 4. Configuration for development environments.
 
-# Structure
+# Project structure
 
 ```
-/doc 
-    /common
-    /angular
-    /react
+/configs - Some configurations, eg ide
+/doc - Codestyle
+/src
+    /configs - Packaged configurations
+    /sandbox
     /scripts
-    /styles 
-/rules
-/tsconfig
-/ide-configs
-    codestyle.idea.xml
 ```   
-
 # Code writing guide
 
 * [Common standarts](./doc/common/README.md)
@@ -31,57 +26,55 @@ This project contains:
 * [Scripts](./doc/scripts/README.md)
 * [Styles](./doc/styles/README.md)
 
-# Rules for tslint
+# Environmental requirements
+* `eslint`: `5.x`
 
-located in `tslint.json`. To connect you need:
-1. Create `tslint.json` in project root or choose already existing.
-2. Inherit `tslint.json` from code-style project, doing this:
+# Rules for eslint
+
+Located in `src/configs/eslint/eslint.base.js`. To connect you need:
+1. Create `.eslintrc.js` in project root or choose already existing.
+2. Inherit `eslint.base.js` from code-style project, doing this:
     ```
-    {
-        "extends": [
-            "@eigenspace/codestyle/tslint.json"
-        ]
-    }
+    module.exports = require('@eigenspace/codestyle/configs/eslint/eslint.base.js')
     ```
-3. In IDE settings turn on `tslint` and specify `tslint` path.    
+3. In IDE settings turn on `eslint` and specify `eslint` path.    
     
 # Configurations for development environments
 
-### IntelliJ IDEA / WebStorm
+## IntelliJ IDEA / WebStorm
 
+Located in `configs/ide/codestyle.idea.xml`
 Used for code validation and auto-formatting.
 1. Open `Preferences`
 2. Go to `Editor` -> `Code Style` -> `TypeScript`
 3. Click on the `gear` icon neat to `scheme`
 4. From the context menu select `Import Scheme`
 
-# Usage tsconfig.json
+## Usage tsconfig.json
 
+Located in `src/configs/typescript/base.tsconfig.js`.
 In current `tsconfig.json` add:
 ```
-"extends": "@eigenspace/codestyle/base.tsconfig.json"
+"extends": "@eigenspace/codestyle/configs/typescript/base.tsconfig.json"
 "compilerOptions": {
     "moduleResolution": "node"
 }
 ```
 
-# Why do we have that dev dependencies?
+## Why do we have that dev dependencies?
 
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
-* `jest` - testing framework to write unit specs (including snapshots).
-snapshots. It extends jest and add method `toMatchImageSnapshot`. It creates image snapshot
-if there is no one like standard jest snapshot tool does. 
-For instance, `expect(componentImage).toMatchImageSnapshot()`.
-* `ts-jest` - it lets you use Jest to test projects written in TypeScript.
-* `tslint` - it checks TypeScript code for readability, maintainability, and functionality errors.
+* `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
 * `lint-staged` - used for configure linters against staged git files.
+* `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
+* `@typescript-eslint/parser` - parser typescript code for eslint.
+* `eslint-plugin-unicorn` - eslint rule package.
 
 # CI
 
 **Important!**
 
 Travis creates the .npmrc file during ci startup. This file contains the access token to the npm repository.
-
