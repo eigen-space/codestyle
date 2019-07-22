@@ -1,6 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint'],
+    plugins: ['unicorn', '@typescript-eslint', 'react'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
@@ -10,7 +10,8 @@ module.exports = {
         project: 'tsconfig.json'
     },
     rules: {
-        'no-unused-vars': 'error',
+        'react/jsx-uses-react': 'error',
+        'react/jsx-uses-vars': 'error',
         'key-spacing': 'error',
         'comma-spacing': 'error',
         'space-infix-ops': 'error',
@@ -19,10 +20,17 @@ module.exports = {
         'comma-style': ['error', 'last'],
         'max-statements-per-line': ['error', { 'max': 1 }],
         'array-bracket-spacing': ['error', 'never'],
-        'object-curly-spacing': ['error', 'always', { 'arraysInObjects': false }],
+        'object-curly-spacing': ['error', 'always'],
         'brace-style': 'error',
-        'newline-per-chained-call': ['error', { ignoreChainWithDepth: 1 }],
-        'max-len': ['error', { code: 120, ignoreComments: true }],
+        'max-len': [
+            'error',
+            {
+                code: 120,
+                ignoreComments: true,
+                ignoreUrls: true,
+                ignorePattern: '^import\\s.+\\sfrom\\s.+;$|^const\\s.+=\\srequire\(.+\);'
+            }
+        ],
         complexity: ['error', 10],
         'multiline-ternary': ['error', 'never'],
         'arrow-body-style': ['error', 'as-needed'],
@@ -61,5 +69,23 @@ module.exports = {
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
         '@typescript-eslint/type-annotation-spacing': 'error'
-    }
+    },
+    overrides: [
+        {
+            plugins: ['eslint-plugin-prettier'],
+            files: ['*.styles.ts'],
+            rules: {
+                indent: 'off',
+                'prettier/prettier': ['error', {
+                    trailingComma: 'none',
+                    parser: 'typescript',
+                    tabWidth: 4,
+                    semi: true,
+                    bracketSpacing: true,
+                    printWidth: 120,
+                    singleQuote: true
+                }]
+            }
+        }
+    ]
 };
