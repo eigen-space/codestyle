@@ -1,0 +1,6 @@
+{
+    "name": "eslint-plugin-eigenspace",
+    "version": "0.0.1",
+    "description": "Eigenspace team's codestyle plugin",
+    "main": "index.js"
+}

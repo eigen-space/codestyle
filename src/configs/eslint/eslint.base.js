@@ -1,15 +1,15 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint', 'react'],
+    plugins: ['unicorn', '@typescript-eslint', 'react', 'eigenspace'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
-        ecmaFeatures: {
-            jsx: true
-        },
+        ecmaFeatures: { jsx: true },
         project: 'tsconfig.json'
     },
     rules: {
+        'eigenspace/object-properties-carrying': 'error',
+        'no-multi-spaces': 'error',
         'react/jsx-uses-react': 'error',
         'react/jsx-uses-vars': 'error',
         'key-spacing': 'error',
