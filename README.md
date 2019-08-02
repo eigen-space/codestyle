@@ -78,6 +78,7 @@ In current `tsconfig.json` add:
 * `husky` - used for configure git hooks.
 * `lint-staged` - used for configure linters against staged git files.
 * `react` - used for sandbox and testing React rules.
+* `react-redux` - used for sandbox and testing React redux rules.
 * `@eigenspace/eslint-config-codestyle` - using for testing eslint rules in the project.
 
 # CI

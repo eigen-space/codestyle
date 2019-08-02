@@ -1,6 +1,7 @@
 module.exports = {
     extends: [
         '@eigenspace/codestyle/base',
-        '@eigenspace/codestyle/react'
+        '@eigenspace/codestyle/react',
+        '@eigenspace/codestyle/redux'
     ]
 };
