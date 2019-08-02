@@ -1,1 +1,7 @@
-module.exports = require('./src/configs/eslint/eslint.base.js');
+module.exports = {
+    extends: [
+        '@eigenspace/codestyle/base',
+        '@eigenspace/codestyle/react',
+        '@eigenspace/codestyle/redux'
+    ]
+};
