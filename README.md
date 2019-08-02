@@ -29,6 +29,13 @@ This project contains:
 # Environmental requirements
 * `eslint`: `5.x`
 
+We use 5<sup>th</sup> version because `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` require `eslint`
+with 5<sup>th</sup> version.
+```
+warning " > @typescript-eslint/eslint-plugin@1.11.0" has incorrect peer dependency "eslint@^5.0.0".
+warning " > @typescript-eslint/parser@1.11.0" has incorrect peer dependency "eslint@^5.0.0".
+```
+
 # Rules for ESLint
 
 All requirement information is described [here](./src/packages/eslint/README.md).
@@ -61,7 +68,6 @@ In current `tsconfig.json` add:
 * `eslint-plugin-unicorn` - eslint rule package.
 * `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
 * `eslint-plugin-prettier` - prettier plugin for eslint.
-* `eslint-plugin-react` - react plugin for eslint.
 
 ## Why do we have that dev dependencies?
 
@@ -71,6 +77,8 @@ In current `tsconfig.json` add:
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
 * `lint-staged` - used for configure linters against staged git files.
+* `react` - used for sandbox and testing React rules.
+* `@eigenspace/eslint-config-codestyle` - using for testing eslint rules in the project.
 
 # CI
 

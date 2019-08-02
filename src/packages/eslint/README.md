@@ -31,6 +31,10 @@ base.js - Base configuration and rules for eslint
 react.js - Configuration includes codestyle React rules
 ```
 
+# Environmental requirements
+
+* `react`: `16.x`
+
 # Why do we have that dependencies?
 
 * `eslint-plugin-react` - React plugin for ESLint.
