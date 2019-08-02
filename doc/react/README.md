@@ -240,7 +240,7 @@ b. Не делать дополнительных переносов внутр�
 
 ### 3.4. Redux
 
-### 3.4.1. \[Non-automated\] Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
+### 3.4.1. \[Automated: prefer-separate-component-file\] Put redux `connect`, `mapStateToProps` and `mapDispatchToProps` into separate file
 
 We should put container-component and related functions (`mapStateToProps` and `mapDispatchToProps`)
 in separate file to separate view logic and logic that prepare data (props) for view.
