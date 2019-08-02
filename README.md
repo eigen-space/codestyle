@@ -29,15 +29,9 @@ This project contains:
 # Environmental requirements
 * `eslint`: `5.x`
 
-# Rules for eslint
+# Rules for ESLint
 
-Located in `src/configs/eslint/eslint.base.js`. To connect you need:
-1. Create `.eslintrc.js` in project root or choose already existing.
-2. Inherit `eslint.base.js` from code-style project, doing this:
-    ```
-    module.exports = require('@eigenspace/codestyle/configs/eslint/eslint.base.js')
-    ```
-3. In IDE settings turn on `eslint` and specify `eslint` path.    
+All requirement information is described [here](./src/packages/eslint/README.md).
     
 # Configurations for development environments
 
