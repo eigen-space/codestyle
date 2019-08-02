@@ -29,6 +29,7 @@ We are forced to load it from codestyle project as subpackage because of satisfa
 ```
 base.js - Base configuration and rules for eslint
 react.js - Configuration includes codestyle React rules
+redux.js - Configuration includes codestyle Redux rules
 ```
 
 # Environmental requirements
@@ -38,3 +39,4 @@ react.js - Configuration includes codestyle React rules
 # Why do we have that dependencies?
 
 * `eslint-plugin-react` - React plugin for ESLint.
+* `eslint-plugin-react-redux` - Redux plugin for ESLint.
