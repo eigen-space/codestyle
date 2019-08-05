@@ -41,7 +41,6 @@ module.exports = {
         '@typescript-eslint/member-ordering': 'error',
         '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: false }],
         'no-caller': 'error',
-        'no-invalid-this': 'error',
         'no-bitwise': 'error',
         'no-console': 'error',
         'no-new-wrappers': 'error',
