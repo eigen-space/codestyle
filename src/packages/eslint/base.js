@@ -28,7 +28,6 @@ module.exports = {
         ],
         complexity: ['error', 10],
         'multiline-ternary': ['error', 'never'],
-        'arrow-body-style': ['error', 'as-needed'],
         'unicorn/filename-case': 'error',
         'capitalized-comments': ['error', 'always', { ignorePattern: 'tslint|noinspection|istanbul' }],
         'spaced-comment': ['error', 'always'],
