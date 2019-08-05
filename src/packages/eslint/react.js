@@ -19,7 +19,6 @@ module.exports = {
         'react/no-danger': 'error',
         'react/no-access-state-in-setstate': 'error',
         'react/no-direct-mutation-state': 'error',
-        'react/jsx-no-bind': 'error',
         'react/jsx-no-duplicate-props': 'error',
         'react/jsx-pascal-case': 'error',
         'react/jsx-key': 'error',
