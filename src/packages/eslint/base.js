@@ -1,6 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint', 'jsdoc'],
+    plugins: ['unicorn', '@typescript-eslint'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
