@@ -1,6 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint'],
+    plugins: ['unicorn', '@typescript-eslint', 'jsdoc'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
@@ -61,7 +61,17 @@ module.exports = {
         '@typescript-eslint/semi': 'error',
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-        '@typescript-eslint/type-annotation-spacing': 'error'
+        '@typescript-eslint/type-annotation-spacing': 'error',
+        'yoda': ['error', 'never', { 'onlyEquality': true }],
+        'no-else-return': 'error',
+        'no-implicit-coercion': 'error',
+        'no-extra-parens': 'error',
+        'line-comment-position': [
+            'error',
+            { position: 'above' }
+        ],
+        'no-useless-constructor': 'error',
+        'no-param-reassign': ['error', { props: true }]
     },
     overrides: [
         {
