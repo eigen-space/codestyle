@@ -9,7 +9,11 @@ module.exports = {
     },
     rules: {
         'eigenspace/object-properties-carrying': 'error',
+        'eigenspace/conditions': 'error',
         'no-multi-spaces': 'error',
+        'no-nested-ternary': 'error',
+        'no-extra-parens': 'error',
+        'no-lonely-if': 'error',
         'react/jsx-uses-react': 'error',
         'react/jsx-uses-vars': 'error',
         'key-spacing': 'error',
