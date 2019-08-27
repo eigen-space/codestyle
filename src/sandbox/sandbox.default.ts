@@ -1,20 +1,18 @@
-const nestedObjects = {
-    someObject: 123,
-    inner: {
-        someInnerObject: {
-            test: 123,
-            another: 123
-        }
-    }
-};
+// Плохо
+const condition = 1234;
+let result;
 
-const colors = {
-    shades: {
-        black100: '12',
-        black40: '213'
-    }
-};
+function doSomeCalculation(): void {
+}
 
-const someTest = { default: colors.shades.black100, primary: colors.shades.black40 };
+if (condition) {
+    result = doSomeCalculation();
+} else {
+    result = 'someValue';
+}
 
-const props = { columnsTemplate: 'Hello! Did you hear me?', test: 'California Dreaming! Noooooo' };
+// Хорошо
+result = 'someValue';
+if (condition) {
+    result = doSomeCalculation();
+}
