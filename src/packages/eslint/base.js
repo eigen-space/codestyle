@@ -65,15 +65,20 @@ module.exports = {
         'yoda': ['error', 'never', { 'onlyEquality': true }],
         'no-else-return': 'error',
         'no-implicit-coercion': 'error',
-        'no-extra-parens': 'error',
         'line-comment-position': [
             'error',
             { position: 'above' }
         ],
-        'no-useless-constructor': 'error',
+        '@typescript-eslint/no-useless-constructor': 'error',
         'no-param-reassign': ['error', { props: true }]
     },
     overrides: [
+        {
+            files: ['!*.styles.ts'],
+            rules: {
+                '@typescript-eslint/no-extra-parens': ['error', 'all', { ignoreJSX: 'all' }]
+            }
+        },
         {
             plugins: ['eslint-plugin-prettier'],
             files: ['*.styles.ts'],
