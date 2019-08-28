@@ -3,6 +3,7 @@ const MESSAGE_LITERAL_OR_CONSTANT_COMPARISON = 'Literal or constant to compare w
 const MESSAGE_UNEXPECTED_NEGATION_BEFORE_PARENTHESES = 'Unexpected negation before parentheses';
 const MESSAGE_UNNECESSARY_NESTED_IF = 'Unnecessary nested if statement';
 const MESSAGE_UNNECESSARY_ELSE = 'Unnecessary else statement. You could do declaration in else statement before if';
+const MESSAGE_UNNECESSARY_TERNARY = 'Unnecessary ternary operator';
 
 const { isParenthesized } = require("eslint-utils");
 
@@ -25,6 +26,14 @@ module.exports = {
                 checkLogicalExpression(context, node);
             },
 
+            AssignmentExpression(node) {
+                checkAssignmentExpression(context, node);
+            },
+
+            VariableDeclarator(node) {
+                checkVariableDeclarator(context, node);
+            },
+
             IfStatement(node) {
                 checkIfStatement(context, node);
             }
@@ -33,10 +42,35 @@ module.exports = {
 };
 
 function checkBinaryExpression(context, node) {
+    isCounterClockwiseComparison(context, node);
+    isComparisonHasEnumOrConstantOnLeftSide(context, node);
+    isNegationBeforeParentheses(context, node)
+}
+
+function checkLogicalExpression(context, node) {
+    isNegationBeforeParentheses(context, node)
+}
+
+function checkAssignmentExpression(context, node) {
+    isHasUnnecessaryTernary(context, node.right);
+}
+
+function checkVariableDeclarator(context, node) {
+    isHasUnnecessaryTernary(context, node.init || {});
+}
+
+function checkIfStatement(context, node) {
+    isHasUnnecessaryIfStatement(context, node);
+    isHasUnnecessaryElseStatement(context, node);
+}
+
+function isCounterClockwiseComparison(context, node) {
     if (node.operator.startsWith('>')) {
         report(context, node, MESSAGE_COUNTER_CLOCKWISE_COMPARISON);
     }
+}
 
+function isComparisonHasEnumOrConstantOnLeftSide(context, node) {
     if (['!==', '==='].includes(node.operator)) {
         // remove nesting
         const isLeftSideVariableConstOrLiteral = isPossibleEnum(node.left) || isLiteral(node.left);
@@ -46,23 +80,27 @@ function checkBinaryExpression(context, node) {
             report(context, node, MESSAGE_LITERAL_OR_CONSTANT_COMPARISON);
         }
     }
-
-    isNegationBeforeParentheses(context, node)
 }
 
-function checkLogicalExpression(context, node) {
-    isNegationBeforeParentheses(context, node)
-}
 
-// Check if in if statement we have unnecessary nested if statement
-function checkIfStatement(context, node) {
-    isHasUnnecessaryIfStatement(context, node);
-    isHasUnnecessaryElseStatement(context, node);
+function isHasUnnecessaryTernary(context, node) {
+    if (node.type !== 'ConditionalExpression') {
+        return;
+    }
+
+    const sourceCode = context.getSourceCode();
+
+    const test = sourceCode.getText(node.test);
+    const consequent = sourceCode.getText(node.consequent);
+
+    if (test === consequent) {
+        report(context, node, MESSAGE_UNNECESSARY_TERNARY);
+    }
 }
 
 function isHasUnnecessaryIfStatement(context, node) {
     const body = [...node.consequent.body];
-    if (body.pop().type !== 'IfStatement') {
+    if (!body.length || body.pop().type !== 'IfStatement') {
         return;
     }
 
@@ -88,6 +126,7 @@ function isNegationBeforeParentheses(context, node) {
     const sourceCode = context.getSourceCode();
     if (isParenthesized(1, node, sourceCode)) {
         const tokenBeforeParentheses = sourceCode.getTokenBefore(sourceCode.getTokenBefore(node));
+
         if (tokenBeforeParentheses.value === '!' && tokenBeforeParentheses.type === 'Punctuator') {
             report(context, node, MESSAGE_UNEXPECTED_NEGATION_BEFORE_PARENTHESES);
         }
