@@ -1,11 +1,11 @@
-const MESSAGE_COUNTER_CLOCKWISE_COMPARISON = 'You should use only clockwise comparison `<` except for null/undefined check';
-const MESSAGE_LITERAL_OR_CONSTANT_COMPARISON = 'Literal or constant to compare with should be on right side of expression';
+const MESSAGE_COUNTER_CLOCKWISE_COMPARISON = 'You should use only clockwise comparison `<`';
+const MESSAGE_LITERAL_OR_CONSTANT_COMPARISON = 'Literal or enum to compare with should be on right side of expression';
 const MESSAGE_UNEXPECTED_NEGATION_BEFORE_PARENTHESES = 'Unexpected negation before parentheses';
 const MESSAGE_UNNECESSARY_NESTED_IF = 'Unnecessary nested if statement';
 const MESSAGE_UNNECESSARY_ELSE = 'Unnecessary else statement. You could do declaration in else statement before if';
 const MESSAGE_UNNECESSARY_TERNARY = 'Unnecessary ternary operator';
 
-const { isParenthesized } = require("eslint-utils");
+const { isParenthesized } = require('eslint-utils');
 
 module.exports = {
     meta: {
@@ -44,11 +44,11 @@ module.exports = {
 function checkBinaryExpression(context, node) {
     isCounterClockwiseComparison(context, node);
     isComparisonHasEnumOrConstantOnLeftSide(context, node);
-    isNegationBeforeParentheses(context, node)
+    isNegationBeforeParentheses(context, node);
 }
 
 function checkLogicalExpression(context, node) {
-    isNegationBeforeParentheses(context, node)
+    isNegationBeforeParentheses(context, node);
 }
 
 function checkAssignmentExpression(context, node) {
@@ -72,16 +72,14 @@ function isCounterClockwiseComparison(context, node) {
 
 function isComparisonHasEnumOrConstantOnLeftSide(context, node) {
     if (['!==', '==='].includes(node.operator)) {
-        // remove nesting
-        const isLeftSideVariableConstOrLiteral = isPossibleEnum(node.left) || isLiteral(node.left);
-        const isRightSideVariableConstOrLiteral = isPossibleEnum(node.right) || isLiteral(node.right);
+        const isLeftSideVariableConstOrLiteral = isPossibleEnum(context, node.left) || isLiteral(node.left);
+        const isRightSideVariableConstOrLiteral = isPossibleEnum(context, node.right) || isLiteral(node.right);
 
         if (isLeftSideVariableConstOrLiteral && !isRightSideVariableConstOrLiteral) {
             report(context, node, MESSAGE_LITERAL_OR_CONSTANT_COMPARISON);
         }
     }
 }
-
 
 function isHasUnnecessaryTernary(context, node) {
     if (node.type !== 'ConditionalExpression') {
@@ -121,7 +119,6 @@ function isHasUnnecessaryElseStatement(context, node) {
     }
 }
 
-
 function isNegationBeforeParentheses(context, node) {
     const sourceCode = context.getSourceCode();
     if (isParenthesized(1, node, sourceCode)) {
@@ -134,33 +131,43 @@ function isNegationBeforeParentheses(context, node) {
 }
 
 function isSimpleVariableDeclarationOrAssignment(node) {
-    const isAssignmentExpression = node.type === 'ExpressionStatement' && node.expression.type === 'AssignmentExpression';
-    if (node.type !== 'VariableDeclaration' && !isAssignmentExpression) {
+    const isAssignment = node.type === 'ExpressionStatement' && node.expression.type === 'AssignmentExpression';
+    if (node.type !== 'VariableDeclaration' && !isAssignment) {
         return false;
     }
 
-    if (isAssignmentExpression) {
-        return isSimpleProperty(node.expression.right) || isSimpleLogicalOrBinaryExpression(node.expression.right);
+    if (isAssignment) {
+        return isSimpleInitialization(node.expression.right);
     }
 
-    return node.declarations.every(declaration => isSimpleProperty(declaration.init) || isSimpleLogicalOrBinaryExpression(declaration.init));
+    return node.declarations.every(declaration => isSimpleInitialization(declaration.init));
+}
+
+function isSimpleInitialization(node) {
+    return isSimpleProperty(node) || isSimpleLogicalOrBinaryExpression(node);
 }
 
 function isSimpleLogicalOrBinaryExpression(node) {
-    return ['LogicalExpression', 'BinaryExpression'].includes(node.type) && isSimpleProperty(node.left) && isSimpleProperty(node.right);
+    const isLogicalOrBinaryExpression = ['LogicalExpression', 'BinaryExpression'].includes(node.type);
+    return isLogicalOrBinaryExpression && isSimpleProperty(node.left) && isSimpleProperty(node.right);
 }
 
 function isSimpleProperty(node) {
     return ['Literal', 'Identifier', 'MemberExpression'].includes(node.type);
 }
 
-function isPossibleEnum(node) {
+function isPossibleEnum(context, node) {
     // If first letter of object is in upper case then perhaps it is an enum or constant
-    return node.type === 'MemberExpression' && node.object.name[0] !== node.object.name[0].toLowerCase();
+
+    const sourceCode = context.getSourceCode();
+
+    const variableText = sourceCode.getText(node.test);
+
+    return node.type === 'MemberExpression' && variableText[0] !== variableText[0].toLowerCase();
 }
 
 function isLiteral(node) {
-    return node.type === 'Identifier';
+    return node.type === 'Literal';
 }
 
 function report(context, node, message) {

@@ -50,7 +50,7 @@ module.exports = {
 };
 
 function checkFunctionInObject(context, node) {
-    if (getContentLength(node) > MAX_CHILD_CALL_EXPRESSION_LENGTH) {
+    if (MAX_CHILD_CALL_EXPRESSION_LENGTH < getContentLength(node)) {
         context.report({
             message: `an object in single line can contain a function no longer than\
              ${MAX_CHILD_CALL_EXPRESSION_LENGTH} characters`,
@@ -61,7 +61,7 @@ function checkFunctionInObject(context, node) {
 }
 
 function checkSingleLineLiteral(context, node) {
-    if (getContentLength(node) > MAX_CONTENT_WIDTH) {
+    if (MAX_CONTENT_WIDTH < getContentLength(node)) {
         context.report({
             message: `content width of object is more than ${MAX_CONTENT_WIDTH}`,
             loc: node.loc,
@@ -69,7 +69,7 @@ function checkSingleLineLiteral(context, node) {
         });
     }
 
-    if (node.properties.length > MAX_PROPERTIES_IN_SINLE_LINE) {
+    if (MAX_PROPERTIES_IN_SINLE_LINE < node.properties.length) {
         context.report({
             message: `an object in single line must contain not more than ${MAX_PROPERTIES_IN_SINLE_LINE} properties`,
             loc: node.loc,
@@ -82,7 +82,7 @@ function checkSingleLineLiteral(context, node) {
 
     const callExpressions = nestedNodes.filter(nestedNode => nestedNode.type === 'CallExpression');
 
-    if (callExpressions.length > MAX_COUNT_CALL_EXPRESSION_IN_SINGLE_LINE) {
+    if (MAX_COUNT_CALL_EXPRESSION_IN_SINGLE_LINE < callExpressions.length) {
         context.report({
             message: `an object in single line must contain not more than ${MAX_COUNT_CALL_EXPRESSION_IN_SINGLE_LINE}\
              call expressions`,
@@ -93,20 +93,18 @@ function checkSingleLineLiteral(context, node) {
 }
 
 function checkObjectInObject(context, node) {
-    if (isParentObjectInSingleLine(context, node)) {
-        if (node.properties.length > 0) {
-            context.report({
-                message: `an object in single line can contain an object with the number of properties not more than\
+    if (isParentObjectInSingleLine(context, node) && node.properties.length) {
+        context.report({
+            message: `an object in single line can contain an object with the number of properties not more than\
                  ${MAX_CHILD_OBJECT_PROPERTIES_IN_SINLE_LINE}`,
-                loc: node.loc,
-                node
-            });
-        }
+            loc: node.loc,
+            node
+        });
     }
 }
 
 function checkArrayInObject(context, node) {
-    if (node.elements.length > MAX_ARRAY_PROPERTIES_IN_SINLE_LINE) {
+    if (MAX_ARRAY_PROPERTIES_IN_SINLE_LINE < node.elements.length) {
         context.report({
             message: `an object in single line can contain an array with the number of properties not more than\
              ${MAX_ARRAY_PROPERTIES_IN_SINLE_LINE}`,
