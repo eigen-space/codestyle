@@ -7,7 +7,7 @@
 We are translating this document from russian to english and some sections are not ready yet.
 Please, go [here](./README.ru.md) to get full description in russian language.
 If you want to help us, please create pull request with translated sections. You can find
-our rules about working with git [here](../common/README.md#5---).
+our rules about working with git [here](../process/README.md#1---).
 
 ## 0. Introduction
 
