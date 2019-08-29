@@ -37,7 +37,6 @@ module.exports = {
         ],
         complexity: ['error', 10],
         'multiline-ternary': ['error', 'never'],
-        'arrow-body-style': ['error', 'as-needed'],
         'unicorn/filename-case': 'error',
         'capitalized-comments': ['error', 'always', { ignorePattern: 'tslint|noinspection|istanbul' }],
         'spaced-comment': ['error', 'always'],
@@ -50,7 +49,6 @@ module.exports = {
         '@typescript-eslint/member-ordering': 'error',
         '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: false }],
         'no-caller': 'error',
-        'no-invalid-this': 'error',
         'no-bitwise': 'error',
         'no-console': 'error',
         'no-new-wrappers': 'error',
@@ -72,9 +70,24 @@ module.exports = {
         '@typescript-eslint/semi': 'error',
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-        '@typescript-eslint/type-annotation-spacing': 'error'
+        '@typescript-eslint/type-annotation-spacing': 'error',
+        'yoda': ['error', 'never', { 'onlyEquality': true }],
+        'no-else-return': 'error',
+        'no-implicit-coercion': 'error',
+        'line-comment-position': [
+            'error',
+            { position: 'above' }
+        ],
+        '@typescript-eslint/no-useless-constructor': 'error',
+        'no-param-reassign': ['error', { props: true }]
     },
     overrides: [
+        {
+            files: ['!*.styles.ts'],
+            rules: {
+                '@typescript-eslint/no-extra-parens': ['error', 'all', { ignoreJSX: 'all' }]
+            }
+        },
         {
             plugins: ['eslint-plugin-prettier'],
             files: ['*.styles.ts'],
