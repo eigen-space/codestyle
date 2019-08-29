@@ -61,9 +61,24 @@ module.exports = {
         '@typescript-eslint/semi': 'error',
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-        '@typescript-eslint/type-annotation-spacing': 'error'
+        '@typescript-eslint/type-annotation-spacing': 'error',
+        'yoda': ['error', 'never', { 'onlyEquality': true }],
+        'no-else-return': 'error',
+        'no-implicit-coercion': 'error',
+        'line-comment-position': [
+            'error',
+            { position: 'above' }
+        ],
+        '@typescript-eslint/no-useless-constructor': 'error',
+        'no-param-reassign': ['error', { props: true }]
     },
     overrides: [
+        {
+            files: ['!*.styles.ts'],
+            rules: {
+                '@typescript-eslint/no-extra-parens': ['error', 'all', { ignoreJSX: 'all' }]
+            }
+        },
         {
             plugins: ['eslint-plugin-prettier'],
             files: ['*.styles.ts'],
