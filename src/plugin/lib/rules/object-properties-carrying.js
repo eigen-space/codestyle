@@ -113,7 +113,7 @@ function checkArrayInObject(context, node) {
     }
 }
 
-// Move to utils later
+// TODO: Move to utils later
 // UTILS
 
 function isObjectProperty(node) {
