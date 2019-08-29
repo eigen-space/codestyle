@@ -108,7 +108,7 @@ function isHasUnnecessaryIfStatement(context, node) {
 }
 
 function isHasUnnecessaryElseStatement(context, node) {
-    if (!node.alternate) {
+    if (!node.alternate || !node.alternate.body) {
         return;
     }
 
