@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/eslint-config-codestyle",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "license": "MIT",
     "dependencies": {
         "eslint-plugin-react": "7.14.2",
