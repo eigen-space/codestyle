@@ -2410,56 +2410,58 @@ d. \[Автоматизировано: switch-default\] `switch` обязате�
 
 #### 3.9.5. \[Не автоматизировано\] Условия
 
-a. \[Автоматизировано: triple-equals\] Для сравнения двух операндов нужно использовать строгое равенство `===` (`!==`),  
-   не `==` (`!=`), которое выполняет конвертацию типов.
+a. \[Automated: eqeqeq\] Strict equality must be used to compare two operands `===` (`!==`),  
+   not a `==` (`!=`), which performs type conversion.
 
 ```typescript
     const a = 1;
     const b = '1';
 
-    // Плохо
-    a == b // Вернёт true
+    // Bad
+    a == b // Will return true
 
-    // Хорошо
-    a === b // Вернёт false
+    // Good
+    a === b // Will return false
 ```
 
-b. \[Не автоматизировано\] Условия должны располагаться в направлении числовой оси. Как одиночные неравенства, 
-   так и двойные без исключений. Под направление числовой оси понимается, что для 
-   положительного разрешения неравенства значение переменной должно находится правее 
-   сравниваемого значения, если неравенство типа `1 < x`, или левее, если неравенство 
-   типа `x < 10`: `x ∈ (1, 10) → 1 < x < 10 → 1 < x && x < 10`. Знак неравенства 
-   всегда `<`, не используется знак `>`.
+b. \[Automated: eigenspace/conditions\] Conditions should be in the direction of the numerical axis. Like single inequalities, 
+   and double without exception. By the direction of the numerical axis it is understood 
+   that for a positive resolution of the inequality, the value of the variable must be located to the right of the compared value, 
+   if an inequality of type `1 <x`, or to the left, if an inequality of type 
+   `x < 10`: `x ∈ (1, 10) → 1 < x < 10 → 1 < x && x < 10`. The inequality sign is always `<`, the `>` sign is not used.
 
 ```typescript
-    // Плохо
+    // Bad
 
     x > 1
     x > 1 && x < 10
     arr.length > 5
 
-    // Хорошо
+    // Good
     1 < x
     1 < x && x < 10
     5 < arr.length
 ```
 
-c. \[Автоматизировано: yoda\] При использовании знака равенства при сравнении переменной и литерала (или константы) 
-необходимо переменную писать слева от знака равенства.
+c. \[Non-automated. There is an incomplete implementation
+(Now we rely on that enum is written in capital letter) in eigenspace/conditions + yoda\]  
+When using the equal sign when comparing a variable and a literal (or constant) 
+you must write the variable to the left of the equal sign.
 
 ```typescript
-    // Плохо
+    // Bad
     if (BusinessCommon.EssenceState.ES_EXEC !== trip.state) { }
 
-    // Хорошо
+    // Good
     if (trip.state !== BusinessCommon.EssenceState.ES_EXEC) { }
 ```
 
-d. \[Не автоматизировано\] Не следует разбивать условия на отдельные без необходимости, когда можно записать их 
-через `||` или `&&`.
+d. \[Partially automated eigenspace/conditions\] 
+It is not necessary to break the conditions into separate ones without the need, when you can write them through `||` or `&&`.
 
+\[Non-automated\]  
 ```typescript
-    // Плохо
+    // Bad
     if (!tags) {
         trip.progressBar = progressBar;
         return;
@@ -2472,57 +2474,65 @@ d. \[Не автоматизировано\] Не следует разбива�
         return;
     }
 
-    // Хорошо
+    // Good
     if (!tags || !tags[MODEL_NAME]) {
         trip.progressBar = progressBar;
         return;
     }
+```
 
-    // Плохо
+\[Non-automated\]  
+```typescript
+
+    // Bad
     if (!isUseCache) {
-        // Достигается то, что currentDraftId становится не равен draft.id
+        // currentDraftId becomes not equal to draft.id
         currentDraftId = null;
     }
     if (draft.id !== currentDraftId) {
         someAction();
     }
 
-    // Хорошо
+    // Good
     if (!isUseCache || draft.id !== currentDraftId) {
         someAction();
     }
+```
 
-    // Плохо
+\[Automated: eigenspace/conditions\]  
+```typescript
+    // Bad
     if (draft.disabled) {
         if (draft.hasOrders) {
             someAction();
         }
     }
 
-    // Хорошо
+    // Good
     if (draft.disabled && draft.hasOrders) {
         someAction();
     }
 ```
  
-e. \[Не автоматизировано\] Не добавлять лишних группировок и скобок в условиях, если можно этого не делать.
+e. \[Automated: no-extra-parens and eigenspace/conditions\]  
+Do not add extra groupings and brackets in the conditions, if you can not do this.
 
 ```typescript
-    // Плохо
+    // Bad
     if (!(orderId && demandKey)) {
         if ((a < b) && (c < d)) {}
     }
 
-    // Хорошо
+    // Good
     if (!orderId || !demandKey) {
         if (a < b && c < d) { }
     }
 ```
 
-f. \[Не автоматизировано\] По возможности избегать лишней вложенности.
+f. \[Non-automated\] Avoid excessive nesting whenever possible.
 
 ```typescript
-    // Плохо
+    // Bad
     if (draft.isCorrect) {
         if (draft.hasOrders) {
             someAction();
@@ -2531,7 +2541,7 @@ f. \[Не автоматизировано\] По возможности изб�
         throw new AppError('Can not use incorrect draft here!');
     }
 
-    // Хорошо
+    // Good
     if (!draft.isCorrect) {
         throw new AppError('Can not use incorrect draft here!');
     }
@@ -2541,20 +2551,20 @@ f. \[Не автоматизировано\] По возможности изб�
     } 
 ```
 
-g. \[Частично автоматизировано: no-else-return\] По возможности избегать лишних ветвей `else`. Это уместно, когда одно из значений 
-является литералом, константой или представляет из себя простое выражение. 
-Если оба значения предполагают вызов функции или сколько-нибудь сложное выражение, 
-то предпочтение нужно отдавать полной записи условия.
+g. \[Automated eigenspace/conditions + no-else-return\] If possible, avoid unnecessary `else` branches. 
+This is appropriate when one of the values is a literal, constant or a simple expression. 
+If both values involve a function call or any complex expression, 
+then preference should be given to the complete recording of the condition.
 
 ```typescript
-    // Плохо
+    // Bad
     if (condition) {
         result = doSomeCalculation();
     } else {
         result = 'someValue';
     }
 
-    // Хорошо
+    // Good
     result = 'someValue';
     if (condition) {
         result = doSomeCalculation();
@@ -2577,31 +2587,30 @@ g. \[Частично автоматизировано: no-else-return\] По в
     return anotherValue;
 ```
 
-h. \[Не автоматизировано\] Не использовать тернарный оператор тогда, когда можно обойтись логическим оператором.
+h. \[Automated eigenspace/conditions\] Do not use ternary operator when you can do with a logical operator.
 
 ```typescript
-    // Плохо
+    // Bad
     action.attributes = action.attributes ? action.attributes : [];
 
-    // Хорошо
+    // Good
     action.attributes = action.attributes || [];
 ```
 
-i. \[Не автоматизировано. Не работает no-nested-ternary\] Недопустимо использовать вложенные тернарные операторы. В данном случае необходимо 
-переписать конструкцию на использование `if-elseif`, `switch-case` или выбор значения 
-из перечисления (map'ы).
+i. \[Automated: no-nested-ternary\] Nested ternary operators are not allowed. In this case, it is necessary 
+rewrite the construct to use `if-elseif`,` switch-case`, or select a value from the enumeration (map).
 
 ```typescript
-    // Плохо
+    // Bad
     action.type = action.isTypePrepared()
         ? action.type : Utils.isDrop(action.type)
             ? ActionType.DROP : Utils.isWork(action.type)
                 ? ActionType.WORK : Utils.isPickup(action.type)
                     ? ActionType.PICKUP : null;
 
-    // Хорошо
+    // Good
     action.type = action.isTypePrepared() ? action.type : ActionType[action.type];
-    // Хорошо
+    // Good
     if (!action.isTypePrepared()) {
         action.type = ActionType[action.type];
     }
