@@ -2,6 +2,8 @@
 
 # React
 
+[Architecture of components](./architecture/README.md)
+
 ## 0. Введение
 
 ### 0.1. Термины и определения
