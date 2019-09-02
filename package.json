@@ -44,7 +44,7 @@
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "1.13.0",
         "@typescript-eslint/parser": "1.13.0",
-        "@eigenspace/eslint-plugin-script-rules": "0.0.1",
+        "@eigenspace/eslint-plugin-script-rules": "0.0.2",
         "eslint-plugin-react": "7.14.3",
         "eslint-plugin-unicorn": "9.1.1",
         "eslint-utils": "1.4.2"
