@@ -1,6 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint', 'react', 'eigenspace'],
+    plugins: ['unicorn', '@typescript-eslint', 'react', '@eigenspace/script-rules'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
@@ -8,8 +8,8 @@ module.exports = {
         project: 'tsconfig.json'
     },
     rules: {
-        'eigenspace/object-properties-carrying': 'error',
-        'eigenspace/conditions': 'error',
+        '@eigenspace/script-rules/object-properties-carrying': 'error',
+        '@eigenspace/script-rules/conditions': 'error',
         'no-multi-spaces': 'error',
         'no-nested-ternary': 'error',
         'no-lonely-if': 'error',
