@@ -2551,7 +2551,7 @@ f. \[Non-automated\] Avoid excessive nesting whenever possible.
     } 
 ```
 
-g. \[Automated eigenspace/conditions + no-else-return\] If possible, avoid unnecessary `else` branches. 
+g. \[Automated: eigenspace/conditions + no-else-return\] If possible, avoid unnecessary `else` branches. 
 This is appropriate when one of the values is a literal, constant or a simple expression. 
 If both values involve a function call or any complex expression, 
 then preference should be given to the complete recording of the condition.
@@ -2587,7 +2587,7 @@ then preference should be given to the complete recording of the condition.
     return anotherValue;
 ```
 
-h. \[Automated eigenspace/conditions\] Do not use ternary operator when you can do with a logical operator.
+h. \[Automated: eigenspace/conditions\] Do not use ternary operator when you can do with a logical operator.
 
 ```typescript
     // Bad
