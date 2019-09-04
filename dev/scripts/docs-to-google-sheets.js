@@ -3,11 +3,14 @@ const fs = require('fs');
 const os = require('os');
 const googleSpreadsheet = require('google-spreadsheet');
 const creds = require('../credentials/google-sheets-credentials.json');
+const { walkThrough } = require('@eigenspace/helper-scripts');
 
 // The Google Sheet ID found in the URL of your Google Sheet.
 const SPREADSHEET_ID = '1phevI9VxclD8QsHYr5Stu-nlvUjJ3taBujgu1JOUqlg';
 
 const PATH_TO_DOCS = '../../doc';
+const FILE_NAME = 'README.ru.md';
+
 const StatusType = {
     AUTOMATED: 'Автоматизировано',
     NON_AUTOMATED: 'Не автоматизировано',
@@ -15,23 +18,12 @@ const StatusType = {
 };
 
 const ID_REGEXP = /(([#]+ ([\d+.]+))|(\w\.))/.toString().slice(1, -1);
-const STATUS_REGEXP = new RegExp(`(${StatusType.NON_AUTOMATED})|(${StatusType.PARTLY_AUTOMATED})|(${StatusType.AUTOMATED})`).toString().slice(1, -1);
-const NAME_REGEXP = /.*/.toString().slice(1, -1);
-const OPEN_BRACKET_REGEXP = /\\\[/.toString().slice(1, -1);
-const CLOSE_BRACKET_REGEXP = /\\\]/.toString().slice(1, -1);
+const STATUS_REGEXP = Object.values(StatusType).map(statusType => `(${statusType})`).join('|');
 const END_REGEXP = new RegExp(`(${os.EOL}.+)*`).toString().slice(1, -1);
 
-const RULE_REGEXP = new RegExp(`${ID_REGEXP} ${OPEN_BRACKET_REGEXP}(${STATUS_REGEXP})(${NAME_REGEXP})${CLOSE_BRACKET_REGEXP} (.+${END_REGEXP})`, 'gm');
+const RULE_REGEXP = new RegExp(`${ID_REGEXP} \\\\\\[(${STATUS_REGEXP})(.*)\\\\\\] (.+${END_REGEXP})`, 'gm');
 
-const sampleRow = {
-    _id: 421,
-    name: 'Использование функций-обёрток',
-    status: 'Автоматизировано',
-    rule: 'no-implicit-coercion',
-    localized: 'Yes',
-    violations: 23,
-    link: 'https://github.com/eigen-space/codestyle/tree/dev/doc/scripts#3111-%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BE-no-implicit-coercion-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B9-%D0%BE%D0%B1%D1%91%D1%80%D1%82%D0%BE%D0%BA'
-};
+const COLUMNS_COUNT = 7;
 
 accessSpreadsheet();
 
@@ -42,43 +34,21 @@ async function accessSpreadsheet() {
     await promisify(doc.useServiceAccountAuth.bind(doc), creds);
     // Get info about worksheets
     const info = await promisify(doc.getInfo);
-    const sheet = info.worksheets[0];
 
-    const rows = await promisify(sheet.getRows);
-    console.log('Title:', sheet.title, 'rows: ', rows.length);
+    const sheets = info.worksheets;
+    walkThrough(PATH_TO_DOCS, async (dir, file) => {
+        if (file !== FILE_NAME) {
+            return;
+        }
 
-    // await removeAllRows(rows);
+        const docType = dir.split(path.sep).pop();
+        const sheet = sheets.find(worksheet => worksheet.title === docType);
 
-    const cells = await promisify(sheet.getCells, {
-        'min-row': 2,
-        'max-row': 150,
-        'max-col': 7,
-        'min-col': 1,
-        'return-empty': true
+        await removeAllRows(sheet);
+
+        const rules = getRulesData(path.join(dir, file));
+        addRows(sheet, rules);
     });
-    // console.log('cells:', cells);
-
-    const rules = getRulesData();
-
-    rules.forEach((rule, i) => {
-        cells[7 * i].value = rule._id;
-        cells[7 * i + 1].value = rule.name;
-        cells[7 * i + 2].value = rule.status;
-        cells[7 * i + 3].value = rule.rule;
-        cells[7 * i + 4].value = rule.localized;
-        cells[7 * i + 5].value = rule.violations;
-        cells[7 * i + 6].value = rule.link;
-    });
-
-    sheet.bulkUpdateCells(cells);
-
-    // rules.forEach(rule => {
-    //     sheet.addRow(rule, err => {
-    //         if (err) {
-    //             console.log(err);
-    //         }
-    //     });
-    // });
 }
 
 function promisify(method, ...args) {
@@ -93,15 +63,49 @@ function promisify(method, ...args) {
     });
 }
 
-function removeAllRows(rows) {
-    return Promise.all(rows.map(row => row.del()));
+async function getCellsTillRow(sheet, maxRow) {
+    return promisify(sheet.getCells, {
+        'min-row': 2,
+        'max-row': maxRow + 1,
+        'max-col': COLUMNS_COUNT,
+        'min-col': 1,
+        'return-empty': true
+    });
 }
 
-function getRulesData() {
-    const doc = fs.readFileSync(`${PATH_TO_DOCS}/scripts/README.ru.md`, 'utf8');
+async function removeAllRows(sheet) {
+    const rows = await promisify(sheet.getRows);
+    const cells = await getCellsTillRow(sheet, rows.length);
+
+    // Assignment through index because of no-param-reassign eslint rule
+    cells.forEach(({}, i) => cells[i].value = null);
+    return sheet.bulkUpdateCells(cells);
+}
+
+async function addRows(sheet, rules) {
+    const cells = await getCellsTillRow(sheet, rules.length);
+
+    rules.forEach((rule, i) => {
+        const rowValues = [rule._id, rule.name, rule.status, rule.rule, rule.localized, rule.violations, rule.link];
+
+        rowValues.forEach((ruleValue, j) => {
+            const cellIndex = i * rowValues.length + j;
+            cells[cellIndex].value = ruleValue;
+        });
+    });
+
+    return sheet.bulkUpdateCells(cells);
+}
+
+function getRulesData(pathToDoc) {
+    const doc = fs.readFileSync(pathToDoc, 'utf8');
     const rules = doc.match(RULE_REGEXP);
 
-    return rules.map((rule, i) => {
+    if (!rules) {
+        return [];
+    }
+
+    return rules.map(rule => {
         RULE_REGEXP.lastIndex = 0;
         const execResult = RULE_REGEXP.exec(rule);
 
