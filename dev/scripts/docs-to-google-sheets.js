@@ -8,7 +8,7 @@ const { walkThrough } = require('@eigenspace/helper-scripts');
 // The Google Sheet ID found in the URL of your Google Sheet.
 const SPREADSHEET_ID = '1phevI9VxclD8QsHYr5Stu-nlvUjJ3taBujgu1JOUqlg';
 
-const PATH_TO_DOCS = '../../doc';
+const PATH_TO_DOCS = './doc';
 const FILE_NAME = 'README.ru.md';
 
 const StatusType = {
@@ -85,9 +85,22 @@ async function removeAllRows(sheet) {
 
 async function addRows(sheet, rules) {
     const cells = await getCellsTillRow(sheet, rules.length);
+    const isSubRuleId = /^[a-z]/;
 
     rules.forEach((rule, i) => {
-        const rowValues = [rule._id, rule.name, rule.status, rule.rule, rule.localized, rule.violations, rule.link];
+
+        let id = rule._id;
+        // Concat sub rule id with parent id
+        if (id.match(isSubRuleId)) {
+            let reverseIndex = i;
+            while (rules[reverseIndex]._id.match(isSubRuleId)) {
+                reverseIndex--;
+            }
+
+            id = `${rules[reverseIndex]._id}${id}`;
+        }
+
+        const rowValues = [id, rule.name, rule.status, rule.rule, rule.localized, rule.violations, rule.link];
 
         rowValues.forEach((ruleValue, j) => {
             const cellIndex = i * rowValues.length + j;
