@@ -58,6 +58,7 @@ function promisify(method, ...args) {
                 reject(err);
                 return;
             }
+
             resolve(result);
         });
     });
@@ -109,6 +110,8 @@ function getRulesData(pathToDoc) {
         RULE_REGEXP.lastIndex = 0;
         const execResult = RULE_REGEXP.exec(rule);
 
+        // Each index belongs to data in parsed result
+        // We use `_id` because of reserved word `id` in google sheets
         const _id = execResult[3] || execResult[4];
         const status = execResult[5];
         const ruleName = execResult[9].slice(1).trim();
