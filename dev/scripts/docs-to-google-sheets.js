@@ -46,7 +46,8 @@ async function accessSpreadsheet() {
             return;
         }
 
-        const docType = dir.split(path.sep).pop();
+        const docType = dir.split(path.sep)
+            .pop();
         const sheet = sheets.find(worksheet => worksheet.title === docType);
 
         await sheet.clear(() => {
@@ -108,7 +109,8 @@ function getRulesData(pathToDoc) {
         // Each index belongs to data in parsed result
         const id = execResult[3] || execResult[4];
         const status = execResult[5];
-        const ruleName = execResult[9].slice(1).trim();
+        const ruleName = execResult[9].slice(1)
+            .trim();
         const name = execResult[10];
 
         return {
