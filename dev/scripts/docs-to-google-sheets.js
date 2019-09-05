@@ -3,6 +3,7 @@ const fs = require('fs');
 const os = require('os');
 const googleSpreadsheet = require('google-spreadsheet');
 const creds = require('../credentials/google-sheets-credentials.json');
+const { promisify } = require('util');
 const { walkThrough } = require('@eigenspace/helper-scripts');
 
 // The Google Sheet ID found in the URL of your Google Sheet.
@@ -17,11 +18,14 @@ const StatusType = {
     PARTLY_AUTOMATED: 'Частично автоматизировано'
 };
 
-const ID_REGEXP = /(([#]+ ([\d+.]+))|(\w\.))/.toString().slice(1, -1);
-const STATUS_REGEXP = Object.values(StatusType).map(statusType => `(${statusType})`).join('|');
-const END_REGEXP = new RegExp(`(${os.EOL}.+)*`).toString().slice(1, -1);
+const ID_PATTERN = /(([#]+ ([\d+.]+))|(\w\.))/.toString()
+    .slice(1, -1);
+const STATUS_PATTERN = Object.values(StatusType).map(statusType => `(${statusType})`)
+    .join('|');
+const END_PATTERN = new RegExp(`(${os.EOL}.+)*`).toString()
+    .slice(1, -1);
 
-const RULE_REGEXP = new RegExp(`${ID_REGEXP} \\\\\\[(${STATUS_REGEXP})(.*)\\\\\\] (.+${END_REGEXP})`, 'gm');
+const RULE_REGEXP = new RegExp(`${ID_PATTERN} \\\\\\[(${STATUS_PATTERN})(.*)\\\\\\] (.+${END_PATTERN})`, 'gm');
 
 const COLUMNS_COUNT = 7;
 
@@ -31,11 +35,12 @@ async function accessSpreadsheet() {
     // Create a document object using the ID of the spreadsheet - obtained from its URL.
     const doc = new googleSpreadsheet(SPREADSHEET_ID);
     // Authenticate with the Google Spreadsheets API.
-    await promisify(doc.useServiceAccountAuth.bind(doc), creds);
+    await promisify(doc.useServiceAccountAuth.bind(doc))(creds);
     // Get info about worksheets
-    const info = await promisify(doc.getInfo);
+    const info = await promisify(doc.getInfo)();
 
     const sheets = info.worksheets;
+
     walkThrough(PATH_TO_DOCS, async (dir, file) => {
         if (file !== FILE_NAME) {
             return;
@@ -44,28 +49,16 @@ async function accessSpreadsheet() {
         const docType = dir.split(path.sep).pop();
         const sheet = sheets.find(worksheet => worksheet.title === docType);
 
-        await removeAllRows(sheet);
+        await sheet.clear(() => {
+        });
 
         const rules = getRulesData(path.join(dir, file));
         addRows(sheet, rules);
     });
 }
 
-function promisify(method, ...args) {
-    return new Promise((resolve, reject) => {
-        method(...args, (err, result) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-
-            resolve(result);
-        });
-    });
-}
-
 async function getCellsTillRow(sheet, maxRow) {
-    return promisify(sheet.getCells, {
+    return promisify(sheet.getCells)({
         'min-row': 2,
         'max-row': maxRow + 1,
         'max-col': COLUMNS_COUNT,
@@ -74,33 +67,22 @@ async function getCellsTillRow(sheet, maxRow) {
     });
 }
 
-async function removeAllRows(sheet) {
-    const rows = await promisify(sheet.getRows);
-    const cells = await getCellsTillRow(sheet, rows.length);
-
-    // Assignment through index because of no-param-reassign eslint rule
-    cells.forEach(({}, i) => cells[i].value = null);
-    return sheet.bulkUpdateCells(cells);
-}
-
 async function addRows(sheet, rules) {
     const cells = await getCellsTillRow(sheet, rules.length);
-    const isSubRuleId = /^[a-z]/;
+    const subRuleIdRegExp = /^[a-z]/;
+
+    let currentParentId = '';
 
     rules.forEach((rule, i) => {
+        let { id } = rule;
 
-        let id = rule._id;
-        // Concat sub rule id with parent id
-        if (id.match(isSubRuleId)) {
-            let reverseIndex = i;
-            while (rules[reverseIndex]._id.match(isSubRuleId)) {
-                reverseIndex--;
-            }
-
-            id = `${rules[reverseIndex]._id}${id}`;
+        if (!subRuleIdRegExp.test(id)) {
+            currentParentId = id;
+        } else {
+            id = `${currentParentId}${id}`;
         }
 
-        const rowValues = [id, rule.name, rule.status, rule.rule, rule.localized, rule.violations, rule.link];
+        const rowValues = Object.keys(rule).map(key => key === 'id' ? id : rule[key]);
 
         rowValues.forEach((ruleValue, j) => {
             const cellIndex = i * rowValues.length + j;
@@ -124,14 +106,13 @@ function getRulesData(pathToDoc) {
         const execResult = RULE_REGEXP.exec(rule);
 
         // Each index belongs to data in parsed result
-        // We use `_id` because of reserved word `id` in google sheets
-        const _id = execResult[3] || execResult[4];
+        const id = execResult[3] || execResult[4];
         const status = execResult[5];
         const ruleName = execResult[9].slice(1).trim();
         const name = execResult[10];
 
         return {
-            _id,
+            id,
             name,
             status,
             rule: ruleName,
