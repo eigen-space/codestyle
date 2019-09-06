@@ -12,7 +12,7 @@ script:
   - yarn build && yarn script:extract-rules-meta-info-to-google-sheets
 before_install:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_ACCESS_TOKEN}" > .npmrc
-  - echo "${GOOGLE_SHEETS_CREDENTIALS}" > src/scripts/credentials/google-sheets-credentials.json
+  - echo $GOOGLE_SHEETS_CREDENTIALS > src/scripts/credentials/google-sheets-credentials.json
 notifications:
   slack:
     rooms:
