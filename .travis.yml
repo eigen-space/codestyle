@@ -9,6 +9,7 @@ cache:
 script:
   - git checkout $TRAVIS_BRANCH
   - git remote set-url origin https://$USER:$GITHUB_API_KEY@github.com/eigen-space/codestyle.git
+  - yarn script:extract-rules-meta-info-to-google-sheets
   - chmod +x ./node_modules/@eigenspace/helper-scripts/scripts/ci/detect-autocommit.sh
   - yarn build && npm run deploy:publish;
 before_install:
