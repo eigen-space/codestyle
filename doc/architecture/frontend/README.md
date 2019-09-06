@@ -163,7 +163,7 @@ Responsible for:
 2. As Framer Motion, as CSS
 
 Filename:\
-`animation.ts`
+`<component>.animation.ts`
 
 Example:
 ```
