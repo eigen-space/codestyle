@@ -7,7 +7,7 @@ In our projects we follow this architecture:
 
 ### 1.1 Smart group
 
-Logic and data processing.
+Logic and data processing. Usual supported by developers.
 
 #### 1.1.1 Container
 
@@ -84,7 +84,7 @@ export class DomainListPresenter extends React.PureComponent<Props> {
 
 ### 1.2 Stub group
 
-Only UI view layers.
+Only UI view layers. Can be supported by designers.
 
 #### 1.2.1 Styles 
 
