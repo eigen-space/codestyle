@@ -2,10 +2,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import { Cell, Info, Worksheet } from 'google-spreadsheet';
-import * as creds from '../credentials/google-sheets-credentials.json';
+import * as creds from './credentials/google-sheets-credentials.json';
 import { promisify } from 'util';
 import { walkThrough } from '@eigenspace/helper-scripts';
 
+// Using require because of import issues
 const GoogleSpreadsheet = require('google-spreadsheet');
 
 // The Google Sheet ID found in the URL of your Google Sheet.
