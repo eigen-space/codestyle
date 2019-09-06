@@ -38,8 +38,9 @@
         "lint:markdown": "node src/scripts/markdown-lint.js",
         "lint": "yarn lint:code . && yarn lint:markdown",
         "script:copy": "node ./dev/scripts/copy.js",
-        "script:docs-to-google-sheets": "node ./dev/scripts/docs-to-google-sheets.js",
-        "build": "yarn script:copy",
+        "script:docs-to-google-sheets": "node dist/scripts/extract-rules-meta-info-to-google-sheets.js",
+        "compile": "tsc",
+        "build": "yarn script:copy && yarn compile",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "dependencies": {

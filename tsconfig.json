@@ -3,12 +3,15 @@
     "compilerOptions": {
         "module": "commonjs",
         "outDir": "dist",
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
         "typeRoots": [
             "node_modules/@types"
         ]
     },
     "include": [
-        "src"
+        "src",
+        "dev"
     ],
     "exclude": [
         "node_modules",
