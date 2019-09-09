@@ -5,20 +5,20 @@
 In our projects we follow this architecture:
 ![Architecture](assets/architecture.png)
 
-### 1.1 Smart group
+### 1.1. Component Logic layer
 
-Logic and data processing. Usual supported by developers.
+Logic and data processing. Usually supported by developers.
 
-#### 1.1.1 Container
+#### 1.1.1. Container
 
-Main question:\
-What does business data component show and business logic
-component use? 
+Main question:
+1. What business data does component operate with? 
+2. What business logic does component implement?
 
 Responsible for:
 1. Getting and preparing data from store
 2. Preparing actions
-3. Including business logic
+3. Implementation of business logic
 
 Filename:\
 `<component>.container.tsx`
@@ -33,7 +33,7 @@ export const mapStateToProps = (state: StoreState): MappingStateProps => ({
 });
 ```
 
-#### 1.1.2 Presenter
+#### 1.1.2. Presenter
 
 Stateful component.
 
@@ -42,7 +42,7 @@ What does component do?
 
 Responsible for:
 1. Storing and controlling UI state
-2. Including all methods
+2. Implementation of all methods like handlers and component logic
 
 Filename:\
 `<component>.presenter.tsx`
@@ -82,11 +82,11 @@ export class DomainListPresenter extends React.PureComponent<Props> {
 }
 ```
 
-### 1.2 Stub group
+### 1.2. Presentation Layer
 
 Only UI view layers. Can be supported by designers.
 
-#### 1.2.1 Styles 
+#### 1.2.1. Styles 
 
 Main question:\
 How does component look?
@@ -112,14 +112,14 @@ export const CardListWrapper = styled(ContainerRoot)`
 ...
 ```
 
-#### 1.2.2 View 
+#### 1.2.2. View 
 
 Main question:\
 What does component show?
 
 Responsible for:
 1. Stateless component
-2. Contains only makeup with handlers and interpolate data
+2. Only makeup with handler interfaces and data interpolation
  
 Filename:\
 `<component>.view.tsx`
@@ -136,7 +136,7 @@ interface Props {
     onCardAction: (action: CardContextMenuAction, entity: CardEntity) => void;
 }
 
-function DomainList({ items, cardsForList, onCardUpdate, onCardAction }: Props): React.ReactElement {
+function View({ items, cardsForList, onCardUpdate, onCardAction }: Props): React.ReactElement {
     return (
         <DomainListRoot>
             <CardListWrapper>
@@ -150,10 +150,10 @@ function DomainList({ items, cardsForList, onCardUpdate, onCardAction }: Props):
     );
 }
 
-export const DomainListView = React.memo(DomainList);
+export const DomainListView = React.memo(View);
 ```
 
-#### 1.2.3 Animation
+#### 1.2.3. Animation
 
 Main question:\
 How does component change UI states?
@@ -185,7 +185,7 @@ export const animationStates = {
 };
 ```
 
-## 1.3 Index
+## 1.3. Index
  
 Each component folder should contain `index` file with exported 
 `<Component>`. If component contains container layer this file should
