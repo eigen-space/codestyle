@@ -38,5 +38,6 @@ redux.js - Configuration includes codestyle Redux rules
 
 # Why do we have that dependencies?
 
+* `eslint-plugin-prettier` - plugin for linting styles.
 * `eslint-plugin-react` - React plugin for ESLint.
 * `eslint-plugin-react-redux` - Redux plugin for ESLint.
