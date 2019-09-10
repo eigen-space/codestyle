@@ -1,3 +1,5 @@
+[ru](./README.ru.md)
+
 # Общие стандарты web-разработки
 
 ## 1. Файлы с исходным кодом
@@ -715,192 +717,191 @@ b. [?] Должно учитываться время, которое необх
 может быть автоматическим. Хотя можно проставлять версию автоматически на основе
 changelog: added, changed, removed
 
-## 7. Итерация
+## 7. Iteration
 
-### 7.1. Основная идея
+### 7.1. The main idea
 
-a. Итерация процесса разработки есть один цикл постановки подцелей,
-производства продукта, получения результата и обратной связи для
-корректировки качества получаемого результата (сюда же включена и 
-эффектвность, которая влияет на конечный результат).
+a. The iteration of development process is an one iteration of
+the loop of setting sub-goals, product production, getting result
+and feedback to correct quality of the result including productivity
+as toughly coupled part of the result.
 
-![Механизм итеации](./assets/iteration-mechanism.ru.png)
+![Iteration mechanism](./assets/iteration-mechanism.en.jpg)
 
-b. Процесс итерации можно представить списком таких этапв 
-(мероприятий):
+b. The iteration process is comprised of the following parts:
 
-* Планирование итерации
-* Запуск итерации
-* Разработка
-    * Решение задач. Не является мероприятием, заполняет
-      всё доступное время.
-    * Обзор решения (Ревью)    
-    * Внутрикомандное демо
-* Закрытие итерации
-* Тихий час
-* Мозговстряска
+* Planning
+* Iteration start
+* Development
+    * Task solving. It is not an event (meeting), it fills
+      all available time.
+    * Review
+    * Dev team demo
+* Iteration finish
+* Quiet time
+* Brainshaking
 
-![Процесс итерации](./assets/iteration-process.ru.png)
+![Iteration process](./assets/iteration-process.en.jpg)
 
-c. Суммарная продолжительность общекомандных мероприятий: 9 ч 
+c. Total time for events: 9h
 
-### 7.2. Роли
+### 7.2. Roles
 
-* Ответственный за итерацию, выбирается по наиболее старшей позиции
-в команде.
+* Responsible for iteration, teammate with higher post in the team.
 
-### 7.3. Планирование итерации
+### 7.3. Planning
 
-a. Продолжительность: 3 ч
+a. Duration: 3h
 
-b. Цель: включить в следующую итерацию наиболее приоритетные задачи
-из бизнес, технических и организационных очередей задач.
+b. Goal: include the tasks with higher priority to the next
+iteration from business, tech and organizational task queues.
 
-c. Задачи:
+c. Tasks:
 
-* актуализировать состав и приоритет задач
-* распределить задачи между участниками в команде
+* actualize priority and set of tasks
+* match assignees with tasks
 
-d. Участники:
+d. Participants:
 
-* ответственный за итерацию
+* responsible for iteration
 
-e. Примечание:
+e. Notes:
 
-* нужно оптимизировать (слишком долго)
-* все задачи должны быть связаны с целями
-* задачи должны постоянно актуализироваться и по сути быть уже 
-отсортированными по приоритету, привязанными к целям и готовыми
-к взятию в работу
+* we have to optimize this step (too long and time consuming, 
+something wrong here)
+* all the tasks should be part of the concrete goals
+* tasks should being actualized constantly and as a result we should
+have actual prioritized task queue all the time
 
-### 7.4. Запуск итерации (Установка микроцелей)
+### 7.4. Iteration start (Setting microgoals)
 
-a. Продолжительность: 15 мин (подготовка) + 10 мин
+a. Duration: 15 min (pre-event) + 10 min
 
-b. Цель: сделать фокус на целях итерации.
+b. Goal: focus on iteration goals.
 
-* актуализировать следующую итерацию по результатам 
-завершения текущей
-* проговорить цели, сделать акцент на целях
-* проговорить непонятные задачи
+* actualize the next iteration according to results of previous one
+* discuss goals, focus on the goals
+* discuss tasks we have questions about
 
-c. Участники:
+c. Participants:
 
-* ответственный за итерацию
-* команда
+* responsible for iteration
+* dev team
 
-d. Требования к участникам:
+d. Requirements to participants:
 
-* ответственный за итерацию должен подготовить план итерации
-* участники команды должны просмотреть предварительный план
-и сформулировать вопросы
+* responsible for iteration should prepare iteration draft
+* teammates should check out iteration draft and write down
+their questions
 
-### 7.5. Обзор решения (Ревью)
+### 7.5. Review
 
-a. Продолжительность (ежедневно): 1 ч
+a. Duration (every day): 1h
 
-b. Цель: обратная связь по решению задачи.
+b. Goal: feedback about task solutions.
 
-d. Участники:
+d. Participants:
 
-* команда
+* dev team
 
-e. Примечание:
+e. Notes:
 
-* подробно обзор рассмотрен в [отдельной секции](#64---)
+* you can find details [here](#64---)
 
-### 7.6. Внутрикомандное демо
+### 7.6. Dev team demo
 
-a. Продолжительность (ежедневно): 15 мин (подготовка) + 10 мин
+a. Duration (every day): 15 min (pre-event) + 10 min
 
-b. Цель: оценить процент достижения цели.
+b. Goal: check progress of the goals.
 
-c. Задачи: 
+c. Tasks: 
 
-* текущий срез с фокусом на достигнутый за день результат
-* получение обратной связи
-* знакомство с результатами работы других участников команды
+* focus on given result rather than actions
+* feedback
+* get to know what other teammates do
 
-d. Участники:
+d. Participants:
 
-* ответственный за итерацию
-* команда
+* responsible for iteration
+* dev team
 
-e. Требования к участникам:
+e. Requirements to participants:
 
-* участники команды должны подготовить к демо выжимку по 
-достигнутым результатам за день
+* teammates should prepare summary of the results achieved during the day
 
-f. Выжимка по достигнутым результатам:
+f. Summary of the results:
 
-* название и ссылка на задачу
-* процент завершения
-* оценка попадания в срок и в оценку
-* достигнутый результат, оценка соответствия требованиям 
+* name and link to the task
+* progress (the percentage of completion)
+* accuracy of due date and time estimation
+* achieve result (there should not be description of activities), 
+matching requirements and result
 
-g. Ход встречи:
+g. The meeting:
 
-* Каждому участнику даётся не более 2 мин на представление результата.
-НЕ нужно рассказывать, КАК к нему пришел и что делал, нужно показать,
-ЧТО сделал и дать оценку результата и приближения к цели.
-* Секция вопросов участнику.
-* Повторить, пока не закончатся участники.
-* Количество участников должно быть не более 4.
+* Each teammate has only 2 minutes to demonstrate his results.
+You should NOT tell about, HOW you solve tasks, you should 
+talk about WHAT you have done and how far you have come on the way
+to goal.
+* Questions to teammate.
+* Repeat until there is at least one teammate has not demonstrated
+his work yet.
+* Number of participants should be less or equal to 4.
 
-### 7.7. Закрытие итерации (Фиксация результатов)
+### 7.7. Iteration finish (summarize results)
 
-a. Продолжительность: 30 мин
+a. Duration: 30 min
 
-b. Цель: фиксация результатов итерации.
+b. Goal: summarize results.
 
-c. Задачи:
+c. Tasks:
 
-* сформировать статистику по выполнению задач по каждому
-участнику в отдельности и по команде в целом
-* определить процент достижения целей на итерацию
-* актуализировать карточки сотрудников
+* prepare statistics for done tasks per each teammate
+and aggregated result for the team
+* get progress per goal
+* actualize personal cards
 
-d. Участники:
+d. Participants:
 
-* ответственный за итерацию
+* responsible for iteration
 
-e. Примечание:
+e. Notes:
 
-* в идеале должно выполняться автоматически
+* we should automate it
 
 ### 7.8. Тихий час
 
-a. Продолжительность: 1 ч
+a. Duration: 1h
 
-b. Цель: личная оценка достижения целей.
+b. Goal: teammate makes performance review by himself.
 
-c. Задачи:
+c. Tasks:
 
-* просмотреть результаты итерации
-* обдумать их
-* зафиксировать положительные и отрицательные моменты
-* подготовить предложения по улучшению
+* check out results of iteration
+* think about it
+* summarize advantages and disadvantages
+* prepare proposals to get better
 
-d. Участники:
+d. Participants:
 
-* команда (каждый участник в отдельности)
+* dev team (each teammate face to face to himself)
 
-### 7.9. Встряска мозгов (Оценка результатов)
+### 7.9. Brainshaking (Performance review)
 
-a. Продолжительность: 15 мин
+a. Duration: 15 min
 
-b. Цель: оценка достижения целей
+b. Goal: performance review (focus on goals)
 
-c. Задачи:
+c. Tasks:
 
-* обсудить итоги итерации
-* оценить процент достижения цели
-* сделать выводы
+* discuss results of iteration
+* estimate progress on the way to goals
+* make conclusions, learn from this
 
-d. Участники:
+d. Participants:
 
-* ответственный за итерацию
-* команда
+* responsible for iteration
+* dev team
 
 ### 7.10. Отношение к оценке времени выполнения задачи
 
