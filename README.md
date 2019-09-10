@@ -68,16 +68,19 @@ In current `tsconfig.json` add:
 
 ## Why do we have that dependencies?
 
-* `@typescript-eslint/parser` - parser typescript code for eslint.
-* `eslint-plugin-unicorn` - eslint rule package.
+* `@eigenspace/eslint-plugin-script-rules` - eslint script rules package.
 * `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
-* `eslint-plugin-prettier` - prettier plugin for eslint.
+* `@typescript-eslint/parser` - parser typescript code for eslint.
+* `eslint-plugin-react` - plugin to adapt eslint to react.
+* `eslint-plugin-unicorn` - eslint rule package.
+* `eslint-utils` - eslint-utils package that helps with rules development.
 
 ## Why do we have that dev dependencies?
 
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
+* `google-spreadsheet` - it is used to work with google spreadsheet api to automate preparing google spreadsheet with all rules.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
 * `lint-staged` - used for configure linters against staged git files.
