@@ -717,3 +717,156 @@ b. Правило добавляется с пометкой `\[Не автом�
 Например: `3.2.2. \[Не автоматизировано\] Правила именования для обработчков`.
 
 c. Должна быть создана задача на автоматизацию правила.
+
+### 4.3. Localization of proposals
+
+a. A proposal should be written down on both languages: Russian and English.
+
+b. When you suggest your proposal, you can use only Russian language to avoid
+corrections in both versions. When the proposal is ready to merge, you should
+translate it to English.
+
+## 5. Meetings
+
+### 5.1. Meeting format
+
+a. There should be agenda for the meeting.
+For example:
+
+```
+Agenda:
+
+1. Discuss problems of getting and manage requirements
+during development process. 
+```
+
+b. Meeting should not be greater than 30 min, 
+i.e. it should be <= 30 min.
+
+c. There should not be optional participants. If a participant is optional,
+there should not be this participant on the meeting.
+
+d. If a meeting is about discussion of some question, each participant
+should prepare some proposals for the meeting.
+If the participant does not have any proposals, he should be considered
+as someone who are not ready for the meeting. Access to the meeting
+should be restricted in this case.
+If there is a risk that someone can not understand that he should
+prepare some materials for the meeting, it does make sense to specify
+this explicitly.
+
+```
+Agenda:
+
+1. Discuss problems of getting and manage requirements
+during development process. 
+
+Requirements to participants:
+
+1. Each participant should bring some proposals to solve
+the problem of managing requirements.
+```
+
+e. Each participant has only 2 minutes to talk about his proposal.
+Nobody can interrupt him. After everybody can ask any questions to
+grasp the proposal. We have 3 minutes for this section.
+
+f. When we get all proposals, we have 5 minutes to discuss them.
+We also have 5 minutes to get conclusions.
+
+g. Each role on the meeting should be obvious:
+
+- host of the meeting, manages meeting according to these rules;
+- time checker, controls time frames of the meeting;
+- scribe, summarize the results of meeting.
+
+h. Number of participants should not be greater than 6, otherwise
+there is a risk to go beyond the meeting time, because if we have
+only 4 participants that fully consume their time, we have no time
+for other two participants.
+
+i. Video/audio recording is required. Video is the preferable option.
+
+j. Only demo can be greater than 30 min, it can be less or equal to 1h:
+45 min - main part, 15 min - questions. The ideal way is to not step
+out time limit of 30 minutes. 
+
+### 5.2. Meeting parts
+
+a. The host of the meeting checks that all participants are ready
+to the meeting. If someone are not ready, the host asks him to go out.
+
+b. The host of the meeting recalls the agenda of meeting and hand it
+over to the one of participants.
+
+c. The participant presents his opinion and proposals during his
+time limit. After other participants ask him.
+
+d. When all participants have spoken out, they discuss all proposals
+to choose the best one.
+
+e. Summarize results:
+
+- approved decisions
+- actions
+- responsible persons
+- due dates
+
+For instance,
+
+```
+Summary:
+
+1. Describe format of a **wish** of stakeholder and
+cirterias of transition from wish to a requirement.
+Resp.: Anton K., 07.09.2019
+2. Prepare requirements to module of buying avia tickets
+according to approved format of wish and requirement.
+Resp.: Danya S., 10.09.2019
+```
+
+f. If time frame of some part of the meeting is exceeded,
+time checker should make alarm about that. The host of the meeting
+recalls about the rule, interrupts current step and switch the meeting
+toward the next.
+
+### 5.3. Number of meetings
+
+We should try to use as minimum meetings as we can. If we can solve
+the issue without meeting, we should do that.
+
+The main idea is to create and suggest proposals with higher quality
+that are the result of thoughtful though process rather than a spontaneous 
+product during the meeting. Maybe some person spends more time,
+other spend less and can simply approve the proposals.
+
+### 5.4. Meeting invitation
+
+a. An invitation to a meeting should be sent at least 1 working day
+in advance. If the meeting requires pre-meeting step more than 2h,
+the host of the meeting should send invitation at least 2 working days
+in advance. There might be exceptions if the host of the meeting
+harmonizes all the things with other participants.
+
+b. Each participant should send response for the invitation,
+so that the host of the meeting can see participants who really can
+be on the meeting.
+
+c. If you get an invitation for a meeting, you must check you really
+need to participate. You should not be a victim of circumstances,
+you should not allow to steal your time. If you do not fully understand
+what purpose you should be on the meeting for, the meeting does not
+conform the required format, do not hesitate to ask to add more description
+to get all things clear. If you have grasped that you do not need to be
+on the meeting, you should decline it adding a reason to description.
+
+### 5.5. Open questions
+
+a. What cases do we really need meetings in?
+
+b. Maybe the most right way to get highest quality and less time consuming
+is to solve all issues using proposals without meetings?
+
+c. We should classify meetings. Each type of meeting should have
+its common requirements and prerequisites for the meeting and participants,
+so that we do not repeat ourselves each time we create the meeting.
