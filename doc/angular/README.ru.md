@@ -1,3 +1,5 @@
+[en](./README.md)
+
 # Angular
 
 ## 0. Введение
