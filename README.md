@@ -20,11 +20,15 @@ This project contains:
 ```   
 # Code writing guide
 
-* [Common standarts](./doc/common/README.md)
+* [Common standards](./doc/common/README.md)
 * [Angular](./doc/angular/README.md)
 * [React](./doc/react/README.md)
 * [Scripts](./doc/scripts/README.md)
 * [Styles](./doc/styles/README.md)
+
+# Process rules
+
+* [Process rules](./doc/process/README.md)
 
 # Environmental requirements
 * `eslint`: `5.x`
