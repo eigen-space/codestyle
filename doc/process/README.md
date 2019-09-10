@@ -473,9 +473,193 @@ b. [?] Должно учитываться время, которое необх
 может быть автоматическим. Хотя можно проставлять версию автоматически на основе
 changelog: added, changed, removed
 
-## 3. Планирование
+## 3. Iteration
 
-### 3.1. Отношение к оценке времени выполнения задачи
+### 3.1. The main idea
+
+a. The iteration of development process is an one iteration of
+the loop of setting sub-goals, product production, getting result
+and feedback to correct quality of the result including productivity
+as toughly coupled part of the result.
+
+![Iteration mechanism](./assets/iteration-mechanism.en.jpg)
+
+b. The iteration process is comprised of the following parts:
+
+* Planning
+* Iteration start
+* Development
+    * Task solving. It is not an event (meeting), it fills
+      all available time.
+    * Review
+    * Dev team demo
+* Iteration finish
+* Quiet time
+* Brainshaking
+
+![Iteration process](./assets/iteration-process.en.jpg)
+
+c. Total time for events: 9h
+
+### 3.2. Roles
+
+* Responsible for iteration, teammate with higher post in the team.
+
+### 3.3. Planning
+
+a. Duration: 3h
+
+b. Goal: include the tasks with higher priority to the next
+iteration from business, tech and organizational task queues.
+
+c. Tasks:
+
+* actualize priority and set of tasks
+* match assignees with tasks
+
+d. Participants:
+
+* responsible for iteration
+
+e. Notes:
+
+* we have to optimize this step (too long and time consuming, 
+something wrong here)
+* all the tasks should be part of the concrete goals
+* tasks should being actualized constantly and as a result we should
+have actual prioritized task queue all the time
+
+### 3.4. Iteration start (Setting microgoals)
+
+a. Duration: 15 min (pre-event) + 10 min
+
+b. Goal: focus on iteration goals.
+
+* actualize the next iteration according to results of previous one
+* discuss goals, focus on the goals
+* discuss tasks we have questions about
+
+c. Participants:
+
+* responsible for iteration
+* dev team
+
+d. Requirements to participants:
+
+* responsible for iteration should prepare iteration draft
+* teammates should check out iteration draft and write down
+their questions
+
+### 3.5. Review
+
+a. Duration (every day): 1h
+
+b. Goal: feedback about task solutions.
+
+d. Participants:
+
+* dev team
+
+e. Notes:
+
+* you can find details [here](#64---)
+
+### 3.6. Dev team demo
+
+a. Duration (every day): 15 min (pre-event) + 10 min
+
+b. Goal: check progress of the goals.
+
+c. Tasks: 
+
+* focus on given result rather than actions
+* feedback
+* get to know what other teammates do
+
+d. Participants:
+
+* responsible for iteration
+* dev team
+
+e. Requirements to participants:
+
+* teammates should prepare summary of the results achieved during the day
+
+f. Summary of the results:
+
+* name and link to the task
+* progress (the percentage of completion)
+* accuracy of due date and time estimation
+* achieve result (there should not be description of activities), 
+matching requirements and result
+
+g. The meeting:
+
+* Each teammate has only 2 minutes to demonstrate his results.
+You should NOT tell about, HOW you solve tasks, you should 
+talk about WHAT you have done and how far you have come on the way
+to goal.
+* Questions to teammate.
+* Repeat until there is at least one teammate has not demonstrated
+his work yet.
+* Number of participants should be less or equal to 4.
+
+### 3.7. Iteration finish (summarize results)
+
+a. Duration: 30 min
+
+b. Goal: summarize results.
+
+c. Tasks:
+
+* prepare statistics for done tasks per each teammate
+and aggregated result for the team
+* get progress per goal
+* actualize personal cards
+
+d. Participants:
+
+* responsible for iteration
+
+e. Notes:
+
+* we should automate it
+
+### 3.8. Quiet time
+
+a. Duration: 1h
+
+b. Goal: teammate makes performance review by himself.
+
+c. Tasks:
+
+* check out results of iteration
+* think about it
+* summarize advantages and disadvantages
+* prepare proposals to get better
+
+d. Participants:
+
+* dev team (each teammate face to face to himself)
+
+### 3.9. Brainshaking (Performance review)
+
+a. Duration: 15 min
+
+b. Goal: performance review (focus on goals)
+
+c. Tasks:
+
+* discuss results of iteration
+* estimate progress on the way to goals
+* make conclusions, learn from this
+
+d. Participants:
+
+* responsible for iteration
+* dev team
+
+### 3.10. Отношение к оценке времени выполнения задачи
 
 a. Если исполнитель задачи понимает, что задача не может быть выполнена за время,
 которым она была оценена, то нужно, как можно раньше донести эту информацию до
@@ -486,17 +670,16 @@ a. Если исполнитель задачи понимает, что зад�
 b. Исходное (оценочное) время на задачу не изменяется, изменяется только время,
 которое осталось на доработку задачи.
 
-### 3.2. Отношение к сроку выполнения задачи
+### 3.11. Отношение к сроку выполнения задачи
 
 TODO
 
-### 3.3. Анализ результатов итерации
+### 3.12. Создание задач
 
-TODO
+TODO: Процедура добавления задач с меткой `unverified`.
 
-### 3.4. Итерация
-
-TODO
+Категоризировать задачи по важности (признак, определяющий 
+распределение задач при обзоре решения (ревью)).
 
 ## 4. Внесение предложений
 
