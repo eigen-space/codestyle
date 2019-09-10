@@ -777,6 +777,14 @@ b. Правило добавляется с пометкой `\[Не автом�
 
 c. Должна быть создана задача на автоматизацию правила.
 
+### 8.3. Localization of proposals
+
+a. A proposal should be written down on both languages: Russian and English.
+
+b. When you suggest your proposal, you can use only Russian language to avoid
+corrections in both versions. When the proposal is ready to merge, you should
+translate it to English.
+
 ## 9. Правила именования
 
 ### 9.1. \[Не автоматизировано\] Общие правила для всех идентификаторов
