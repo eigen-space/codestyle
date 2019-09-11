@@ -42,14 +42,15 @@
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "dependencies": {
+        "@eigenspace/eslint-plugin-script-rules": "0.0.1",
         "@typescript-eslint/eslint-plugin": "1.13.0",
         "@typescript-eslint/parser": "1.13.0",
-        "@eigenspace/eslint-plugin-script-rules": "0.0.1",
         "eslint-plugin-react": "7.14.3",
         "eslint-plugin-unicorn": "9.1.1",
         "eslint-utils": "1.4.2"
     },
     "devDependencies": {
+        "@eigenspace/commit-linter": "0.0.18",
         "@eigenspace/eslint-config-codestyle": "file:src/packages/eslint",
         "@eigenspace/helper-scripts": "1.0.77",
         "@types/node": "10.12.21",
@@ -58,9 +59,9 @@
         "eslint": "5.16.0",
         "husky": "1.3.1",
         "lint-staged": "8.1.5",
-        "typescript": "3.5.3",
         "react": "16.8.6",
-        "react-redux": "7.1.0"
+        "react-redux": "7.1.0",
+        "typescript": "3.5.3"
     },
     "peerDependencies": {
         "eslint": "5.x"
