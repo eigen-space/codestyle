@@ -45,7 +45,7 @@
         "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/plugin"
     },
     "dependencies": {
-        "@eigenspace/eslint-plugin-script-rules": "0.0.2",
+        "@eigenspace/eslint-plugin-script-rules": "file:src/packages/script-rules",
         "@typescript-eslint/eslint-plugin": "1.13.0",
         "@typescript-eslint/parser": "1.13.0",
         "eslint-plugin-react": "7.14.3",
@@ -54,6 +54,8 @@
     },
     "devDependencies": {
         "@eigenspace/eslint-config-codestyle": "file:src/packages/eslint",
+        "@eigenspace/eslint-plugin-react-rules": "file:src/packages/react-rules",
+        "@eigenspace/eslint-plugin-redux-rules": "file:src/packages/redux-rules",
         "@eigenspace/helper-scripts": "1.0.80",
         "@types/node": "10.12.21",
         "@types/react": "16.8.24",

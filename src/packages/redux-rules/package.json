@@ -1,0 +1,12 @@
+{
+    "name": "@eigenspace/eslint-plugin-redux-rules",
+    "version": "0.0.1",
+    "description": "Eigenspace team's codestyle plugin for redux",
+    "license": "MIT",
+    "dependencies": {
+        "eslint-plugin-react-redux": "3.0.1"
+    },
+    "peerDependencies": {
+        "react": "16.x"
+    }
+}
