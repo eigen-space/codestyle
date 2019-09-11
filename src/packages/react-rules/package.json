@@ -1,0 +1,12 @@
+{
+    "name": "@eigenspace/eslint-plugin-react-rules",
+    "version": "0.0.1",
+    "description": "Eigenspace team's codestyle plugin for react",
+    "license": "MIT",
+    "dependencies": {
+        "eslint-plugin-react": "7.14.3"
+    },
+    "peerDependencies": {
+        "react": "16.x"
+    }
+}

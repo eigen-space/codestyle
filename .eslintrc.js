@@ -1,7 +1,7 @@
 module.exports = {
     extends: [
-        '@eigenspace/codestyle/base',
-        '@eigenspace/codestyle/react',
-        '@eigenspace/codestyle/redux'
+        'plugin:@eigenspace/redux-rules',
+        'plugin:@eigenspace/react-rules',
+        'plugin:@eigenspace/script-rules'
     ]
 };

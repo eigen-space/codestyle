@@ -32,6 +32,11 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@eigenspace/argument-parser@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@eigenspace/argument-parser/-/argument-parser-1.0.2.tgz#dbb21937d1b88795398ff7d1d26d0f8742a0999b"
+  integrity sha512-LgHE7X/6F8zTsPNt62CvJSxBo/grXKpX6+4A9iVihkLdIvFJ8KVP6vJ1ekZS6Quov6dEBB5aKSN5Z08yTaBafg==
+
 "@eigenspace/eslint-config-codestyle@file:src/packages/eslint":
   version "1.1.2"
   dependencies:
@@ -39,17 +44,33 @@
     eslint-plugin-react "7.14.3"
     eslint-plugin-react-redux "3.0.1"
 
+"@eigenspace/eslint-plugin-react-rules@file:src/packages/react-rules":
+  version "0.0.1"
+  dependencies:
+    eslint-plugin-react "7.14.3"
+
+"@eigenspace/eslint-plugin-redux-rules@file:src/packages/redux-rules":
+  version "0.0.1"
+  dependencies:
+    eslint-plugin-react-redux "3.0.1"
+
 "@eigenspace/eslint-plugin-script-rules@0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@eigenspace/eslint-plugin-script-rules/-/eslint-plugin-script-rules-0.0.2.tgz#84b8214b1377ea09038b00b298a3d8226ccdcd98"
   integrity sha512-DE3BuALIRWtcU2eTEFxNt44bWS+Q8O6oK/qVMb14C6+oQK/fbn4jZiwDcSBw2Sx69kCtwllYbo/RQWQB/jZkSw==
 
-"@eigenspace/helper-scripts@1.0.77":
-  version "1.0.77"
-  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.77.tgz#dfd91414315a08b9f0f69299ea1dd93a8f274bac"
-  integrity sha512-EGdKpJPfp5ub4MH6+/yZYPSoCQy8ESKAxZW+UPTwlr6o18d3g+Q99fDrs2RLznEbAMFSGkmMbVQHmKod0b+icA==
+"@eigenspace/eslint-plugin-script-rules@file:src/packages/script-rules":
+  version "0.0.5"
   dependencies:
-    minimist "1.2.0"
+    "@eigenspace/eslint-plugin-script-rules" "0.0.2"
+    eslint-plugin-unicorn "9.1.1"
+
+"@eigenspace/helper-scripts@1.0.80":
+  version "1.0.80"
+  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.80.tgz#2b5432a044e20060062887869549d67d7b8e9d94"
+  integrity sha512-ulHD0DcDCEsq7tzyrxcOMDwZOR9ftGDZh5jfJCTXLWaOY3W3POXgspD3+Wm21l6BodVGA2PCYw7KDsalR7EqPQ==
+  dependencies:
+    "@eigenspace/argument-parser" "1.0.2"
     npm-exists "1.0.1"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -2105,11 +2126,6 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
   integrity sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
-
-minimist@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
-  integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
 
 mixin-deep@^1.2.0:
   version "1.3.2"
