@@ -41,8 +41,7 @@
         "script:extract-rules-meta-info-to-google-sheets": "node dist/scripts/extract-rules-meta-info-to-google-sheets.js",
         "compile": "tsc",
         "build": "yarn script:copy && yarn compile",
-        "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js",
-        "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/plugin"
+        "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js"
     },
     "dependencies": {
         "@eigenspace/eslint-plugin-script-rules": "0.0.4",
