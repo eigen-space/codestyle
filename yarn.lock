@@ -37,33 +37,26 @@
   resolved "https://registry.yarnpkg.com/@eigenspace/argument-parser/-/argument-parser-1.0.2.tgz#dbb21937d1b88795398ff7d1d26d0f8742a0999b"
   integrity sha512-LgHE7X/6F8zTsPNt62CvJSxBo/grXKpX6+4A9iVihkLdIvFJ8KVP6vJ1ekZS6Quov6dEBB5aKSN5Z08yTaBafg==
 
-"@eigenspace/eslint-config-codestyle@file:src/packages/eslint":
-  version "1.1.2"
-  dependencies:
-    eslint-plugin-prettier "3.1.0"
-    eslint-plugin-react "7.14.3"
-    eslint-plugin-react-redux "3.0.1"
-
-"@eigenspace/eslint-plugin-react-rules@file:src/packages/react-rules":
+"@eigenspace/eslint-config-react-rules@file:src/packages/react-rules":
   version "0.0.1"
   dependencies:
     eslint-plugin-react "7.14.3"
 
-"@eigenspace/eslint-plugin-redux-rules@file:src/packages/redux-rules":
+"@eigenspace/eslint-config-redux-rules@file:src/packages/redux-rules":
   version "0.0.1"
   dependencies:
     eslint-plugin-react-redux "3.0.1"
 
-"@eigenspace/eslint-plugin-script-rules@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@eigenspace/eslint-plugin-script-rules/-/eslint-plugin-script-rules-0.0.2.tgz#84b8214b1377ea09038b00b298a3d8226ccdcd98"
-  integrity sha512-DE3BuALIRWtcU2eTEFxNt44bWS+Q8O6oK/qVMb14C6+oQK/fbn4jZiwDcSBw2Sx69kCtwllYbo/RQWQB/jZkSw==
-
-"@eigenspace/eslint-plugin-script-rules@file:src/packages/script-rules":
+"@eigenspace/eslint-config-script-rules@file:src/packages/script-rules":
   version "0.0.5"
   dependencies:
-    "@eigenspace/eslint-plugin-script-rules" "0.0.2"
+    "@eigenspace/eslint-plugin-script-rules" "0.0.4"
     eslint-plugin-unicorn "9.1.1"
+
+"@eigenspace/eslint-plugin-script-rules@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@eigenspace/eslint-plugin-script-rules/-/eslint-plugin-script-rules-0.0.4.tgz#ea3311cdc45e06daee759ffa7b18d0d695809158"
+  integrity sha512-9TDj+aBVE7DvP6tEnDfCfzyJB4EN5uY38VrZAf9+YoEbnxxFxAmuO7Qrqa8CdcrAm8KfdjJO8uXcW3yG8WeiCw==
 
 "@eigenspace/helper-scripts@1.0.80":
   version "1.0.80"
@@ -794,13 +787,6 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-plugin-prettier@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.0.tgz#8695188f95daa93b0dc54b249347ca3b79c4686d"
-  integrity sha512-XWX2yVuwVNLOUhQijAkXz+rMPPoCr7WFiAl8ig6I7Xn+pPVhDhzg4DxHpmbeb0iqjO9UronEA3Tb09ChnFVHHA==
-  dependencies:
-    prettier-linter-helpers "^1.0.0"
-
 eslint-plugin-react-redux@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-redux/-/eslint-plugin-react-redux-3.0.1.tgz#e38d919c609fabba7d09fd947ecd2576851e2ae2"
@@ -1030,11 +1016,6 @@ fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
-
-fast-diff@^1.1.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
-  integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
 
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
@@ -2503,13 +2484,6 @@ prepend-http@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
-
-prettier-linter-helpers@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
-  integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
-  dependencies:
-    fast-diff "^1.1.2"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"

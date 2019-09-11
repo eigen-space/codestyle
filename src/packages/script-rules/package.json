@@ -1,13 +1,10 @@
 {
-    "name": "@eigenspace/eslint-plugin-script-rules",
+    "name": "@eigenspace/eslint-config-script-rules",
     "version": "0.0.5",
     "description": "Eigenspace team's codestyle plugin",
     "license": "MIT",
     "dependencies": {
-        "@eigenspace/eslint-plugin-script-rules": "0.0.2",
+        "@eigenspace/eslint-plugin-script-rules": "0.0.4",
         "eslint-plugin-unicorn": "9.1.1"
-    },
-    "peerDependencies": {
-        "react": "16.x"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "@eigenspace/eslint-plugin-redux-rules",
+    "name": "@eigenspace/eslint-config-redux-rules",
     "version": "0.0.1",
     "description": "Eigenspace team's codestyle plugin for redux",
     "license": "MIT",
