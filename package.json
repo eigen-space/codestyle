@@ -32,7 +32,7 @@
         ]
     },
     "scripts": {
-        "lint:sandbox": "eslint src/sandbox/sandbox.default.ts",
+        "lint:sandbox": "eslint src/sandbox/sandbox.default.tsx",
         "lint:code": "eslint --ext .ts,.js",
         "lint:fix": "yarn lint:code --fix",
         "lint:markdown": "node src/scripts/markdown-lint.js",
@@ -45,7 +45,7 @@
         "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/plugin"
     },
     "dependencies": {
-        "@eigenspace/eslint-plugin-script-rules": "file:src/packages/script-rules",
+        "@eigenspace/eslint-config-script-rules": "file:src/packages/script-rules",
         "@typescript-eslint/eslint-plugin": "1.13.0",
         "@typescript-eslint/parser": "1.13.0",
         "eslint-plugin-react": "7.14.3",
@@ -53,9 +53,8 @@
         "eslint-utils": "1.4.2"
     },
     "devDependencies": {
-        "@eigenspace/eslint-config-codestyle": "file:src/packages/eslint",
-        "@eigenspace/eslint-plugin-react-rules": "file:src/packages/react-rules",
-        "@eigenspace/eslint-plugin-redux-rules": "file:src/packages/redux-rules",
+        "@eigenspace/eslint-config-react-rules": "file:src/packages/react-rules",
+        "@eigenspace/eslint-config-redux-rules": "file:src/packages/redux-rules",
         "@eigenspace/helper-scripts": "1.0.80",
         "@types/node": "10.12.21",
         "@types/react": "16.8.24",
