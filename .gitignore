@@ -11,3 +11,6 @@ node_modules
 
 # logs
 yarn-error.log
+
+# credentials
+/src/scripts/credentials/google-sheets-credentials.json
