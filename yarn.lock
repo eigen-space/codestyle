@@ -32,6 +32,18 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@eigenspace/argument-parser@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@eigenspace/argument-parser/-/argument-parser-1.0.4.tgz#9c51fc5bfca474c98841942ed8440864cd455323"
+  integrity sha512-uqlYKbicmfu2B8yB+MC8b7OdhGBQYSaDy6hmfRKWZ6uFOy4dD+ysvOzgrNeFgR1BPNitLhBcsTrekyQuYx07Aw==
+
+"@eigenspace/commit-linter@0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@eigenspace/commit-linter/-/commit-linter-0.0.18.tgz#837b02e8872bc8c03891aeea706bfefd08b3e71b"
+  integrity sha512-ZvzD/EliybJSVLPyFXzy29FmuO/v57w6hGwAVkmuV6tYP15RZmRwpfKaS8rTX8k3hfLohrRppe0FHYOcHj4YXw==
+  dependencies:
+    "@eigenspace/argument-parser" "1.0.4"
+
 "@eigenspace/eslint-config-codestyle@file:src/packages/eslint":
   version "1.1.2"
   dependencies:

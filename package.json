@@ -53,6 +53,7 @@
         "eslint-utils": "1.4.2"
     },
     "devDependencies": {
+        "@eigenspace/commit-linter": "0.0.18",
         "@eigenspace/eslint-config-codestyle": "file:src/packages/eslint",
         "@eigenspace/helper-scripts": "1.0.80",
         "@types/node": "10.12.21",
