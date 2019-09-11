@@ -32,7 +32,7 @@ bug/301-broken-infobar-dropdown
 proposal/new-branch-type-for-proposals
 ```
 
-#### 1.1.2. \[Автоматизировано: commit-linter\] Сообщение к изменению
+#### 1.1.2. \[Automated: commit-linter\] Сообщение к изменению
 
 a. При фиксации изменения обязательно используется сообщение, описывающее изменение.
 
