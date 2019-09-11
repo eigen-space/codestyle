@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "1.1.65",
+    "version": "1.1.69",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -54,7 +54,7 @@
     },
     "devDependencies": {
         "@eigenspace/eslint-config-codestyle": "file:src/packages/eslint",
-        "@eigenspace/helper-scripts": "1.0.77",
+        "@eigenspace/helper-scripts": "1.0.80",
         "@types/node": "10.12.21",
         "@types/react": "16.8.24",
         "@types/react-redux": "7.1.1",
