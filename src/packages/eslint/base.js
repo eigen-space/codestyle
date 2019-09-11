@@ -1,6 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['unicorn', '@typescript-eslint', 'react', '@eigenspace/script-rules'],
+    plugins: ['unicorn', '@typescript-eslint', '@eigenspace/script-rules'],
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
@@ -13,8 +13,6 @@ module.exports = {
         'no-multi-spaces': 'error',
         'no-nested-ternary': 'error',
         'no-lonely-if': 'error',
-        'react/jsx-uses-react': 'error',
-        'react/jsx-uses-vars': 'error',
         'key-spacing': 'error',
         'comma-spacing': 'error',
         'space-infix-ops': 'error',
