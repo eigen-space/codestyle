@@ -1,4 +1,4 @@
-[ru](./README.ru.md)
+[en](./README.md)
 
 # Angular
 
