@@ -11,13 +11,11 @@ This project contains:
 # Project structure
 
 ```
-/configs - Some configurations, eg ide
-/doc - Codestyle
-/src
-    /configs - Packaged configurations
-    /sandbox
-    /scripts
-```   
+/lib
+    /rules - folder with custom rules
+index.js - exported plugin config
+```
+
 # Code writing guide
 
 * [Scripts](./doc/scripts/README.md)
