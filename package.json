@@ -39,11 +39,11 @@
         "lint": "yarn lint:code . && yarn lint:markdown",
         "script:copy": "node ./dev/scripts/copy.js",
         "script:extract-rules-meta-info-to-google-sheets": "node dist/scripts/extract-rules-meta-info-to-google-sheets.js",
-        "script:update-deps-remote": "npx -p @eigenspace/helper-scripts update-deps",
+        "script:update-deps-local": "node node_modules/@eigenspace/helper-scripts/scripts/project/update-deps.js",
         "compile": "tsc",
         "build": "yarn script:copy && yarn compile",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js",
-        "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/plugin"
+        "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/packages/react-rules,/src/packages/redux-rules,/src/packages/script-rules"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "1.13.0",
