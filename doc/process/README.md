@@ -41,8 +41,9 @@ b. Сообщение должно описывать состав измене�
 c. Сообщение должно иметь следующий формат:
 
 ```
-<номер задачи> <модуль 1>[/<подмолуль>][, ..., <модуль N>[/<подмодуль>]]: <состав и семантика изменения 1>[, 
-..., <состав и семантика изменения M>][; ...; <модуль K>[/<подмодуль>]: <состав и семантика изменения>]
+<номер задачи> <модуль 1>[/<подмолуль>][, ..., <модуль N>[/<подмодуль>]]: 
+<состав и семантика изменения 1>[, ..., <состав и семантика изменения M>]
+[; ...; <модуль K>[/<подмодуль>]: <состав и семантика изменения>]
 ```
 
 Таким образом, самый простой вид сообщения:
@@ -81,7 +82,8 @@ c. Сообщение должно иметь следующий формат:
   * `<модуль>` и `<подмодуль>` разделяются слешем `/`;
   * Группы `<модуль>/<подмодуль>` отделяются друг от друга запятой `,`;
   * `<модуль>/<подмодуль>` и `<состав и семантика изменения>` разделяются двоеточием `:`;
-  * Группы `<модуль >: <состав и семантика изменения>` отделяются друг от друга точкой с запятой `;`;
+  * Группы `<модуль >: <состав и семантика изменения>` отделяются друг 
+    от друга точкой с запятой `;`;
   * Группы `<состав и семантика изменения>` отделяются друг от друга запятой `,`
 
 В квадратных скобках `[]` указаны части сообщения, которые могут отсутствовать. 
@@ -109,15 +111,20 @@ data-collectors <root of project>
 
 // Отсутствует суть изменений
 #287 common: review fixes
-// Нет номера задачи, в указании модуля присутствует название проекта и указана излишняя вложенность
-data-collectors/report/pasrer/historical: optimized parsing of the dom to get 2x speed of parsing
+// Нет номера задачи, в указании модуля присутствует название проекта 
+// и указана излишняя вложенность
+data-collectors/report/pasrer/historical: optimized parsing of the dom 
+    to get 2x speed of parsing
 
 // Хорошо
 inni/issues#104 common: added script to update dependencies to cure integrity check error
-inni/issues#105 instrument: changed source of data from source1 to source2 to get more stable data stream
-inni/issues#106 dev/db: changed type of the field `value` of report to store data from different sources;
+inni/issues#105 instrument: changed source of data from source1 to source2 
+    to get more stable data stream
+inni/issues#106 dev/db: changed type of the field `value` of report to store data 
+    from different sources;
 report: implemented new service to get data from some new source of data.
-inni/issues#107 common/services: added new service `report data service` to get report data from database
+inni/issues#107 common/services: added new service `report data service` to get 
+    report data from database
 ```
 
 d. Не должно быть вложенности больше `<модуль>/<подмолуль>`, т.е. максимальная точность
@@ -131,8 +138,9 @@ d. Не должно быть вложенности больше `<модуль
 <модуль 1>/<подмодуль 2>: <состав и семантика изменения>
 
 // Вариант 2. Сообщение сгруппировано по модулю
-<номер задачи> <модуль 1>: <состав и семантика изменения с указанием, что оно сделано в подмодуле 1>,
-<состав и семантика изменения с указанием, что оно сделано в подмодуле 2>; 
+<номер задачи> <модуль 1>: <состав и семантика изменения с указанием, 
+что оно сделано в подмодуле 1>, <состав и семантика изменения с указанием, 
+что оно сделано в подмодуле 2>; 
 ```
 
 e. Не должно быть точки в конце сообщения.
@@ -262,8 +270,8 @@ c. Для каждого изменения в начале строки дол�
 ```
 // Пример описанного изменения
 - [`DXAPP-571`](https://smekalka.atlassian.net/browse/DXAPP-571) Added 
-  [redux-logger](https://github.com/LogRocket/redux-logger) as redux middleware to get alternative to react native
-  debugger that slows down app during debug
+  [redux-logger](https://github.com/LogRocket/redux-logger) as redux middleware 
+  to get alternative to react native debugger that slows down app during debug
 ```
 
 d. Для записей в журнале изменений применяются те же правила по ограничению на длину строки,
@@ -336,16 +344,16 @@ g. Все вопросы по ревью обсуждаются наибыстр
 
 #### 2.4.4. Process of task review not related with code management (Github, Gitlab)
 
-Task like writing documentation in Notion, Confluence and so on. 
+We are talking about tasks like writing documentation in Notion, Confluence and so on. 
 
 Motivation:\
-To decrease number of distracting requests to author of changes to 1 (in positive scenario),
-less distracting from work.
+We want to decrease number of distracting requests to the author of changes to the 
+single one in positive scenario. We want to distract each other less.
 
-1. Reviewer in code review process fixes wishes and remarks in comments
-in thread of message with task in `review` channel. 
+1. A reviewer puts wishes and remarks in comments of the thread of a message 
+related to the task in `review` channel during the code review process. 
 
-    ##### Format
+    **Format**
     
     Message: 
     > [short task description] \
@@ -356,21 +364,23 @@ in thread of message with task in `review` channel.
     2: [Remark or wish 2] \
     N: [Remark or wish N]
 
-2. After reviewer has finished fixing remarks or wishes, he notifies about that author of task.
-Also he changes status of task to «open» / «reopened». It is necessary to another reviewers could 
-make review only on not viewed tasks.
+2. After the reviewer has put all remarks and wishes, he notifies the author 
+of task. Also he changes status of the task to «open» / «reopen». 
+It is necessary so that other reviewers could make review only non-reviewed tasks.
 
-3. Author of task meets with list of remarks and wishes, makes list of questions and discuss them 
-with reviewer. At the start of working on fixing author of task changes status to «in progress».
+3. The author of task checks out list of remarks and wishes, prepares a list of 
+questions and discusses them with the reviewer. Before the author of task starts fixing
+he changes status of the task to «in progress».
 
-4. Author of changes marks resolved task using smile: ✔ 
+4. The author of changes marks resolved item using smile: ✔ 
 
-5. After the author of changes has finished improvements of his work and has marked all 
-points as done, he also ask reviewer about it.
+5. When the author of changes has finished and has marked all points as done, 
+he notifies the reviewer too.
 
-6. Reviewer marks in points he sures (they are done and not require any changes) by smile ✔.
-If reviewer doesn't agree with something, he notifies author of task for fixing and improvements. 
-And process will start from step 2. In other case task's status changes to «done».
+6. The reviewer marks items that are fixed correctly using smile ✔. 
+If the reviewer does not agree with something, he requires fixes and improvements 
+from the author of task. Repeat steps starting from the step 2 until 
+all the items are «done».
 
 #### 2.4.5. Противоречия и споры в процессе обзора кода
 
