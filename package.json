@@ -43,7 +43,7 @@
         "compile": "tsc",
         "build": "yarn script:copy && yarn compile",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js",
-        "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/packages/react-rules,/src/packages/redux-rules,/src/packages/script-rules"
+        "deploy:publish-subprojects": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/packages/eslint-plugin-eigenspace-react,/src/packages/eslint-plugin-eigenspace-redux,/src/packages/eslint-plugin-eigenspace-script"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "1.13.0",
