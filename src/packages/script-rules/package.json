@@ -5,5 +5,8 @@
     "license": "MIT",
     "dependencies": {
         "eslint-plugin-unicorn": "9.1.1"
+    },
+    "peerDependencies": {
+        "eslint": "5.x"
     }
 }

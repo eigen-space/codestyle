@@ -6,9 +6,7 @@ module.exports = {
                 'react-redux'
             ],
             parserOptions: {
-                ecmaFeatures: {
-                    jsx: true
-                }
+                ecmaFeatures: { jsx: true }
             },
             rules: {
                 'react-redux/connect-prefer-named-arguments': 'error',
