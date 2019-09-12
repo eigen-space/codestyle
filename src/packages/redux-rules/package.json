@@ -1,6 +1,6 @@
 {
     "name": "eslint-plugin-eigenspace-redux",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "description": "Eigenspace team's codestyle plugin for redux",
     "license": "MIT",
     "dependencies": {
