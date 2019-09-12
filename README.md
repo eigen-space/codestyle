@@ -68,15 +68,14 @@ In current `tsconfig.json` add:
 
 ## Why do we have that dependencies?
 
-* `@eigenspace/eslint-plugin-script-rules` - eslint script rules package.
 * `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
 * `@typescript-eslint/parser` - parser typescript code for eslint.
-* `eslint-plugin-react` - plugin to adapt eslint to react.
-* `eslint-plugin-unicorn` - eslint rule package.
-* `eslint-utils` - eslint-utils package that helps with rules development.
 
 ## Why do we have that dev dependencies?
 
+* `eslint-plugin-eigenspace-script` - eslint script rules package.
+* `eslint-plugin-eigenspace-react` - eslint react rules package.
+* `eslint-plugin-eigenspace-redux` - eslint redux rules package.
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
@@ -86,7 +85,7 @@ In current `tsconfig.json` add:
 * `lint-staged` - used for configure linters against staged git files.
 * `react` - used for sandbox and testing React rules.
 * `react-redux` - used for sandbox and testing React redux rules.
-* `@eigenspace/eslint-config-codestyle` - using for testing eslint rules in the project.
+* `eslint-utils` - eslint-utils package that helps with rules development.
 
 # CI
 
