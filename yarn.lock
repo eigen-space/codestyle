@@ -32,11 +32,6 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@eigenspace/argument-parser@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@eigenspace/argument-parser/-/argument-parser-1.0.2.tgz#dbb21937d1b88795398ff7d1d26d0f8742a0999b"
-  integrity sha512-LgHE7X/6F8zTsPNt62CvJSxBo/grXKpX6+4A9iVihkLdIvFJ8KVP6vJ1ekZS6Quov6dEBB5aKSN5Z08yTaBafg==
-
 "@eigenspace/argument-parser@1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@eigenspace/argument-parser/-/argument-parser-1.0.4.tgz#9c51fc5bfca474c98841942ed8440864cd455323"
@@ -61,12 +56,11 @@
   resolved "https://registry.yarnpkg.com/@eigenspace/eslint-plugin-script-rules/-/eslint-plugin-script-rules-0.0.4.tgz#ea3311cdc45e06daee759ffa7b18d0d695809158"
   integrity sha512-9TDj+aBVE7DvP6tEnDfCfzyJB4EN5uY38VrZAf9+YoEbnxxFxAmuO7Qrqa8CdcrAm8KfdjJO8uXcW3yG8WeiCw==
 
-"@eigenspace/helper-scripts@1.0.79":
-  version "1.0.79"
-  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.79.tgz#8e7efec079213550d13ff559d8f9c409c5ff69bf"
-  integrity sha512-zVvAJzKTGZT1S6pTB5zdFMW0ZDUYMGNETmRBjb4uBd+BISjWpjxOZQ28zt9rIP4RI+GheEMsvf74+17hW4KVqA==
+"@eigenspace/helper-scripts@1.0.78":
+  version "1.0.78"
+  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.78.tgz#4c17151279f7794b5c0da9d9bfa55c9b12066abf"
+  integrity sha512-7OmUmyJaZouXnNJOAr77zBSr9gGi/+ImDy09wCnf/ZE+JIP8OdL3muIuWGtvJOiUDoneOBKnKJxnvCXts9+f1w==
   dependencies:
-    "@eigenspace/argument-parser" "1.0.2"
     npm-exists "1.0.1"
 
 "@samverschueren/stream-to-observable@^0.3.0":
