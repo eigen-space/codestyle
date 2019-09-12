@@ -1,6 +1,0 @@
-{
-    "name": "@eigenspace/eslint-plugin-script-rules",
-    "version": "0.0.3",
-    "description": "Eigenspace team's codestyle plugin",
-    "main": "index.js"
-}

@@ -48,7 +48,7 @@ if (trip.disabled && trip.hasOrders) {
 
 // Плохо
 if (!(a && b)) {
-    if ((a < b) && (x < a)) {
+    if (a < b && x < a) {
     }
 }
 
