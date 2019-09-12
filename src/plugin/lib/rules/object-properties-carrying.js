@@ -14,10 +14,11 @@ const ERROR_TYPE = {
     COUNT_CALL_EXPRESSIONS: 'count-call-expressions',
     FUNCTION_LENGTH: 'function-length',
     COUNT_NESTED_OBJECT_PROPERTIES: 'count-nested-object-properties',
-    COUNT_NESTED_ARRAY_ELEMENTS: 'count-nested-array-properties'
+    COUNT_NESTED_ARRAY_ELEMENTS: 'count-nested-array-properties',
+    NO_MULTILINE: 'no-multiline'
 };
 
-const SINGLE_LINE_ERROR_MESSAGES = {
+const SINGLE_LINE_ERRORS = {
     [ERROR_TYPE.CONTENT_WIDTH]: `content width of object is more than ${MAX_CONTENT_WIDTH}.`,
     [ERROR_TYPE.COUNT_PROPERTIES]: `an object in single line must contain not more than\
      ${MAX_PROPERTIES_IN_SINGLE_LINE} properties.`,
@@ -31,15 +32,26 @@ const SINGLE_LINE_ERROR_MESSAGES = {
      properties not more than ${MAX_ARRAY_PROPERTIES_IN_SINGLE_LINE}.`
 };
 
-const MULTI_LINE_ERROR_MESSAGE = 'the object can be written in one line.';
+const MULTI_LINE_ERRORS = {
+    [ERROR_TYPE.NO_MULTILINE]: 'the object can be written in one line.'
+};
 
-module.exports = {
+const exportedModule = module.exports = {
     meta: {
         type: 'layout',
 
         docs: {
             description: 'object literal property carrying rules',
             category: 'Stylistic Issues'
+        },
+        messages: {
+            [ERROR_TYPE.CONTENT_WIDTH]: SINGLE_LINE_ERRORS[ERROR_TYPE.CONTENT_WIDTH],
+            [ERROR_TYPE.COUNT_PROPERTIES]: SINGLE_LINE_ERRORS[ERROR_TYPE.COUNT_PROPERTIES],
+            [ERROR_TYPE.COUNT_CALL_EXPRESSIONS]: SINGLE_LINE_ERRORS[ERROR_TYPE.COUNT_CALL_EXPRESSIONS],
+            [ERROR_TYPE.FUNCTION_LENGTH]: SINGLE_LINE_ERRORS[ERROR_TYPE.FUNCTION_LENGTH],
+            [ERROR_TYPE.COUNT_NESTED_OBJECT_PROPERTIES]: SINGLE_LINE_ERRORS[ERROR_TYPE.COUNT_NESTED_OBJECT_PROPERTIES],
+            [ERROR_TYPE.COUNT_NESTED_ARRAY_ELEMENTS]: SINGLE_LINE_ERRORS[ERROR_TYPE.COUNT_NESTED_ARRAY_ELEMENTS],
+            [ERROR_TYPE.NO_MULTILINE]: MULTI_LINE_ERRORS[ERROR_TYPE.NO_MULTILINE]
         }
     },
     create(context) {
@@ -55,7 +67,7 @@ module.exports = {
                 let messages = checkLiteralAsSingleLine(context, node);
 
                 if (!isSingleLine) {
-                    messages = !messages.length ? [MULTI_LINE_ERROR_MESSAGE] : [];
+                    messages = !messages.length ? [ERROR_TYPE.NO_MULTILINE] : [];
                 }
 
                 report(context, node, messages);
@@ -63,6 +75,8 @@ module.exports = {
         };
     }
 };
+
+exportedModule.ERROR_TYPE = ERROR_TYPE;
 
 // Not a part of call expression
 function isDesiredObject(context) {
@@ -77,6 +91,8 @@ function isDesiredObject(context) {
 
 function getClosestByTypes(context, types) {
     const NOT_FOUND_INDEX = -1;
+    // TODO Understand why the condition is not covered.
+    /* istanbul ignore next line */
     return types.map(type => CommonUtils.findIndexParentByType(context, type))
         .filter(index => NOT_FOUND_INDEX < index)
         .reduce((previous, current) => current < previous ? current : previous, Number.MAX_SAFE_INTEGER);
@@ -101,11 +117,11 @@ function checkCommonRules(context, node) {
     const messages = [];
 
     if (MAX_CONTENT_WIDTH < FormattingUtils.nodeToSingleLineText(context, node).length) {
-        messages.push(SINGLE_LINE_ERROR_MESSAGES[ERROR_TYPE.CONTENT_WIDTH]);
+        messages.push(ERROR_TYPE.CONTENT_WIDTH);
     }
 
     if (MAX_PROPERTIES_IN_SINGLE_LINE < node.properties.length) {
-        messages.push(SINGLE_LINE_ERROR_MESSAGES[ERROR_TYPE.COUNT_PROPERTIES]);
+        messages.push(ERROR_TYPE.COUNT_PROPERTIES);
     }
 
     return messages;
@@ -114,7 +130,7 @@ function checkCommonRules(context, node) {
 function checkArrayExpressionInObject(nodes) {
     const arrayExpressions = nodes.filter(nestedNode => nestedNode.type === 'ArrayExpression');
     if (arrayExpressions.some(array => MAX_ARRAY_PROPERTIES_IN_SINGLE_LINE < array.elements.length)) {
-        return SINGLE_LINE_ERROR_MESSAGES[ERROR_TYPE.COUNT_NESTED_ARRAY_ELEMENTS];
+        return ERROR_TYPE.COUNT_NESTED_ARRAY_ELEMENTS;
     }
 }
 
@@ -124,12 +140,12 @@ function checkFunctionsInObject(nodes) {
 
     const messages = [];
     if (MAX_COUNT_CALL_EXPRESSION_IN_SINGLE_LINE < callExpressions.length) {
-        messages.push(SINGLE_LINE_ERROR_MESSAGES[ERROR_TYPE.COUNT_CALL_EXPRESSIONS]);
+        messages.push(ERROR_TYPE.COUNT_CALL_EXPRESSIONS);
     }
 
     const functionLengths = callExpressions.map(expressionNode => CommonUtils.getContentLength(expressionNode));
     if (functionLengths.some(length => MAX_CHILD_CALL_EXPRESSION_LENGTH < length)) {
-        messages.push(SINGLE_LINE_ERROR_MESSAGES[ERROR_TYPE.FUNCTION_LENGTH]);
+        messages.push(ERROR_TYPE.FUNCTION_LENGTH);
     }
 
     return messages;
@@ -138,10 +154,10 @@ function checkFunctionsInObject(nodes) {
 function checkObjectInObject(nodes) {
     const objectExpressions = nodes.filter(nestedNode => nestedNode.type === 'ObjectExpression');
     if (objectExpressions.some(objectNode => Boolean(objectNode.properties.length))) {
-        return SINGLE_LINE_ERROR_MESSAGES[ERROR_TYPE.COUNT_NESTED_OBJECT_PROPERTIES];
+        return ERROR_TYPE.COUNT_NESTED_OBJECT_PROPERTIES;
     }
 }
 
-function report(context, node, messages = []) {
-    messages.forEach(message => context.report({ message, node }));
+function report(context, node, messages) {
+    messages.forEach(message => context.report({ messageId: message, node }));
 }
