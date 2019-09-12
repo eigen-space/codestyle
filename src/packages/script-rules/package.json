@@ -1,10 +1,9 @@
 {
     "name": "eslint-plugin-eigenspace-script",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "Eigenspace team's codestyle plugin",
     "license": "MIT",
     "dependencies": {
-        "eslint-plugin-eigenspace-script": "latest",
         "eslint-plugin-unicorn": "9.1.1"
     }
 }
