@@ -73,6 +73,7 @@ In current `tsconfig.json` add:
 
 ## Why do we have that dev dependencies?
 
+* `@eigenspace/commit-linter` - commit linter.
 * `eslint-plugin-eigenspace-script` - eslint script rules package.
 * `eslint-plugin-eigenspace-react` - eslint react rules package.
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
