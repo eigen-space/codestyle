@@ -7,7 +7,6 @@ node_modules
 # compiled output
 /out-tsc
 /dist
-/src/sandbox
 
 # logs
 yarn-error.log
