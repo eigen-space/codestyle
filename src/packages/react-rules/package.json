@@ -1,5 +1,5 @@
 {
-    "name": "@eigenspace/eslint-config-react-rules",
+    "name": "eslint-plugin-eigenspace-react",
     "version": "0.0.1",
     "description": "Eigenspace team's codestyle plugin for react",
     "license": "MIT",
