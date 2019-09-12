@@ -1,7 +1,7 @@
 module.exports = {
     extends: [
-        '@eigenspace/react-rules/config',
-        '@eigenspace/redux-rules/config',
-        '@eigenspace/script-rules/config'
+        'plugin:eigenspace-scripts/all',
+        'plugin:eigenspace-react/all',
+        'plugin:eigenspace-redux/all'
     ]
 };
