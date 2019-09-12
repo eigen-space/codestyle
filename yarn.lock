@@ -37,10 +37,10 @@
   resolved "https://registry.yarnpkg.com/@eigenspace/argument-parser/-/argument-parser-1.0.2.tgz#dbb21937d1b88795398ff7d1d26d0f8742a0999b"
   integrity sha512-LgHE7X/6F8zTsPNt62CvJSxBo/grXKpX6+4A9iVihkLdIvFJ8KVP6vJ1ekZS6Quov6dEBB5aKSN5Z08yTaBafg==
 
-"@eigenspace/helper-scripts@1.0.80":
-  version "1.0.80"
-  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.80.tgz#2b5432a044e20060062887869549d67d7b8e9d94"
-  integrity sha512-ulHD0DcDCEsq7tzyrxcOMDwZOR9ftGDZh5jfJCTXLWaOY3W3POXgspD3+Wm21l6BodVGA2PCYw7KDsalR7EqPQ==
+"@eigenspace/helper-scripts@1.0.81":
+  version "1.0.81"
+  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.81.tgz#403394a68f9a86b3897b18248135117463477f65"
+  integrity sha512-i22AsCMoBAqNjTPYOIvQGqO11WX6HdWKC5zaxBJmMLXesqQ59ZtybC8jIPi1YiwWDwNvmy5lrYc14spZJQ/JoA==
   dependencies:
     "@eigenspace/argument-parser" "1.0.2"
     npm-exists "1.0.1"
@@ -770,21 +770,21 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-plugin-eigenspace-react@0.0.1:
+eslint-plugin-eigenspace-react@latest:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-react/-/eslint-plugin-eigenspace-react-0.0.1.tgz#4579fe1008b0d9c2021cab0c19a77db53cd345e0"
   integrity sha512-D4vPdLRugRxSgFQ6GTvH4zCvW+bsy5U/Oa9JnkMG2WpJmueZ86Tsx6nM034+gn3Zl6/C4Rghs7Nbh6zFCggSCg==
   dependencies:
     eslint-plugin-react "7.14.3"
 
-eslint-plugin-eigenspace-redux@0.0.1:
+eslint-plugin-eigenspace-redux@latest:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-redux/-/eslint-plugin-eigenspace-redux-0.0.1.tgz#9451d3376b4e3702906a35037c4cc891a10fccea"
   integrity sha512-OkLcUtmzm/pEgFaddY4Mv7LMC71+bPQ/uGz1BzyF/RrYi7IwtPB4XeOVkE60xPB+Rp5p9CAhxaa4hSyVSPNrVg==
   dependencies:
     eslint-plugin-react-redux "3.0.1"
 
-eslint-plugin-eigenspace-script@0.0.3:
+eslint-plugin-eigenspace-script@latest:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-script/-/eslint-plugin-eigenspace-script-0.0.3.tgz#f9172ef78da34805b155154b35512fe0f6cf9f24"
   integrity sha512-oh3kJO6gW6fyoVwHktbCtIAOZRFHysLkpC+r5mZmz8YUY9VpQcloOIwg5ARu3Wpicte47tEMaALRhOHA2ETyew==
