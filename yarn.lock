@@ -49,22 +49,10 @@
   dependencies:
     "@eigenspace/argument-parser" "1.0.4"
 
-"@eigenspace/eslint-config-codestyle@file:src/packages/eslint":
-  version "1.1.2"
-  dependencies:
-    eslint-plugin-prettier "3.1.0"
-    eslint-plugin-react "7.14.3"
-    eslint-plugin-react-redux "3.0.1"
-
-"@eigenspace/eslint-plugin-script-rules@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@eigenspace/eslint-plugin-script-rules/-/eslint-plugin-script-rules-0.0.4.tgz#ea3311cdc45e06daee759ffa7b18d0d695809158"
-  integrity sha512-9TDj+aBVE7DvP6tEnDfCfzyJB4EN5uY38VrZAf9+YoEbnxxFxAmuO7Qrqa8CdcrAm8KfdjJO8uXcW3yG8WeiCw==
-
-"@eigenspace/helper-scripts@1.0.79":
-  version "1.0.79"
-  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.79.tgz#8e7efec079213550d13ff559d8f9c409c5ff69bf"
-  integrity sha512-zVvAJzKTGZT1S6pTB5zdFMW0ZDUYMGNETmRBjb4uBd+BISjWpjxOZQ28zt9rIP4RI+GheEMsvf74+17hW4KVqA==
+"@eigenspace/helper-scripts@1.0.81":
+  version "1.0.81"
+  resolved "https://registry.yarnpkg.com/@eigenspace/helper-scripts/-/helper-scripts-1.0.81.tgz#403394a68f9a86b3897b18248135117463477f65"
+  integrity sha512-i22AsCMoBAqNjTPYOIvQGqO11WX6HdWKC5zaxBJmMLXesqQ59ZtybC8jIPi1YiwWDwNvmy5lrYc14spZJQ/JoA==
   dependencies:
     "@eigenspace/argument-parser" "1.0.2"
     npm-exists "1.0.1"
@@ -790,12 +778,26 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-plugin-prettier@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.0.tgz#8695188f95daa93b0dc54b249347ca3b79c4686d"
-  integrity sha512-XWX2yVuwVNLOUhQijAkXz+rMPPoCr7WFiAl8ig6I7Xn+pPVhDhzg4DxHpmbeb0iqjO9UronEA3Tb09ChnFVHHA==
+eslint-plugin-eigenspace-react@latest:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-react/-/eslint-plugin-eigenspace-react-0.0.11.tgz#71823054d77d7c8d689a6eeea3909160e6387570"
+  integrity sha512-Zi0LZTRYTmKJjv7csE0aeDaGkyF2LeLH9Ac7xwcRv2Pbrq/S4BOHKaoguruafAwqXqvxN1kYV1zTSjV7Ook0+w==
   dependencies:
-    prettier-linter-helpers "^1.0.0"
+    eslint-plugin-react "7.14.3"
+
+eslint-plugin-eigenspace-redux@latest:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-redux/-/eslint-plugin-eigenspace-redux-0.0.12.tgz#748cbc195bf1da4b0ddf4b81fc8558ab631f8351"
+  integrity sha512-zHbRC/WpEdTxJFqcibnUJxFZtoHNfmS/laZzGrsB00/+8jmXpzWXdoSodIdrpvqE1e9u6JjuscnXiy4PxrJQjg==
+  dependencies:
+    eslint-plugin-react-redux "3.0.1"
+
+eslint-plugin-eigenspace-script@latest:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-script/-/eslint-plugin-eigenspace-script-0.0.14.tgz#f7c4669fa1d35387d3b0d3b80a4f885c3807e1da"
+  integrity sha512-4j5iZpngSqCq/jQ0p2wyhVoNTWSWZsU3Uk60eDvg38ZcJaAzJRmBYVDwUVWx9TRQs8UJv1kCmqoEB52SI6TH0Q==
+  dependencies:
+    eslint-plugin-unicorn "9.1.1"
 
 eslint-plugin-react-redux@3.0.1:
   version "3.0.1"
@@ -1026,11 +1028,6 @@ fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
-
-fast-diff@^1.1.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
-  integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
 
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
@@ -2499,13 +2496,6 @@ prepend-http@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
-
-prettier-linter-helpers@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
-  integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
-  dependencies:
-    fast-diff "^1.1.2"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
