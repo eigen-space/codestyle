@@ -68,6 +68,7 @@
         "lint-staged": "8.1.5",
         "react": "16.8.6",
         "react-redux": "7.1.0",
+        "ts-jest": "24.1.0",
         "typescript": "3.5.3"
     },
     "peerDependencies": {
