@@ -91,11 +91,9 @@ function isDesiredObject(context) {
 
 function getClosestByTypes(context, types) {
     const NOT_FOUND_INDEX = -1;
-    // TODO Understand why the condition is not covered.
-    /* istanbul ignore next line */
-    return types.map(type => CommonUtils.findIndexParentByType(context, type))
-        .filter(index => NOT_FOUND_INDEX < index)
-        .reduce((previous, current) => current < previous ? current : previous, Number.MAX_SAFE_INTEGER);
+    const parentPositions = types.map(type => CommonUtils.findIndexParentByType(context, type))
+        .filter(index => NOT_FOUND_INDEX < index);
+    return Math.min(...parentPositions);
 }
 
 function checkLiteralAsSingleLine(context, node) {
