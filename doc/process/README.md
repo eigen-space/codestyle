@@ -531,24 +531,50 @@ have actual prioritized task queue all the time
 
 ### 3.4. Iteration start (Setting microgoals)
 
-a. Duration: 15 min (pre-event) + 10 min
+#### 3.4.1. Pre iteration start (Actualization)
+
+a. Duration: 15 min
+
+b. Goal: actualize iteration tasks.
+
+c. Tasks:
+
+* actualize the next iteration according to results of previous one
+
+d. Participants:
+
+* responsible for iteration
+
+#### 3.4.2. Pre iteration start (Preparation)
+
+a. Duration: 15 min
+
+b. Goal: grasp iteration goals.
+
+c. Tasks:
+
+* check out iteration tasks
+* prepare questions
+
+d. Participants:
+
+* dev team
+
+#### 3.4.3. Iteration start
+
+a. Duration: 10 min
 
 b. Goal: focus on iteration goals.
 
-* actualize the next iteration according to results of previous one
+c. Tasks:
+
 * discuss goals, focus on the goals
 * discuss tasks we have questions about
 
-c. Participants:
+d. Participants:
 
 * responsible for iteration
 * dev team
-
-d. Requirements to participants:
-
-* responsible for iteration should prepare iteration draft
-* teammates should check out iteration draft and write down
-their questions
 
 ### 3.5. Review
 
@@ -556,44 +582,57 @@ a. Duration (every day): 1h
 
 b. Goal: feedback about task solutions.
 
-d. Participants:
+c. Participants:
 
 * dev team
 
-e. Notes:
+d. Notes:
 
 * you can find details [here](#64---)
 
 ### 3.6. Dev team demo
 
-a. Duration (every day): 15 min (pre-event) + 10 min
+#### 3.6.1. Pre Demo
+
+a. Duration (every day): 15 min
 
 b. Goal: check progress of the goals.
 
 c. Tasks: 
 
 * focus on given result rather than actions
-* feedback
-* get to know what other teammates do
+* prepare summary of the results
 
 d. Participants:
 
-* responsible for iteration
 * dev team
 
-e. Requirements to participants:
-
-* teammates should prepare summary of the results achieved during the day
-
-f. Summary of the results:
+e. Summary of the results:
 
 * name and link to the task
 * progress (the percentage of completion)
 * accuracy of due date and time estimation
 * achieve result (there should not be description of activities), 
 matching requirements and result
+* artifacts (links to articles, repos, video etc)
 
-g. The meeting:
+#### 3.6.2. Demo
+
+a. Duration (every day): 10 min
+
+b. Goal: demonstrate your achievements (!).
+
+c. Tasks: 
+
+* feedback
+* get to know what other teammates have done
+
+d. Participants:
+
+* responsible for iteration
+* dev team
+
+e. The meeting:
 
 * Each teammate has only 2 minutes to demonstrate his results.
 You should NOT tell about, HOW you solve tasks, you should 
@@ -680,6 +719,17 @@ TODO: Процедура добавления задач с меткой `unveri
 
 Категоризировать задачи по важности (признак, определяющий 
 распределение задач при обзоре решения (ревью)).
+
+### 3.13. Process optimization
+
+a. Process efficiency should be the goal of each teammate. Everyone should always 
+think how much the process is efficient and what we can change to make it better.
+
+b. If you have found some productive practices, you should share them with team
+and introduce as common practice.
+
+c. If you understand that we should eliminate some process steps or we should
+change them some way, your duty is to make proposal to introduce this change.
 
 ## 4. Внесение предложений
 
