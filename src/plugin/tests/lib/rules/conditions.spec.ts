@@ -15,8 +15,26 @@ ruleTester.run('conditions', rule, {
             x === BusinessCommon.ES_EXEC
         `,
         `
-            if (trip.disabled && trip.hasOrders) {
+            if ((trip.disabled || trip.removed) && trip.hasOrders) {
                 someAction();
+            }
+        `,
+        `
+            if (trip.disabled) {
+                const a = foo();
+                if (trip.hasOrders) {
+                    someAction();
+                }
+            }
+        `,
+        `
+            if (trip.disabled) {
+                boo();
+                if (trip.hasOrders) {
+                    someAction();
+                }
+            } else {
+                foo();
             }
         `,
         `
@@ -52,6 +70,7 @@ ruleTester.run('conditions', rule, {
         {
             code: `
                 if (trip.disabled) {
+                    a = b || c;
                     if (trip.hasOrders) {
                         t = 3;
                     }
@@ -82,9 +101,14 @@ ruleTester.run('conditions', rule, {
                     g = 3;
                 } else {
                     g = 5;
+                    g = a || b;
                 }
             `,
             errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_ELSE }]
+        },
+        {
+            code: 'if (BusinessCommon.ES_EXEC !== trip.state) {}',
+            errors: [{ messageId: rule.ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON }]
         }
     ]
 });

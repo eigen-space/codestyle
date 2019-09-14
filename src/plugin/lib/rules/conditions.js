@@ -98,8 +98,6 @@ function isComparisonHasEnumOrConstantOnLeftSide(context, node) {
         const isLeftSideVariableConstOrLiteral = isPossibleEnum(context, node.left) || isLiteral(node.left);
         const isRightSideVariableConstOrLiteral = isPossibleEnum(context, node.right) || isLiteral(node.right);
 
-        // Not working now. Should be automated in the next version
-        /* istanbul ignore next line */
         if (isLeftSideVariableConstOrLiteral && !isRightSideVariableConstOrLiteral) {
             report(context, node, ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON);
         }
@@ -127,8 +125,6 @@ function isHasUnnecessaryIfStatement(context, node) {
         return;
     }
 
-    // TODO Come up with a case and write spec when the conditions do not pass
-    /* istanbul ignore next line */
     if (body.every(statement => isSimpleVariableDeclarationOrAssignment(statement))) {
         report(context, node, ERROR_TYPE.UNNECESSARY_NESTED_IF);
     }
@@ -141,8 +137,6 @@ function isHasUnnecessaryElseStatement(context, node) {
 
     const { body } = node.alternate;
 
-    // TODO Come up with a case and write spec when the conditions do not pass
-    /* istanbul ignore next line */
     if (body.every(statement => isSimpleVariableDeclarationOrAssignment(statement))) {
         report(context, node.alternate, ERROR_TYPE.UNNECESSARY_ELSE);
     }
@@ -153,8 +147,6 @@ function isNegationBeforeParentheses(context, node) {
     if (isParenthesized(1, node, sourceCode)) {
         const tokenBeforeParentheses = sourceCode.getTokenBefore(sourceCode.getTokenBefore(node));
 
-        // TODO Come up with a case and write spec when the conditions do not pass
-        /* istanbul ignore next line */
         if (tokenBeforeParentheses.value === '!' && tokenBeforeParentheses.type === 'Punctuator') {
             report(context, node, ERROR_TYPE.NEGATION_BEFORE_PARENTHESES);
         }
@@ -163,31 +155,21 @@ function isNegationBeforeParentheses(context, node) {
 
 function isSimpleVariableDeclarationOrAssignment(node) {
     const isAssignment = node.type === 'ExpressionStatement' && node.expression.type === 'AssignmentExpression';
-    // TODO Come up with a case and write spec when the conditions do pass
-    /* istanbul ignore next line */
     if (node.type !== 'VariableDeclaration' && !isAssignment) {
         return false;
     }
 
-    // TODO Come up with a case and write spec when the conditions do not pass
-    /* istanbul ignore next line */
     if (isAssignment) {
         return isSimpleInitialization(node.expression.right);
     }
 
-    // TODO Come up with a case and write spec when the conditions do not pass
-    /* istanbul ignore next line */
     return node.declarations.every(declaration => isSimpleInitialization(declaration.init));
 }
 
 function isSimpleInitialization(node) {
-    // TODO Come up with a case and write spec when the conditions do not pass
-    /* istanbul ignore next line */
     return isSimpleProperty(node) || isSimpleLogicalOrBinaryExpression(node);
 }
 
-// TODO Come up with a case and write spec
-/* istanbul ignore next line */
 function isSimpleLogicalOrBinaryExpression(node) {
     const isLogicalOrBinaryExpression = ['LogicalExpression', 'BinaryExpression'].includes(node.type);
     return isLogicalOrBinaryExpression && isSimpleProperty(node.left) && isSimpleProperty(node.right);
@@ -202,13 +184,13 @@ function isPossibleEnum(context, node) {
 
     const sourceCode = context.getSourceCode();
 
-    const variableText = sourceCode.getText(node.test);
+    const variableText = sourceCode.getText(node);
 
     return node.type === 'MemberExpression' && variableText[0] !== variableText[0].toLowerCase();
 }
 
 function isLiteral(node) {
-    return node.type === 'Literal';
+    return ['Literal', 'Identifier'].includes(node.type);
 }
 
 function report(context, node, messageId) {
