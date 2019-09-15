@@ -107,7 +107,10 @@ ruleTester.run('conditions', rule, {
             errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_ELSE }]
         },
         {
-            code: 'if (BusinessCommon.ES_EXEC !== trip.state) {}',
+            code: `
+                if (BusinessCommon.ES_EXEC !== trip.state) {
+                }
+            `,
             errors: [{ messageId: rule.ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON }]
         }
     ]
