@@ -3,14 +3,10 @@ module.exports = {
         'react'
     ],
     parserOptions: {
-        ecmaFeatures: {
-            jsx: true
-        }
+        ecmaFeatures: { jsx: true }
     },
     settings: {
-        react: {
-            version: 'detect'
-        }
+        react: { version: 'detect' }
     },
     rules: {
         'react/jsx-indent': 'error',
