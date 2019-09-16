@@ -1,7 +1,7 @@
 {
     "name": "eslint-plugin-eigenspace-react",
     "version": "0.0.14",
-    "description": "Eigenspace team's codestyle plugin for react",
+    "description": "Eigenspace team's codestyle plugin for react linting",
     "license": "MIT",
     "dependencies": {
         "eslint-plugin-react": "7.14.3"

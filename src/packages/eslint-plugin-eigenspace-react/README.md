@@ -1,12 +1,6 @@
-# CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
+# Eigenspace eslint plugin for react
 
-Main language: `TypeScript`
-
-This project contains:
-1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
-2. `eslint` configuration.
-3. `typescript` configuration.
-4. Configuration for development environments.
+Eigenspace`s rules and configuration for react projects
 
 # Project structure
 
@@ -22,13 +16,6 @@ index.js - exported plugin config
 
 # Environmental requirements
 * `eslint`: `5.x`
-
-We use 5<sup>th</sup> version because `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` require `eslint`
-with 5<sup>th</sup> version.
-```
-warning " > @typescript-eslint/eslint-plugin@1.11.0" has incorrect peer dependency "eslint@^5.0.0".
-warning " > @typescript-eslint/parser@1.11.0" has incorrect peer dependency "eslint@^5.0.0".
-```
 
 # Rules for ESLint
 
