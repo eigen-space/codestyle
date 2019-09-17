@@ -1,18 +1,15 @@
 # Eigenspace eslint plugin for react
 
-Eigenspace`s rules and configuration for react projects
+Eigenspace`s rules and configuration for React projects
 
 # Project structure
 
-```
-/lib
-    /rules - folder with custom rules
-index.js - exported plugin config
-```
+We use same project structure as all plugin uses.
+Example of project structure can be found [there](https://github.com/DianaSuvorova/eslint-plugin-react-redux)
 
 # Code writing guide
 
-* [React](./doc/react/README.md)
+* [React](https://github.com/eigen-space/codestyle/tree/dev/doc/react)
 
 # Environmental requirements
 * `eslint`: `5.x`
