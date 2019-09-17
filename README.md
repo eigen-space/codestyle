@@ -81,8 +81,10 @@ In current `tsconfig.json` add:
 * `@types/*` - contains type definitions for specific library.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `google-spreadsheet` - it is used to work with google spreadsheet api to automate preparing google spreadsheet with all rules.
+* `ts-jest` - used for jest to work with typescript files.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
+* `jest` - spec runner.
 * `lint-staged` - used for configure linters against staged git files.
 * `react` - used for sandbox and testing React rules.
 * `react-redux` - used for sandbox and testing React redux rules.

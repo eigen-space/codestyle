@@ -7,6 +7,7 @@ node_modules
 # compiled output
 /out-tsc
 /dist
+/coverage
 
 # logs
 yarn-error.log
