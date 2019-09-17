@@ -7,7 +7,8 @@
         "eslint-plugin-react-redux": "3.0.1"
     },
     "peerDependencies": {
-        "react": "16.x",
+        "react": "*",
+        "redux": "*",
         "eslint": "5.x"
     }
 }
