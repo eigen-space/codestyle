@@ -4,15 +4,12 @@ Eigenspace`s rules and configuration for web projects
 
 # Project structure
 
-```
-/lib
-    /rules - folder with custom rules
-index.js - exported plugin config
-```
+We use same project structure as all plugin uses.
+Example of project structure can be found [there](https://github.com/DianaSuvorova/eslint-plugin-react-redux)
 
 # Code writing guide
 
-* [Scripts](./doc/scripts/README.md)
+* [Scripts](https://github.com/eigen-space/codestyle/tree/dev/doc/scripts)
 
 # Environmental requirements
 * `eslint`: `5.x`

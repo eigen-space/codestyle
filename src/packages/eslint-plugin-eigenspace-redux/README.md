@@ -1,14 +1,11 @@
 # Eigenspace eslint plugin for redux
 
-Eigenspace`s rules and configuration for redux projects
+Eigenspace`s rules and configuration for Redux projects
 
 # Project structure
 
-```
-/lib
-    /rules - folder with custom rules
-index.js - exported plugin config
-```
+We use same project structure as all plugin uses.
+Example of project structure can be found [there](https://github.com/DianaSuvorova/eslint-plugin-react-redux)
 
 # Environmental requirements
 * `eslint`: `5.x`
