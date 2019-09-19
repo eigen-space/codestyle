@@ -1,31 +1,31 @@
-# Architecture
+# Архитектура
 
-## 1. Component
+## 1. Компонент
 
-In our projects we follow this architecture:
+В наших проектах мы следуем следующей архитектуре:
 ![Architecture](assets/architecture.png)
 
-### 1.1. Component Logic layer
+### 1.1. Слой компонентной логики
 
-Logic and data processing. Usually supported by developers.
+Логика и обработка данных. Обычно поддерживается разработчиками.
 
 #### 1.1.1. Provider
 
-Main question:
-1. What business data does component operate with? 
-2. What business logic does component implement?
+Основные вопросы:
+1. С какими бизнес-данными работает компонент?
+2. Какую бизнес-логику компонент реализует?
 
-Responsible for:
-1. Getting and preparing data from store
-2. Preparing actions
-3. Implementation of business logic
+Ответственный за:
+1. Получение и подготовку данных из store
+2. Подготовка действий
+3. Реализация бизнес-логики
 
-Filename:\
+Имя файла:\
 `<component>.provider.tsx`
 
-Exports `mapStateToProps` and / or `mapDispatchToProps` functions.
+Экспортирует `mapStateToProps` и / или `mapDispatchToProps`.
 
-Example:
+Пример:
 ```
 export const mapStateToProps = (state: StoreState): MappingStateProps => ({
     ownCards: getOwnCards(state),
@@ -35,22 +35,22 @@ export const mapStateToProps = (state: StoreState): MappingStateProps => ({
 
 #### 1.1.2. Presenter
 
-Stateful component.
+Stateful компонент.
 
-Main question:\
-What does component do?
+Основные вопросы:\
+Что компонент делает?
 
-Responsible for:
-1. Storing and controlling UI state
-2. Implementation of all methods like handlers and component logic
+Ответственный за:
+1. Хранение и управление состоянием UI
+2. Реализация всех методов (любые обработчики, компонентная логика)
 
-Filename:\
+Имя файла:\
 `<component>.presenter.tsx`
 
-Exports class name:\
+Экспортируемое имя класса:\
 `<Component>Presenter`
 
-Example:
+Пример:
 ```
 export class DomainListPresenter extends React.PureComponent<Props> {
     
@@ -82,19 +82,19 @@ export class DomainListPresenter extends React.PureComponent<Props> {
 }
 ```
 
-### 1.2. Presentation Layer
+### 1.2. Презентационный слой
 
-Only UI view layers. Can be supported by designers.
+Только отображение UI.
 
-#### 1.2.1. Styles 
+#### 1.2.1. Styles
 
-Main question:\
-How does component look?
+Основной вопрос:\
+Как компонент выглядит?
 
-Filename:\
+Имя файла:\
 `<component>.styles.tsx`
 
-Example:
+Пример:
 ```
 ...
 
@@ -114,20 +114,19 @@ export const CardListWrapper = styled(ContainerRoot)`
 
 #### 1.2.2. View 
 
-Main question:\
-What does component show?
+Основной вопрос:\
+Что компонент показывает?
 
-Responsible for:
-1. Stateless component
-2. Only makeup with handler interfaces and data interpolation
+Ответственный за:\
+Вёрстку без состояния, обработчиков и т.д.
  
 Filename:\
 `<component>.view.tsx`
 
-Exports class name / functional component name:\
+Экспортируемое имя класса / функционального компонента:\
 `<Component>View`
 
-Example:
+Пример:
 ```
 interface Props {
     items: CardEntity[];
@@ -155,17 +154,16 @@ export const DomainListView = React.memo(View);
 
 #### 1.2.3. Animation
 
-Main question:\
-How does component change UI states?
+Основной вопрос:\
+Как компонент меняет свои состояния?
 
-Responsible for:
-1. Includes animation states for some components.
-2. As Framer Motion, as CSS
+Ответственный за:\
+Хранение состояний какой-либо анимации как для Framer Motion, так и для CSS
 
-Filename:\
+Имя файла:\
 `<component>.animation.ts`
 
-Example:
+Пример:
 ```
 import { SwitchState } from '../switch.enum.ts';
 
@@ -187,21 +185,21 @@ export const animationStates = {
 
 ## 1.3. Index
  
-Each component folder should contain `index` file with exported 
-`<Component>`. If component contains `Provider` layer this file should
-connect `mapStateToProps` and / or `mapDispatchToProps` with component.
-In another case, just export `<Component>`.
+Директория каждого компонента должна содержать файл `index` с экспортируемым 
+`<Component>`. Если компонент содержит слой `Prodider`, то этот компонент
+должен подключать `mapStateToProps` и / или `mapDispatchToProps`. В остальных 
+случаях просто переэкспортировать `<Component>`.
 
-Example with existing provider layer:
+Пример с существующим `Provider` слоем:
 ```
 import { connect } from 'react-redux';
 import { DomainListPresenter } from './domain-list.presenter';
-import { mapStateToProps } from './domain-list.provider';
+import { mapStateToProps } from './domain-list.container';
 
 export const DomainList = connect(mapStateToProps)(DomainListPresenter);
 ```
 
-Example with not existing provider layer:
+Пример с существующего `Provider` слоя:
 ```
 import { DomainListPresenter } from './domain-list.presenter';
 
