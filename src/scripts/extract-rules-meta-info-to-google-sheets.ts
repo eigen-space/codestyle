@@ -27,16 +27,20 @@ interface Rule {
     [key: string]: string | number;
 }
 
-const StatusTypes = ['Автоматизировано', 'Не автоматизировано', 'Частично автоматизировано'];
+enum StatusType {
+    AUTOMATED = 'Автоматизировано',
+    NON_AUTOMATED = 'Не автоматизировано',
+    PARTLY_AUTOMATED = 'Частично автоматизировано'
+}
 
-const ID_PATTERN = /(([#]+ ([\d+.]+))|(\w\.))/.toString()
+const ID_PATTERN = /((##[#]+ ([\d+.]+))|([a-z]\.))/.toString()
     .slice(1, -1);
-const STATUS_PATTERN = StatusTypes.map(statusType => `(${statusType})`)
+const STATUS_PATTERN = Object.values(StatusType).map(statusType => `(${statusType})`)
     .join('|');
 const END_PATTERN = new RegExp(`(${os.EOL}.+)*`).toString()
     .slice(1, -1);
 
-const RULE_REGEXP = new RegExp(`${ID_PATTERN} \\\\\\[(${STATUS_PATTERN})(.*)\\\\\\] (.+${END_PATTERN})`, 'gm');
+const RULE_REGEXP = new RegExp(`${ID_PATTERN} (\\\\\\[(${STATUS_PATTERN})(.*)\\\\\\] )?(.+${END_PATTERN})`, 'gm');
 
 const COLUMNS_COUNT = 7;
 
@@ -121,16 +125,16 @@ function getRulesData(pathToDoc: string): Rule[] {
     return rules.map(rule => {
         RULE_REGEXP.lastIndex = 0;
 
-        const [, , , ruleId, subRuleId, status, , , , rawRuleName, name] = RULE_REGEXP.exec(rule) as Array<string>;
+        const [, , , ruleId, subRuleId, , status, , , , rawRuleName, name] = RULE_REGEXP.exec(rule) as Array<string>;
 
         const id = ruleId || subRuleId;
-        const ruleName = rawRuleName.slice(1)
+        const ruleName = (rawRuleName || '').slice(1)
             .trim();
 
         return {
             id,
             name,
-            status,
+            status: status || StatusType.NON_AUTOMATED,
             rule: ruleName,
             localized: 'No',
             violations: 'None',
