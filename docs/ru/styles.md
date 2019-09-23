@@ -1,5 +1,3 @@
-[en](./README.md)
-
 # Стили (css)
 
 В качестве методологии написания стилей используется [БЭМ](https://ru.bem.info/methodology/quick-start/).

@@ -57,6 +57,7 @@
         "@types/node": "10.12.21",
         "@types/react": "16.8.24",
         "@types/react-redux": "7.1.1",
+        "docsify-cli": "4.3.0",
         "eslint": "5.16.0",
         "eslint-plugin-eigenspace-react": "latest",
         "eslint-plugin-eigenspace-redux": "latest",

@@ -1,5 +1,3 @@
-[ru](./README.ru.md)
-
 # npm dependencies
 
 ## 1. Why is it here?
@@ -88,4 +86,3 @@ our library. So it is preferable to set fluent versions (range of versions) for 
 rather than concrete versions. However we should set only that range of versions we can guarantee
 our library works correctly with. If we do not really know whether our library works correctly
 with some versions of the peer dependency, we should set concrete version of the dependency.
-
