@@ -1,5 +1,3 @@
-[ru](./README.ru.md)
-
 # Angular
 
 ## 0. Введение
