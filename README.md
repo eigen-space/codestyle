@@ -3,10 +3,18 @@
 Main language: `TypeScript`
 
 This project contains:
-1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
+1. Code writing guide. Covers aesthetic issues, convention naming and coding standards in
+russian and english languages.
 2. `eslint` configuration.
 3. `typescript` configuration.
 4. Configuration for development environments.
+
+# Getting started
+
+For running documentation serving run the following command:
+```
+docsify serve ./docs
+```
 
 # Project structure
 
