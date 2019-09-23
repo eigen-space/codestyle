@@ -1,3 +1,38 @@
+/**
+ * Script parses documentation of rules, extracts meta info and add it google sheets.
+ *
+ * We have general rules and more specific sub rules which disclose the general rules in more detail.
+ *
+ * Doc structure requirements.
+ *
+ * Rule structure:
+ * - general rule should contain at least two hashes (#)
+ * - general rule should have space after hashes
+ * - general rule should contain id in format number and dot after number with repeats (1.2.3.)
+ * - sub rule should contain id in format cyrillic letter and dot after letter with no repeats (a.)
+ * - rule should have space after id
+ * - rule can contain status and rule info block:
+ *      - block should starts with `\[` and ends with `\]`
+ *      - block should contain one of available statuses: `Автоматизировано` | `Не автоматизировано` | `Частично автоматизировано`
+ *      - if status is `Не автоматизировано` nothing else are in status and rule info block
+ *      - if status is `Автоматизировано` or `Частично автоматизировано` the colon symbol (:) with space should be after status
+ *      - if status is `Автоматизировано` or `Частично автоматизировано` the name of rule that automates problem should be specified
+ *      - if we have several rules for automation they should be separated by comma (,) and one space
+ * - rule should have space after status and rule info block if it was specified
+ * - rule should have name of rule
+ * - rule should have one empty line after rule row
+ *
+ * Examples of correct general rules:
+ * - ### 1.1. \[Не автоматизировано\] Правила именования
+ * - #### 2.1.2. \[Автоматизировано: brace-style\] Непустые блоки
+ * - #### 2.1.4. Поля с аннтотациями
+ *
+ * Examples of correct sub rules:
+ * - c. \[Не автоматизировано\] Между последовательно идущими объявлениями полей класса.
+ * - a. \[Автоматизировано: newline-per-chained-call\] Выражение должно переноситься по точке.
+ * - a. Предпочтительно размещать параметры функции на той же строке, что и имя функции.
+ */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -27,16 +62,20 @@ interface Rule {
     [key: string]: string | number;
 }
 
-const StatusTypes = ['Автоматизировано', 'Не автоматизировано', 'Частично автоматизировано'];
+enum StatusType {
+    AUTOMATED = 'Автоматизировано',
+    NON_AUTOMATED = 'Не автоматизировано',
+    PARTLY_AUTOMATED = 'Частично автоматизировано'
+}
 
-const ID_PATTERN = /(([#]+ ([\d+.]+))|(\w\.))/.toString()
+const ID_PATTERN = /((##[#]+ ([\d+.]+))|([a-z]\.))/.toString()
     .slice(1, -1);
-const STATUS_PATTERN = StatusTypes.map(statusType => `(${statusType})`)
+const STATUS_PATTERN = Object.values(StatusType).map(statusType => `(${statusType})`)
     .join('|');
 const END_PATTERN = new RegExp(`(${os.EOL}.+)*`).toString()
     .slice(1, -1);
 
-const RULE_REGEXP = new RegExp(`${ID_PATTERN} \\\\\\[(${STATUS_PATTERN})(.*)\\\\\\] (.+${END_PATTERN})`, 'gm');
+const RULE_REGEXP = new RegExp(`${ID_PATTERN} (\\\\\\[(${STATUS_PATTERN})(.*)\\\\\\] )?(.+${END_PATTERN})`, 'gm');
 
 const COLUMNS_COUNT = 7;
 
@@ -121,16 +160,16 @@ function getRulesData(pathToDoc: string): Rule[] {
     return rules.map(rule => {
         RULE_REGEXP.lastIndex = 0;
 
-        const [, , , ruleId, subRuleId, status, , , , rawRuleName, name] = RULE_REGEXP.exec(rule) as Array<string>;
+        const [, , , ruleId, subRuleId, , status, , , , rawRuleName, name] = RULE_REGEXP.exec(rule) as Array<string>;
 
         const id = ruleId || subRuleId;
-        const ruleName = rawRuleName.slice(1)
+        const ruleName = (rawRuleName || '').slice(1)
             .trim();
 
         return {
             id,
             name,
-            status,
+            status: status || StatusType.NON_AUTOMATED,
             rule: ruleName,
             localized: 'No',
             violations: 'None',
