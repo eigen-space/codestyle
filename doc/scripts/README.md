@@ -33,7 +33,7 @@ f. [C++ Guideline](https://lab.veeroute.com/development/docs-internal/blob/maste
 
 g. Intellij IDEA. File | Settings | Editor | Code Style | TypeScript
 
-e. Robert Cecil Martin - Clean Code: A Handbook of Agile Software Craftsmanship: «Piter», 2010.
+h. Robert Cecil Martin - Clean Code: A Handbook of Agile Software Craftsmanship: «Piter», 2010.
 
 
 ## 1. Файлы с исходным кодом
