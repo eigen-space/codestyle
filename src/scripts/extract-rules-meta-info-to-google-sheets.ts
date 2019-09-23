@@ -1,3 +1,38 @@
+/**
+ * Script parses documentation of rules, extracts meta info and add it google sheets.
+ *
+ * We have general rules and more specific sub rules which disclose the general rules in more detail.
+ *
+ * Doc structure requirements.
+ *
+ * Rule structure:
+ * - general rule should contain at least two hashes (#)
+ * - general rule should have space after hashes
+ * - general rule should contain id in format number and dot after number with repeats (1.2.3.)
+ * - sub rule should contain id in format cyrillic letter and dot after letter with no repeats (a.)
+ * - rule should have space after id
+ * - rule can contain status and rule info block:
+ *      - block should starts with `\[` and ends with `\]`
+ *      - block should contain one of available statuses: `Автоматизировано` | `Не автоматизировано` | `Частично автоматизировано`
+ *      - if status is `Не автоматизировано` nothing else are in status and rule info block
+ *      - if status is `Автоматизировано` or `Частично автоматизировано` the colon symbol (:) with space should be after status
+ *      - if status is `Автоматизировано` or `Частично автоматизировано` the name of rule that automates problem should be specified
+ *      - if we have several rules for automation they should be separated by comma (,) and one space
+ * - rule should have space after status and rule info block if it was specified
+ * - rule should have name of rule
+ * - rule should have one empty line after rule row
+ *
+ * Examples of correct general rules:
+ * - ### 1.1. \[Не автоматизировано\] Правила именования
+ * - #### 2.1.2. \[Автоматизировано: brace-style\] Непустые блоки
+ * - #### 2.1.4. Поля с аннтотациями
+ *
+ * Examples of correct sub rules:
+ * - c. \[Не автоматизировано\] Между последовательно идущими объявлениями полей класса.
+ * - a. \[Автоматизировано: newline-per-chained-call\] Выражение должно переноситься по точке.
+ * - a. Предпочтительно размещать параметры функции на той же строке, что и имя функции.
+ */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
