@@ -2,14 +2,14 @@ import { isParenthesized } from 'eslint-utils';
 import { CommonRuleContext } from '../../@types/eslint';
 import { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/experimental-utils';
 
-export const ERROR_TYPE = {
-    COUNTER_CLOCKWISE_COMPARISON: 'counter-clockwise-comparison',
-    LITERAL_OR_CONSTANT_COMPARISON: 'literal-or-constant-comparison',
-    NEGATION_BEFORE_PARENTHESES: 'negation-before-parentheses',
-    UNNECESSARY_NESTED_IF: 'unnecessary-nested-if',
-    UNNECESSARY_ELSE: 'unnecessary-else',
-    UNNECESSARY_TERNARY: 'unnecessary-ternary-operator'
-};
+export enum ERROR_TYPE {
+    COUNTER_CLOCKWISE_COMPARISON = 'counter-clockwise-comparison',
+    LITERAL_OR_CONSTANT_COMPARISON = 'literal-or-constant-comparison',
+    NEGATION_BEFORE_PARENTHESES = 'negation-before-parentheses',
+    UNNECESSARY_NESTED_IF = 'unnecessary-nested-if',
+    UNNECESSARY_ELSE = 'unnecessary-else',
+    UNNECESSARY_TERNARY = 'unnecessary-ternary-operator'
+}
 
 const MESSAGE_TYPE = {
     [ERROR_TYPE.COUNTER_CLOCKWISE_COMPARISON]: 'You should use only clockwise comparison `<`',
@@ -27,7 +27,8 @@ export default {
 
         docs: {
             description: 'rules for checking condition syntax',
-            category: 'Stylistic Issues'
+            category: 'Stylistic Issues',
+            recommended: 'error'
         },
 
         messages: {
@@ -120,7 +121,7 @@ function isHasUnnecessaryTernary(context: CommonRuleContext, node: TSESTree.Node
 }
 
 function isHasUnnecessaryIfStatement(context: CommonRuleContext, node: TSESTree.IfStatement): void {
-    // TODO Case when prop body doesn't exists
+    // Case when prop body doesn't exists
     // @ts-ignore
     const body = [...node.consequent.body];
     if (!body.length || body.pop().type !== AST_NODE_TYPES.IfStatement) {
@@ -133,13 +134,13 @@ function isHasUnnecessaryIfStatement(context: CommonRuleContext, node: TSESTree.
 }
 
 function isHasUnnecessaryElseStatement(context: CommonRuleContext, node: TSESTree.IfStatement): void {
-    // TODO Case when prop body doesn't exists
+    // Case when prop body doesn't exists
     // @ts-ignore
     if (!node.alternate || !node.alternate.body) {
         return;
     }
 
-    // TODO Case when prop body doesn't exists
+    // Case when prop body doesn't exists
     // @ts-ignore
     const body = node.alternate.body as TSESTree.Statement[];
 
@@ -165,12 +166,12 @@ function isSimpleVariableDeclarationOrAssignment(node: TSESTree.Statement): bool
     }
 
     if (isAssignment(node)) {
-        // TODO Case when prop doesn't exists
+        // Case when prop doesn't exists
         // @ts-ignore
         return isSimpleInitialization(node.expression.right);
     }
 
-    // TODO Case when prop doesn't exists
+    // Case when prop doesn't exists
     // @ts-ignore
     return node.declarations.every(declaration => isSimpleInitialization(declaration.init));
 }
@@ -182,7 +183,7 @@ function isSimpleInitialization(node: TSESTree.Node): boolean {
 function isSimpleLogicalOrBinaryExpression(node: TSESTree.Node): boolean {
     const types = [AST_NODE_TYPES.LogicalExpression, AST_NODE_TYPES.BinaryExpression];
     const isLogicalOrBinaryExpression = types.includes(node.type);
-    // TODO Typescript sends fake errors
+    // Typescript sends fake errors
     // @ts-ignore
     return isLogicalOrBinaryExpression && isSimpleProperty(node.left) && isSimpleProperty(node.right);
 }
