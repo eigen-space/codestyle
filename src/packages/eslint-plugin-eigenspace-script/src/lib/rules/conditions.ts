@@ -1,6 +1,7 @@
 import { isParenthesized } from 'eslint-utils';
 import { CommonRuleContext } from '../../@types/eslint';
 import { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/experimental-utils';
+import { RuleListener } from '@typescript-eslint/experimental-utils/dist/ts-eslint';
 
 export enum ERROR_TYPE {
     COUNTER_CLOCKWISE_COMPARISON = 'counter-clockwise-comparison',
@@ -40,7 +41,7 @@ export default {
             [ERROR_TYPE.UNNECESSARY_TERNARY]: MESSAGE_TYPE[ERROR_TYPE.UNNECESSARY_TERNARY]
         }
     },
-    create(context: CommonRuleContext) {
+    create(context: CommonRuleContext): RuleListener {
         return {
             BinaryExpression(node: TSESTree.BinaryExpression) {
                 checkBinaryExpression(context, node);
