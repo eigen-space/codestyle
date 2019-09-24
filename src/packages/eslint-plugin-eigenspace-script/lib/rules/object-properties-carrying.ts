@@ -12,15 +12,15 @@ const MAX_CHILD_OBJECT_PROPERTIES_IN_SINGLE_LINE = 0;
 const MAX_CHILD_CALL_EXPRESSION_LENGTH = 20;
 const MAX_COUNT_CALL_EXPRESSION_IN_SINGLE_LINE = 1;
 
-export const ERROR_TYPE = {
-    CONTENT_WIDTH: 'content-width',
-    COUNT_PROPERTIES: 'count-properties',
-    COUNT_CALL_EXPRESSIONS: 'count-call-expressions',
-    FUNCTION_LENGTH: 'function-length',
-    COUNT_NESTED_OBJECT_PROPERTIES: 'count-nested-object-properties',
-    COUNT_NESTED_ARRAY_ELEMENTS: 'count-nested-array-properties',
-    NO_MULTILINE: 'no-multiline'
-};
+export enum ERROR_TYPE {
+    CONTENT_WIDTH = 'content-width',
+    COUNT_PROPERTIES = 'count-properties',
+    COUNT_CALL_EXPRESSIONS = 'count-call-expressions',
+    FUNCTION_LENGTH = 'function-length',
+    COUNT_NESTED_OBJECT_PROPERTIES = 'count-nested-object-properties',
+    COUNT_NESTED_ARRAY_ELEMENTS = 'count-nested-array-properties',
+    NO_MULTILINE = 'no-multiline'
+}
 
 const SINGLE_LINE_ERRORS = {
     [ERROR_TYPE.CONTENT_WIDTH]: `content width of object is more than ${MAX_CONTENT_WIDTH}.`,
@@ -40,11 +40,9 @@ const MULTI_LINE_ERRORS = {
     [ERROR_TYPE.NO_MULTILINE]: 'the object can be written in one line.'
 };
 
-// noinspection JSUnusedGlobalSymbols
 export default {
     meta: {
         type: 'layout',
-        schema: [],
         docs: {
             description: 'object literal property carrying rules',
             category: 'Stylistic Issues',
