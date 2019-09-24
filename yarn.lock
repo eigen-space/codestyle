@@ -1379,36 +1379,22 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-plugin-eigenspace-react@0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-react/-/eslint-plugin-eigenspace-react-0.0.13.tgz#dd8431960800fee97caa02ce0989ea77b381f844"
-  integrity sha512-szaVOfCNWGRaGd65fknQLnTsMgBhHRwQEPZso//+Lb83bj+AgDjyjO3e2jblwonNC10VxiKJ+ZgYUtjHmiszIw==
+"eslint-plugin-eigenspace-react@file:src/packages/eslint-plugin-eigenspace-react":
+  version "0.0.14"
   dependencies:
     eslint-plugin-react "7.14.3"
 
-eslint-plugin-eigenspace-redux@0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-redux/-/eslint-plugin-eigenspace-redux-0.0.13.tgz#93ce03688e4215892a4b499ce900e93c8bd7f368"
-  integrity sha512-3fRB3I4TbIbI/KBa9uzTJ6CJnBXvrT3FOYD/xtlItYCv9W65Inar7gyShkOf8PJURnHtG+pRZ5Q21MqUykwaEQ==
+"eslint-plugin-eigenspace-redux@file:src/packages/eslint-plugin-eigenspace-react":
+  version "0.0.14"
   dependencies:
-    eslint-plugin-react-redux "3.0.1"
+    eslint-plugin-react "7.14.3"
 
-eslint-plugin-eigenspace-script@0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-eigenspace-script/-/eslint-plugin-eigenspace-script-0.0.15.tgz#4c5cc524929e35a677c34bf5d9e76904439d46ac"
-  integrity sha512-gu6W8PAF89Y4x4TOFoRv7NaXVsL1+wGj6ZtxhexM5fu2K9sypV0aJwkq1qiWL73q2XWM7N/tyskO4WZ9ZvtpyA==
+"eslint-plugin-eigenspace-script@file:src/packages/eslint-plugin-eigenspace-script/dist":
+  version "0.0.16"
   dependencies:
     eslint-plugin-unicorn "9.1.1"
 
-eslint-plugin-react-redux@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-redux/-/eslint-plugin-react-redux-3.0.1.tgz#e38d919c609fabba7d09fd947ecd2576851e2ae2"
-  integrity sha512-RJDh/vAfkvyFOht/lfp4UDN8j96OjnanbtjgNURwwxY65l64KHtRjJMqDoCQP5bwSe+eeGl3VZd6GtG6wheXWQ==
-  dependencies:
-    eslint-plugin-react "^7.11.1"
-    eslint-rule-composer "^0.3.0"
-
-eslint-plugin-react@7.14.3, eslint-plugin-react@^7.11.1:
+eslint-plugin-react@7.14.3:
   version "7.14.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.14.3.tgz#911030dd7e98ba49e1b2208599571846a66bdf13"
   integrity sha512-EzdyyBWC4Uz2hPYBiEJrKCUi2Fn+BJ9B/pJQcjw5X+x/H2Nm59S4MJIvL4O5NEE0+WbnQwEBxWY03oUk+Bc3FA==
@@ -1440,11 +1426,6 @@ eslint-plugin-unicorn@9.1.1:
     regexpp "^2.0.1"
     reserved-words "^0.1.2"
     safe-regex "^2.0.1"
-
-eslint-rule-composer@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz#79320c927b0c5c0d3d3d2b76c8b4a488f25bbaf9"
-  integrity sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==
 
 eslint-scope@^4.0.0, eslint-scope@^4.0.3:
   version "4.0.3"
