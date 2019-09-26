@@ -31,3 +31,8 @@ module.exports = {
 ## Why do we have that dependencies?
 
 * `eslint-plugin-unicorn` - eslint rule package.
+
+## Why do we have that dev dependencies?
+
+* `@types/*` - contains type definitions for specific library.
+* `@typescript-eslint/experimental-utils` - using ast types
