@@ -29,7 +29,7 @@ f. [C++ Guideline](https://lab.veeroute.com/development/docs-internal/blob/maste
 
 g. Intellij IDEA. File | Settings | Editor | Code Style | TypeScript
 
-e. Мартин Роберт К. - Чистый код. Создание, анализ и рефакторинг: Издательство «Питер», 2010.
+h. Мартин Роберт К. - Чистый код. Создание, анализ и рефакторинг: Издательство «Питер», 2010.
 
 ## 1. Файлы с исходным кодом
 
