@@ -13,7 +13,7 @@ russian and english languages.
 
 For running documentation serving run the following command:
 ```
-docsify serve ./docs
+yarn dev:doc
 ```
 
 # Project structure
