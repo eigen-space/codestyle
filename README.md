@@ -37,7 +37,7 @@ yarn dev:doc
 * `@eigenspace/commit-linter` - commit linter.
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
-* `docsify-cli` - generates documentation for easier way of looking forward.
+* `docsify-cli` - generates documentation to work with documentation in easier way.
 * `eslint-plugin-eigenspace-script` - eslint script rules package.
 * `eslint-plugin-eigenspace-react` - eslint react rules package.
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
