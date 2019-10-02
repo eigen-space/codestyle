@@ -14,8 +14,8 @@ export enum ERROR_TYPE {
 
 const MESSAGE_TYPE = {
     [ERROR_TYPE.COUNTER_CLOCKWISE_COMPARISON]: 'You should use only clockwise comparison `<`',
-    [ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON]: `Literal or enum to compare with should be on right side of\
-     expression`,
+    [ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON]: 'Literal or enum to compare with should be on right side of\
+     expression',
     [ERROR_TYPE.NEGATION_BEFORE_PARENTHESES]: 'Unexpected negation before parentheses',
     [ERROR_TYPE.UNNECESSARY_NESTED_IF]: 'Unnecessary nested if statement',
     [ERROR_TYPE.UNNECESSARY_ELSE]: 'Unnecessary else statement. You could do declaration in else statement before if',

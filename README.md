@@ -3,68 +3,29 @@
 Main language: `TypeScript`
 
 This project contains:
-1. Code writing guide. Covers aesthetic issues, convention naming and coding standards.
+1. Code writing guide. Covers aesthetic issues, convention naming and coding standards in
+russian and english languages.
 2. `eslint` configuration.
 3. `typescript` configuration.
 4. Configuration for development environments.
+
+# Getting started
+
+For running documentation serving run the following command:
+```
+yarn dev:doc
+```
 
 # Project structure
 
 ```
 /configs - Some configurations, eg ide
-/doc - Codestyle
+/docs - Codestyle
 /src
     /configs - Packaged configurations
     /sandbox
     /scripts
 ```   
-# Code writing guide
-
-* [Common standards](./doc/common/README.md)
-* [Angular](./doc/angular/README.md)
-* [React](./doc/react/README.md)
-* [Scripts](./doc/scripts/README.md)
-* [Styles](./doc/styles/README.md)
-
-# Process rules
-
-* [Process rules](./doc/process/README.md)
-
-# Environmental requirements
-* `eslint`: `5.x`
-
-We use 5<sup>th</sup> version because `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` require `eslint`
-with 5<sup>th</sup> version.
-```
-warning " > @typescript-eslint/eslint-plugin@1.11.0" has incorrect peer dependency "eslint@^5.0.0".
-warning " > @typescript-eslint/parser@1.11.0" has incorrect peer dependency "eslint@^5.0.0".
-```
-
-# Rules for ESLint
-
-All requirement information is described [here](./src/packages/eslint/README.md).
-    
-# Configurations for development environments
-
-## IntelliJ IDEA / WebStorm
-
-Located in `configs/ide/codestyle.idea.xml`
-Used for code validation and auto-formatting.
-1. Open `Preferences`
-2. Go to `Editor` -> `Code Style` -> `TypeScript`
-3. Click on the `gear` icon neat to `scheme`
-4. From the context menu select `Import Scheme`
-
-## Usage tsconfig.json
-
-Located in `src/configs/typescript/base.tsconfig.js`.
-In current `tsconfig.json` add:
-```
-"extends": "@eigenspace/codestyle/configs/typescript/base.tsconfig.json"
-"compilerOptions": {
-    "moduleResolution": "node"
-}
-```
 
 ## How to start development with sandbox
 
@@ -87,11 +48,12 @@ To run specs for all subprojects, just call `yarn test` from the root project
 ## Why do we have that dev dependencies?
 
 * `@eigenspace/commit-linter` - commit linter.
+* `@eigenspace/helper-scripts` - common scripts for dev. environment.
+* `@types/*` - contains type definitions for specific library.
+* `docsify-cli` - generates documentation to work with documentation in easier way.
 * `eslint-plugin-eigenspace-script` - eslint script rules package.
 * `eslint-plugin-eigenspace-react` - eslint react rules package.
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
-* `@eigenspace/helper-scripts` - common scripts for dev. environment.
-* `@types/*` - contains type definitions for specific library.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `google-spreadsheet` - it is used to work with google spreadsheet api to automate preparing google spreadsheet with all rules.
 * `ts-jest` - used for jest to work with typescript files.
