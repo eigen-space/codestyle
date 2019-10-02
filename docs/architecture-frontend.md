@@ -3,7 +3,7 @@
 ## 1. Component
 
 In our projects we follow this architecture:
-![Architecture](assets/architecture.png)
+![Architecture](assets/architecture-frontend/architecture.png)
 
 ### 1.1. Component Logic layer
 
