@@ -1,8 +1,8 @@
+import objectPropertiesCarrying from './lib/rules/object-properties-carrying';
+import conditions from './lib/rules/conditions';
+
 module.exports = {
-    rules: {
-        'object-properties-carrying': require('./lib/rules/object-properties-carrying'),
-        conditions: require('./lib/rules/conditions')
-    },
+    rules: { 'object-properties-carrying': objectPropertiesCarrying, conditions },
     configs: {
         all: {
             parser: '@typescript-eslint/parser',

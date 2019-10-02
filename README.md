@@ -27,6 +27,19 @@ yarn dev:doc
     /scripts
 ```   
 
+## How to start development with sandbox
+
+1. Build `eslint-plugin-eigenspace-script` project
+    ```
+        > cd src/packages/eslint-plugin-eigenspace-script
+        > yarn build
+    ```
+2. Run `yarn` from root project
+
+## How to run specs
+
+To run specs for all subprojects, just call `yarn test` from the root project
+
 ## Why do we have that dependencies?
 
 * `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
