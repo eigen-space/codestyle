@@ -1,7 +1,8 @@
 module.exports = {
     testMatch: ['<rootDir>/src/**/*.spec.ts'],
     collectCoverageFrom: [
-        '<rootDir>/src/plugin/lib/rules/*.js'
+        '<rootDir>/src/packages/**/*.ts',
+        '!<rootDir>/src/packages/eslint-plugin-eigenspace-script/tests/utils/**/*'
     ],
     coveragePathIgnorePatterns: [
         '.*\\.d\\.ts'

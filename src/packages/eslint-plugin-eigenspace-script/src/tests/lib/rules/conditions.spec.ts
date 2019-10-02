@@ -1,7 +1,8 @@
 import { ruleTester } from '../../utils/configured-rule-tester';
+import rule, { ERROR_TYPE } from '../../../lib/rules/conditions';
 
-const rule = require('../../../lib/rules/conditions');
-
+// Ignored meta info errors
+// @ts-ignore
 ruleTester.run('conditions', rule, {
     valid: [
         'const x;',
@@ -51,11 +52,11 @@ ruleTester.run('conditions', rule, {
     invalid: [
         {
             code: 'x > 1',
-            errors: [{ messageId: rule.ERROR_TYPE.COUNTER_CLOCKWISE_COMPARISON }]
+            errors: [{ messageId: ERROR_TYPE.COUNTER_CLOCKWISE_COMPARISON }]
         },
         {
             code: '1 < x && x > 10',
-            errors: [{ messageId: rule.ERROR_TYPE.COUNTER_CLOCKWISE_COMPARISON }]
+            errors: [{ messageId: ERROR_TYPE.COUNTER_CLOCKWISE_COMPARISON }]
         },
         {
             code: `
@@ -65,7 +66,7 @@ ruleTester.run('conditions', rule, {
                     }
                 }
             `,
-            errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_NESTED_IF }]
+            errors: [{ messageId: ERROR_TYPE.UNNECESSARY_NESTED_IF }]
         },
         {
             code: `
@@ -76,7 +77,7 @@ ruleTester.run('conditions', rule, {
                     }
                 }
             `,
-            errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_NESTED_IF }]
+            errors: [{ messageId: ERROR_TYPE.UNNECESSARY_NESTED_IF }]
         },
         {
             code: `
@@ -84,15 +85,15 @@ ruleTester.run('conditions', rule, {
                     const g = 3;
                 }
             `,
-            errors: [{ messageId: rule.ERROR_TYPE.NEGATION_BEFORE_PARENTHESES }]
+            errors: [{ messageId: ERROR_TYPE.NEGATION_BEFORE_PARENTHESES }]
         },
         {
             code: 'action.attributes = action.attributes ? action.attributes : [];',
-            errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_TERNARY }]
+            errors: [{ messageId: ERROR_TYPE.UNNECESSARY_TERNARY }]
         },
         {
             code: 'const attributes = action.attributes ? action.attributes : [];',
-            errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_TERNARY }]
+            errors: [{ messageId: ERROR_TYPE.UNNECESSARY_TERNARY }]
         },
         {
             code: `
@@ -104,14 +105,14 @@ ruleTester.run('conditions', rule, {
                     g = a || b;
                 }
             `,
-            errors: [{ messageId: rule.ERROR_TYPE.UNNECESSARY_ELSE }]
+            errors: [{ messageId: ERROR_TYPE.UNNECESSARY_ELSE }]
         },
         {
             code: `
                 if (BusinessCommon.ES_EXEC !== trip.state) {
                 }
             `,
-            errors: [{ messageId: rule.ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON }]
+            errors: [{ messageId: ERROR_TYPE.LITERAL_OR_CONSTANT_COMPARISON }]
         }
     ]
 });

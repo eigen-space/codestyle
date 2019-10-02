@@ -3,8 +3,17 @@
     "version": "0.0.16",
     "description": "Eigenspace team's codestyle plugin for script linting",
     "license": "MIT",
+    "scripts": {
+        "build": "yarn copy:assets && yarn compile",
+        "compile": "node ../../../node_modules/typescript/bin/tsc",
+        "copy:assets": "node ./dev/scripts/copy.js"
+    },
     "dependencies": {
         "eslint-plugin-unicorn": "9.1.1"
+    },
+    "devDependencies": {
+        "@types/eslint": "4.16.8",
+        "@typescript-eslint/experimental-utils": "2.3.0"
     },
     "peerDependencies": {
         "eslint": "5.x"
