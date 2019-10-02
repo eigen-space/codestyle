@@ -3,7 +3,7 @@
 ## 1. Компонент
 
 В наших проектах мы следуем следующей архитектуре:
-![Architecture](../assets/architecture.png)
+![Architecture](../assets/architecture-frontend/architecture.png)
 
 ### 1.1. Слой компонентной логики
 

@@ -528,7 +528,7 @@ the loop of setting sub-goals, product production, getting result
 and feedback to correct quality of the result including productivity
 as toughly coupled part of the result.
 
-![Iteration mechanism](assets/iteration-mechanism.en.jpg)
+![Iteration mechanism](assets/process/iteration-mechanism.en.jpg)
 
 b. The iteration process is comprised of the following parts:
 
@@ -543,7 +543,7 @@ b. The iteration process is comprised of the following parts:
 * Quiet time
 * Brainshaking
 
-![Iteration process](assets/iteration-process.en.jpg)
+![Iteration process](assets/process/iteration-process.en.jpg)
 
 c. Total time for events: 9h
 
