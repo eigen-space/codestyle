@@ -43,6 +43,7 @@
         "test": "jest",
         "test:ci": "yarn test --ci",
         "compile": "tsc",
+        "dev:doc": "docsify serve ./docs",
         "build": "yarn script:copy && yarn compile",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/packages/eslint-plugin-eigenspace-react,/src/packages/eslint-plugin-eigenspace-redux,/src/packages/eslint-plugin-eigenspace-script"
     },
@@ -57,6 +58,7 @@
         "@types/node": "10.12.21",
         "@types/react": "16.8.24",
         "@types/react-redux": "7.1.1",
+        "docsify-cli": "4.3.0",
         "eslint": "5.16.0",
         "eslint-plugin-eigenspace-react": "file:src/packages/eslint-plugin-eigenspace-react",
         "eslint-plugin-eigenspace-redux": "file:src/packages/eslint-plugin-eigenspace-react",
