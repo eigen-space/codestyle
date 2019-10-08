@@ -34,5 +34,7 @@ module.exports = {
 
 ## Why do we have that dev dependencies?
 
+* `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
 * `@typescript-eslint/experimental-utils` - using ast types
+* `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
