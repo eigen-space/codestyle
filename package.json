@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -22,6 +22,7 @@
     ],
     "husky": {
         "hooks": {
+            "pre-push": "yarn hooks:pre-push",
             "pre-commit": "lint-staged"
         }
     },
@@ -47,6 +48,7 @@
         "dev:doc": "docsify serve ./docs",
         "build": "yarn script:copy && yarn compile",
         "build:subprojects": "node ./dev/scripts/build-subprojects.js",
+        "hooks:pre-push": "yarn lint && yarn test",
         "deploy:publish": "node node_modules/@eigenspace/helper-scripts/scripts/ci/publish.js --projectPaths[]=/,/src/packages/eslint-plugin-eigenspace-react,/src/packages/eslint-plugin-eigenspace-redux,/src/packages/eslint-plugin-eigenspace-script"
     },
     "dependencies": {
