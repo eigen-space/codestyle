@@ -47,8 +47,8 @@ const GoogleSpreadsheet = require('google-spreadsheet');
 // The Google Sheet ID found in the URL of your Google Sheet.
 const SPREADSHEET_ID = '1phevI9VxclD8QsHYr5Stu-nlvUjJ3taBujgu1JOUqlg';
 
-const PATH_TO_DOCS = './doc';
-const FILE_NAME = 'README.ru.md';
+const PATH_TO_DOCS = './docs/ru/';
+const FILE_NAME = 'README.md';
 
 interface Rule {
     id: string;
