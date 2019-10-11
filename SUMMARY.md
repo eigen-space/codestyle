@@ -16,7 +16,7 @@
     * [React](docs/ru/react.md)
   * [Common stardards of web-developement](docs/common.md)
   * [npm dependencies](docs/dependencies.md)
-  * [Процедурные стандарты](docs/process.md)
+  * [Processes](docs/process.md)
   * [\_navbar](docs/_navbar.md)
   * [Architecture](docs/architecture-frontend.md)
   * [Стили \(css\)](docs/styles.md)
