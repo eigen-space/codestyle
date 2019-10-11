@@ -2,8 +2,7 @@
 
 ## 1. Component
 
-In our projects we follow this architecture:
-![Architecture](assets/architecture-frontend/architecture.png)
+In our projects we follow this architecture: ![Architecture](../.gitbook/assets/architecture%20%281%29.png)
 
 ### 1.1. Component Logic layer
 
@@ -11,22 +10,17 @@ Logic and data processing. Usually supported by developers.
 
 #### 1.1.1. Provider
 
-Main question:
-1. What business data does component operate with? 
-2. What business logic does component implement?
+Main question: 1. What business data does component operate with? 2. What business logic does component implement?
 
-Responsible for:
-1. Getting and preparing data from store
-2. Preparing actions
-3. Implementation of business logic
+Responsible for: 1. Getting and preparing data from store 2. Preparing actions 3. Implementation of business logic
 
-Filename:\
-`<component>.provider.tsx`
+Filename: `<component>.provider.tsx`
 
 Exports `mapStateToProps` and / or `mapDispatchToProps` functions.
 
 Example:
-```
+
+```text
 export const mapStateToProps = (state: StoreState): MappingStateProps => ({
     ownCards: getOwnCards(state),
     cardsForList: getCardsForList(state)
@@ -37,28 +31,24 @@ export const mapStateToProps = (state: StoreState): MappingStateProps => ({
 
 Stateful component.
 
-Main question:\
-What does component do?
+Main question: What does component do?
 
-Responsible for:
-1. Storing and controlling UI state
-2. Implementation of all methods like handlers and component logic
+Responsible for: 1. Storing and controlling UI state 2. Implementation of all methods like handlers and component logic
 
-Filename:\
-`<component>.presenter.tsx`
+Filename: `<component>.presenter.tsx`
 
-Exports class name:\
-`<Component>Presenter`
+Exports class name: `<Component>Presenter`
 
 Example:
-```
+
+```text
 export class DomainListPresenter extends React.PureComponent<Props> {
-    
+
     ...
 
     render(): React.ReactNode {
         const { ownCards, cardsForList } = this.props;
-    
+
         return (
             <DomainListView
                 items={ownCards}
@@ -86,16 +76,15 @@ export class DomainListPresenter extends React.PureComponent<Props> {
 
 Only UI view layers. Can be supported by designers.
 
-#### 1.2.1. Styles 
+#### 1.2.1. Styles
 
-Main question:\
-How does component look?
+Main question: How does component look?
 
-Filename:\
-`<component>.styles.tsx`
+Filename: `<component>.styles.tsx`
 
 Example:
-```
+
+```text
 ...
 
 export const DomainListRoot = styled.div`
@@ -112,23 +101,19 @@ export const CardListWrapper = styled(ContainerRoot)`
 ...
 ```
 
-#### 1.2.2. View 
+#### 1.2.2. View
 
-Main question:\
-What does component show?
+Main question: What does component show?
 
-Responsible for:
-1. Stateless component
-2. Only makeup with handler interfaces and data interpolation
- 
-Filename:\
-`<component>.view.tsx`
+Responsible for: 1. Stateless component 2. Only makeup with handler interfaces and data interpolation
 
-Exports class name / functional component name:\
-`<Component>View`
+Filename: `<component>.view.tsx`
+
+Exports class name / functional component name: `<Component>View`
 
 Example:
-```
+
+```text
 interface Props {
     items: CardEntity[];
     cardsForList: CardEntity[];
@@ -155,18 +140,15 @@ export const DomainListView = React.memo(View);
 
 #### 1.2.3. Animation
 
-Main question:\
-How does component change UI states?
+Main question: How does component change UI states?
 
-Responsible for:
-1. Includes animation states for some components.
-2. As Framer Motion, as CSS
+Responsible for: 1. Includes animation states for some components. 2. As Framer Motion, as CSS
 
-Filename:\
-`<component>.animation.ts`
+Filename: `<component>.animation.ts`
 
 Example:
-```
+
+```text
 import { SwitchState } from '../switch.enum.ts';
 
 const transition = { type: 'tween', duration: 1 };
@@ -186,14 +168,12 @@ export const animationStates = {
 ```
 
 ## 1.3. Index
- 
-Each component folder should contain `index` file with exported 
-`<Component>`. If component contains `Provider` layer this file should
-connect `mapStateToProps` and / or `mapDispatchToProps` with component.
-In another case, just export `<Component>`.
+
+Each component folder should contain `index` file with exported `<Component>`. If component contains `Provider` layer this file should connect `mapStateToProps` and / or `mapDispatchToProps` with component. In another case, just export `<Component>`.
 
 Example with existing provider layer:
-```
+
+```text
 import { connect } from 'react-redux';
 import { DomainListPresenter } from './domain-list.presenter';
 import { mapStateToProps } from './domain-list.provider';
@@ -202,8 +182,10 @@ export const DomainList = connect(mapStateToProps)(DomainListPresenter);
 ```
 
 Example with not existing provider layer:
-```
+
+```text
 import { DomainListPresenter } from './domain-list.presenter';
 
 export const DomainList = DomainListPresenter;
 ```
+
