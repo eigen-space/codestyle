@@ -1,6 +1,6 @@
 {
     "name": "eslint-plugin-eigenspace-redux",
-    "version": "0.0.610",
+    "version": "0.0.611",
     "description": "Eigenspace team's codestyle plugin for Redux app linting",
     "license": "MIT",
     "dependencies": {
