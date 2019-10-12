@@ -1,6 +1,6 @@
 {
     "name": "eslint-plugin-eigenspace-script",
-    "version": "0.0.557",
+    "version": "0.0.558",
     "description": "Eigenspace team's codestyle plugin for script linting",
     "license": "MIT",
     "scripts": {
