@@ -1,51 +1,51 @@
-# README
-
-## CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
+# CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
 
 Main language: `TypeScript`
 
-This project contains: 1. Code writing guide. Covers aesthetic issues, convention naming and coding standards in russian and english languages. 2. `eslint` configuration. 3. `typescript` configuration. 4. Configuration for development environments.
+This project contains:
+1. Code writing guide. Covers aesthetic issues, convention naming and coding standards in
+russian and english languages.
+2. `eslint` configuration.
+3. `typescript` configuration.
+4. Configuration for development environments.
 
-## Getting started
+# Getting started
 
 For running documentation serving run the following command:
-
-```text
+```
 yarn dev:doc
 ```
 
-## Project structure
+# Project structure
 
-```text
+```
 /configs - Some configurations, eg ide
 /docs - Codestyle
 /src
     /configs - Packaged configurations
     /sandbox
     /scripts
-```
+```   
 
-### How to start development with sandbox
+## How to start development with sandbox
 
 1. Build `eslint-plugin-eigenspace-script` project
-
-   ```text
+    ```
         > cd src/packages/eslint-plugin-eigenspace-script
         > yarn build
-   ```
-
+    ```
 2. Run `yarn` from root project
 
-### How to run specs
+## How to run specs
 
 To run specs for all subprojects, just call `yarn test` from the root project
 
-### Why do we have that dependencies?
+## Why do we have that dependencies?
 
 * `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
 * `@typescript-eslint/parser` - parser typescript code for eslint.
 
-### Why do we have that dev dependencies?
+## Why do we have that dev dependencies?
 
 * `@eigenspace/commit-linter` - commit linter.
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
@@ -65,9 +65,8 @@ To run specs for all subprojects, just call `yarn test` from the root project
 * `react-redux` - used for sandbox and testing React redux rules.
 * `eslint-utils` - eslint-utils package that helps with rules development.
 
-## CI
+# CI
 
 **Important!**
 
 Travis creates the .npmrc file during ci startup. This file contains the access token to the npm repository.
-
