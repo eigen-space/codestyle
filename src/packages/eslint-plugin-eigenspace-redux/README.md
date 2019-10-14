@@ -8,6 +8,7 @@ We use same project structure as all plugin uses.
 Example of project structure can be found [there](https://github.com/DianaSuvorova/eslint-plugin-react-redux)
 
 # Environmental requirements
+
 * `eslint`: `5.x`
 
 # Rules for ESLint

@@ -3,24 +3,14 @@
 Main language: `TypeScript`
 
 This project contains:
-1. Code writing guide. Covers aesthetic issues, convention naming and coding standards in
-russian and english languages.
-2. `eslint` configuration.
-3. `typescript` configuration.
-4. Configuration for development environments.
-
-# Getting started
-
-For running documentation serving run the following command:
-```
-yarn dev:doc
-```
+1. `eslint` configuration.
+2. `typescript` configuration.
+3. Configuration for development environments.
 
 # Project structure
 
 ```
 /configs - Some configurations, eg ide
-/docs - Codestyle
 /src
     /configs - Packaged configurations
     /sandbox
@@ -50,7 +40,6 @@ To run specs for all subprojects, just call `yarn test` from the root project
 * `@eigenspace/commit-linter` - commit linter.
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
-* `docsify-cli` - generates documentation to work with documentation in easier way.
 * `eslint-plugin-eigenspace-script` - eslint script rules package.
 * `eslint-plugin-eigenspace-react` - eslint react rules package.
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
