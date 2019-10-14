@@ -54,6 +54,7 @@ To run specs for all subprojects, just call `yarn test` from the root project
 * `eslint-plugin-eigenspace-script` - eslint script rules package.
 * `eslint-plugin-eigenspace-react` - eslint react rules package.
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
+* `eslint-plugin-eigenspace-styles` - eslint styles rules package.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `google-spreadsheet` - it is used to work with google spreadsheet api to automate preparing google spreadsheet with all rules.
 * `ts-jest` - used for jest to work with typescript files.
