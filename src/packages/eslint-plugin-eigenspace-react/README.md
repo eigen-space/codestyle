@@ -9,9 +9,10 @@ Example of project structure can be found [there](https://github.com/DianaSuvoro
 
 # Code writing guide
 
-* [React](https://github.com/eigen-space/codestyle/tree/dev/doc/react)
+* [React](https://standards.eigenspace.team/react)
 
 # Environmental requirements
+
 * `eslint`: `5.x`
 
 # Rules for ESLint
