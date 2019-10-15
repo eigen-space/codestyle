@@ -9,6 +9,9 @@ Basic usage of it is finding not automated rules in faster way.
 ### Documentation
 Read more in JSDoc [here](./extract-rules-meta-info-to-google-sheets.ts)
 
+### When we run that script?
+We run it only on CI right after build to.
+
 ## markdown-lint
 
 ### Why do we need that script?
@@ -18,3 +21,6 @@ To make sure we describe all dependencies we need a dependency linter.
 
 ### Documentation
 Read more in JSDoc [here](./markdown-lint.js)
+
+### When we run that script?
+We run it locally and on CI with linter.
