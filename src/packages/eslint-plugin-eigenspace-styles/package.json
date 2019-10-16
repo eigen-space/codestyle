@@ -4,9 +4,7 @@
     "description": "Eigenspace team's codestyle plugin for linting and fixing styles",
     "license": "MIT",
     "scripts": {
-        "build": "yarn copy:assets && yarn compile",
-        "compile": "node ./node_modules/typescript/bin/tsc",
-        "copy:assets": "node ./dev/scripts/copy.js"
+        "build": "node ./dev/scripts/copy.js"
     },
     "dependencies": {
         "eslint-plugin-prettier": "3.1.1",
