@@ -33,7 +33,3 @@ module.exports = {
 
 * `eslint-plugin-prettier` - eslint rule package.
 * `prettier` - used for code formatting. 
-
-## Why do we have that dev dependencies?
-
-* `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
