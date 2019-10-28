@@ -1398,8 +1398,8 @@ eslint-ast-utils@^1.0.0:
   dependencies:
     eslint-plugin-unicorn "9.1.1"
 
-"eslint-plugin-eigenspace-styles@file:src/packages/eslint-plugin-eigenspace-styles/dist":
-  version "0.0.1"
+"eslint-plugin-eigenspace-styles@file:src/packages/eslint-plugin-eigenspace-styles":
+  version "0.0.2"
   dependencies:
     eslint-plugin-prettier "3.1.1"
     prettier "1.18.2"
