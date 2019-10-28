@@ -3,9 +3,9 @@
 Main language: `TypeScript`
 
 This project contains:
-1. `eslint` configuration.
-2. `typescript` configuration.
-3. Configuration for development environments.
+1. `typescript` configuration.
+2. README linter.
+3. Packages of eslint rules.
 
 # Project structure
 
@@ -30,11 +30,6 @@ This project contains:
 
 To run specs for all subprojects, just call `yarn test` from the root project
 
-## Why do we have that dependencies?
-
-* `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
-* `@typescript-eslint/parser` - parser typescript code for eslint.
-
 ## Why do we have that dev dependencies?
 
 * `@eigenspace/commit-linter` - commit linter.
@@ -45,7 +40,6 @@ To run specs for all subprojects, just call `yarn test` from the root project
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
 * `eslint-plugin-eigenspace-styles` - eslint styles rules package.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
-* `google-spreadsheet` - it is used to work with google spreadsheet api to automate preparing google spreadsheet with all rules.
 * `ts-jest` - used for jest to work with typescript files.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
 * `husky` - used for configure git hooks.
@@ -53,7 +47,6 @@ To run specs for all subprojects, just call `yarn test` from the root project
 * `lint-staged` - used for configure linters against staged git files.
 * `react` - used for sandbox and testing React rules.
 * `react-redux` - used for sandbox and testing React redux rules.
-* `eslint-utils` - eslint-utils package that helps with rules development.
 
 # CI
 

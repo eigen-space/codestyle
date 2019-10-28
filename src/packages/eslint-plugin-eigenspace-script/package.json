@@ -9,13 +9,16 @@
         "copy:assets": "node ./dev/scripts/copy.js"
     },
     "dependencies": {
-        "eslint-plugin-unicorn": "9.1.1"
+        "@typescript-eslint/eslint-plugin": "1.13.0",
+        "@typescript-eslint/experimental-utils": "2.3.0",
+        "@typescript-eslint/parser": "1.13.0",
+        "eslint-plugin-unicorn": "9.1.1",
+        "eslint-utils": "1.4.2"
     },
     "devDependencies": {
         "@eigenspace/helper-scripts": "1.0.81",
         "@types/eslint": "4.16.8",
         "@types/node": "10.12.21",
-        "@typescript-eslint/experimental-utils": "2.3.0",
         "typescript": "3.5.3"
     },
     "peerDependencies": {
