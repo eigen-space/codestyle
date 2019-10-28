@@ -1,0 +1,13 @@
+{
+    "name": "eslint-plugin-eigenspace-styles",
+    "version": "0.0.2",
+    "description": "Eigenspace team's codestyle plugin for linting and fixing styles",
+    "license": "MIT",
+    "dependencies": {
+        "eslint-plugin-prettier": "3.1.1",
+        "prettier": "1.18.2"
+    },
+    "peerDependencies": {
+        "eslint": "5.x"
+    }
+}
