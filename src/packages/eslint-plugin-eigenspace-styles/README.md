@@ -1,11 +1,15 @@
-# Eigenspace eslint plugin for redux
+# Eigenspace eslint plugin for styles
 
-Eigenspace`s rules and configuration for Redux projects
+Eigenspace`s rules and configuration for web projects
 
 # Project structure
 
 We use same project structure as all plugin uses.
 Example of project structure can be found [there](https://github.com/DianaSuvorova/eslint-plugin-react-redux)
+
+# Code writing guide
+
+* [Styles](https://standards.eigenspace.team/styles)
 
 # Environmental requirements
 
@@ -18,7 +22,7 @@ In .eslintrc.js do following:
 ```
 module.exports = {
     extends: [
-        'plugin:eigenspace-script/all'
+        'plugin:eigenspace-styles/all'
     ]
 };
 ```
@@ -27,4 +31,5 @@ module.exports = {
 
 ## Why do we have that dependencies?
 
-* `eslint-plugin-react-redux` - eslint rule package.
+* `eslint-plugin-prettier` - eslint rule package.
+* `prettier` - used for code formatting. 

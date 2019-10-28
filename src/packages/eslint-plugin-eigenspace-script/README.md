@@ -9,7 +9,7 @@ Example of project structure can be found [there](https://github.com/DianaSuvoro
 
 # Code writing guide
 
-* [Scripts](https://github.com/eigen-space/codestyle/tree/dev/doc/scripts)
+* [Scripts](https://standards.eigenspace.team/scripts)
 
 # Environmental requirements
 * `eslint`: `5.x`
