@@ -1,4 +1,4 @@
-if: branch = master
+if: branch =~ ^(master|dev|feature\/.*)$ AND commit_message !~ /auto\/ci:\sset\sversion/
 language: node_js
 node_js:
   - "11.10"
@@ -13,7 +13,8 @@ script:
   - yarn lint && yarn test:ci
   - yarn build && npm run deploy:publish;
 before_install:
-  - echo "//registry.npmjs.org/:_authToken=\${NPM_ACCESS_TOKEN}" > .npmrc
+  - echo "registry=https://$REGISTRY/" >> .npmrc
+  - echo "//$REGISTRY/:_authToken=$ACCESS_TOKEN" >> .npmrc
 notifications:
   slack:
     rooms:
