@@ -3,7 +3,7 @@
 Main language: `TypeScript`
 
 This project contains:
-1. `typescript` configuration.
+1. Typescript configuration.
 2. README linter.
 3. Packages of eslint rules.
 
