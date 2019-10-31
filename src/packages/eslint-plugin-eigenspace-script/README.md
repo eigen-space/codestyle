@@ -30,11 +30,14 @@ module.exports = {
 
 ## Why do we have that dependencies?
 
+* `@typescript-eslint/eslint-plugin` - plugin to adapt eslint to typescript.
+* `@typescript-eslint/experimental-utils` - using ast types
+* `@typescript-eslint/parser` - parser typescript code for eslint.
 * `eslint-plugin-unicorn` - eslint rule package.
+* `eslint-utils` - eslint-utils package that helps with rules development.
 
 ## Why do we have that dev dependencies?
 
 * `@eigenspace/helper-scripts` - common scripts for dev. environment.
 * `@types/*` - contains type definitions for specific library.
-* `@typescript-eslint/experimental-utils` - using ast types
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
