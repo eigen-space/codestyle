@@ -1,5 +1,7 @@
 # CodeStyle [![Build Status](https://travis-ci.com/eigen-space/codestyle.svg?branch=master)](https://travis-ci.com/eigen-space/codestyle)
 
+[Description of all dev. standards which this project exists for.](https://standards.eigenspace.team/)
+
 Main language: `TypeScript`
 
 This project contains:
