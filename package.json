@@ -1,6 +1,6 @@
 {
     "name": "@eigenspace/codestyle",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "description": "Eigenspace team's codestyle",
     "repository": "https://github.com/eigen-space/codestyle.git",
     "author": "Anton Kalashnikov <tohasan@yandex.ru>",
@@ -59,7 +59,6 @@
         "@types/react": "16.8.24",
         "@types/react-redux": "7.1.1",
         "eslint": "5.16.0",
-        "eslint-plugin-react-perf": "3.2.3",
         "eslint-plugin-eigenspace-react": "file:src/packages/eslint-plugin-eigenspace-react",
         "eslint-plugin-eigenspace-redux": "file:src/packages/eslint-plugin-eigenspace-redux",
         "eslint-plugin-eigenspace-script": "file:src/packages/eslint-plugin-eigenspace-script/dist",

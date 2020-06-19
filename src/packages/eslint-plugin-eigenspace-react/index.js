@@ -3,8 +3,10 @@ module.exports = {
     configs: {
         all: {
             plugins: [
-                'react'
+                'react',
+                'react-perf'
             ],
+            extends: ['plugin:react-perf/all'],
             parserOptions: {
                 ecmaFeatures: { jsx: true }
             },

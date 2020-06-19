@@ -41,7 +41,6 @@ To run specs for all subprojects, just call `yarn test` from the root project
 * `eslint-plugin-eigenspace-react` - eslint react rules package.
 * `eslint-plugin-eigenspace-redux` - eslint redux rules package.
 * `eslint-plugin-eigenspace-styles` - eslint styles rules package.
-* `eslint-plugin-react-perf` - helps improve performance by removing anti-patterns.
 * `eslint` - it checks code for readability, maintainability, and functionality errors.
 * `ts-jest` - used for jest to work with typescript files.
 * `typescript` - is a superset of JavaScript that have static type-checking and ECMAScript features.
