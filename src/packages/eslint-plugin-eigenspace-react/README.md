@@ -32,3 +32,4 @@ module.exports = {
 ## Why do we have that dependencies?
 
 * `eslint-plugin-react` - eslint rule package.
+* `eslint-plugin-react-perf` - helps improve performance by removing anti-patterns.
