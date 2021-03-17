@@ -8,7 +8,7 @@
         "eslint-plugin-react-perf": "3.2.3"
     },
     "peerDependencies": {
-        "eslint": "5.x",
+        "eslint": "7.x",
         "react": "*"
     }
 }

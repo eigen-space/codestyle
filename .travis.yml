@@ -1,7 +1,7 @@
 if: branch =~ ^(master|dev|feature\/.*)$ AND commit_message !~ /auto\/ci:\sset\sversion/
 language: node_js
 node_js:
-  - "11.10"
+  - "14.15"
 git:
   depth: false
 cache:
@@ -15,9 +15,3 @@ script:
 before_install:
   - echo "registry=https://$REGISTRY/" >> .npmrc
   - echo "//$REGISTRY/:_authToken=$ACCESS_TOKEN" >> .npmrc
-notifications:
-  slack:
-    rooms:
-      - eigenspaceworkspace:kmQErenC9R4KA4kWyb1j8UaS#ci
-    on_success: change
-    on_failure: always
