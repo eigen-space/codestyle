@@ -91,7 +91,7 @@ module.exports = {
                     }
                 },
                 {
-                    files: ['*.ts?x'],
+                    files: ['*.ts', '*.tsx'],
                     rules: {
                         '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }]
                     }
