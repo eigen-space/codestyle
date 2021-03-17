@@ -22,7 +22,7 @@ export class RuleTester extends TSESLint.RuleTester {
     run<TMessageIds extends string, TOptions extends Readonly<unknown[]>>(
         name: string,
         rule: TSESLint.RuleModule<TMessageIds, TOptions>,
-        tests: TSESLint.RunTests<TMessageIds, TOptions>,
+        tests: TSESLint.RunTests<TMessageIds, TOptions>
     ): void {
 
         const errorMessage = `Do not set the parser at the test level unless you want to use a parser other than\

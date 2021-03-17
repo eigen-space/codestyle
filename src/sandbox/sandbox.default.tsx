@@ -75,3 +75,9 @@ trip.attributes = trip.attributes ? trip.attributes : [];
 
 // Хорошо
 trip.attributes = trip.attributes || [];
+
+// Capitalized comment
+// not capitalized comment
+
+// Check correct parsing this js feature
+const comparison = a ?? 2;

@@ -8,10 +8,10 @@ module.exports = {
             parser: '@typescript-eslint/parser',
             plugins: ['unicorn', '@typescript-eslint', 'eigenspace-script'],
             parserOptions: {
-                ecmaVersion: 2018,
+                ecmaVersion: 2020,
                 sourceType: 'module',
                 ecmaFeatures: { jsx: true },
-                project: 'tsconfig.json'
+                project: 'tsconfig.eslint.json'
             },
             rules: {
                 'eigenspace-script/object-properties-carrying': 'error',
@@ -41,7 +41,6 @@ module.exports = {
                 complexity: ['error', 10],
                 'multiline-ternary': ['error', 'never'],
                 'unicorn/filename-case': 'error',
-                'capitalized-comments': ['error', 'always', { ignorePattern: 'tslint|noinspection|istanbul' }],
                 'spaced-comment': ['error', 'always'],
                 curly: 'error',
                 'comma-dangle': ['error', 'never'],
@@ -59,7 +58,8 @@ module.exports = {
                 'no-empty': 'error',
                 'no-eval': 'error',
                 '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true }],
-                'no-shadow': 'error',
+                'no-shadow': 'off',
+                '@typescript-eslint/no-shadow': ['error'],
                 'no-fallthrough': 'error',
                 'default-case': 'error',
                 'no-trailing-spaces': 'error',
@@ -72,7 +72,6 @@ module.exports = {
                 'no-throw-literal': 'error',
                 '@typescript-eslint/semi': 'error',
                 eqeqeq: ['error', 'always', { null: 'ignore' }],
-                '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
                 '@typescript-eslint/type-annotation-spacing': 'error',
                 'yoda': ['error', 'never', { 'onlyEquality': true }],
                 'no-else-return': 'error',
@@ -89,6 +88,12 @@ module.exports = {
                     files: ['!*.styles.ts'],
                     rules: {
                         '@typescript-eslint/no-extra-parens': ['error', 'all', { ignoreJSX: 'all' }]
+                    }
+                },
+                {
+                    files: ['*.ts', '*.tsx'],
+                    rules: {
+                        '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }]
                     }
                 }
             ]
