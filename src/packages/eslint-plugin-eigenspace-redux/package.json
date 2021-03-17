@@ -9,6 +9,6 @@
     "peerDependencies": {
         "react": "*",
         "redux": "*",
-        "eslint": "5.x"
+        "eslint": "7.x"
     }
 }

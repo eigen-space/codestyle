@@ -11,8 +11,7 @@
         ]
     },
     "include": [
-        "src",
-        "dev"
+        "src"
     ],
     "exclude": [
         "node_modules",

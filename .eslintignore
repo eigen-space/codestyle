@@ -1,3 +1,8 @@
 out-tsc/**/*
 **/dist/**/*
+**/coverage/**/*
 **/node_modules/**/*
+**/*.d.ts
+.eslintrc.js
+jest.config.js
+src/sandbox/sandbox.default.tsx
